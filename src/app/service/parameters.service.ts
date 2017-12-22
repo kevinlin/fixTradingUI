@@ -1,0 +1,22 @@
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {TradingParameters} from '../model/trading-parameters';
+
+@Injectable()
+export class ParametersService {
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+  private parametersUrl = '/api/parameters';
+
+  public getParameters(): Observable<TradingParameters> {
+    return this.httpClient.get<TradingParameters>(this.parametersUrl);
+  }
+
+  public updateParameters(tradingParameters: TradingParameters): Observable<TradingParameters> {
+    return this.httpClient.put<TradingParameters>(this.parametersUrl, tradingParameters);
+  }
+
+}

@@ -1,0 +1,52 @@
+<form class="form">
+  <mat-grid-list cols="2" rowHeight="60px">
+    <mat-grid-tile [colspan]="2">
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.average" name="average" placeholder="Average" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.shortStart" name="shortStart" placeholder="Start Short" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.longStart" name="longStart" placeholder="Long Short" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.shortClose" name="shortClose" placeholder="Close Short" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.longClose" name="longClose" placeholder="Close Long" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.shortStopLoss" name="shortStopLoss" placeholder="Stop Short Loss" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.longStopLoss" name="longStopLoss" placeholder="Stop Long Loss" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.shortStartAgain" name="shortStartAgain" placeholder="Start Short Again" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.longStartAgain" name="longStartAgain" placeholder="Start Long Again" type="number" class="right-align">
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="action-row">
+    <button mat-raised-button color="primary" (click)="saveTradingParameters()">Save Changes</button>
+  </div>
+</form>

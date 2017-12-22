@@ -1,20 +1,37 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {InstrumentsComponent} from './instruments/instruments.component';
+import {ParametersComponent} from './parameters/parameters.component';
 
-import { AppComponent } from './app.component';
-
+import {MaterialModule} from './material.module';
+import {InstrumentService} from './service/instrument.service';
+import {ParametersService} from './service/parameters.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InstrumentsComponent,
+    ParametersComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MaterialModule
   ],
-  providers: [],
+  providers: [
+    InstrumentService,
+    ParametersService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
