@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 import {TradingParameters} from '../model/trading-parameters';
 import {ParametersService} from '../service/parameters.service';
 
@@ -9,10 +10,10 @@ import {ParametersService} from '../service/parameters.service';
 })
 export class ParametersComponent implements OnInit {
 
-  constructor(private parametersService: ParametersService) {
+  constructor(private parametersService: ParametersService, private snackBar: MatSnackBar) {
   }
 
-  private tradingParameters: TradingParameters;
+  tradingParameters: TradingParameters;
 
   ngOnInit() {
     this.tradingParameters = <TradingParameters>{};
@@ -28,6 +29,9 @@ export class ParametersComponent implements OnInit {
     this.parametersService.updateParameters(this.tradingParameters).subscribe(
       parameters => {
         this.tradingParameters = parameters;
+        this.snackBar.open('Trading Parameters', 'successful saved', {
+          duration: 3000,
+        });
       }
     );
   }

@@ -7,16 +7,35 @@ import {NavigationEnd, Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  url = '';
+  private navLinks = [
+    {
+      path: '/instruments',
+      label: 'Instruments'
+    },
+    {
+      path: '/parameters',
+      label: 'Trading Parameters'
+    },
+    {
+      path: '/tradingSession',
+      label: 'Trading Session'
+    }
+  ];
+  private title: string;
 
   constructor(private router: Router) {
     router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
           // console.log(event);
-          this.url = event.url;
+          this.title = this.capitalize(event.url.slice(1));
         }
       }
     );
   }
+
+  private capitalize(string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 }

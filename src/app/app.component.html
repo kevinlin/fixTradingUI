@@ -18,22 +18,31 @@
 <!--</li>-->
 <!--</ul>-->
 
-<h1>Iron Ore Trading</h1>
-<div id="content">
-  <div class="container-fluid">
-    <div>
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" [ngClass]="{'active': url === '/instruments'}"><a [routerLink]="['/instruments']">Instruments</a></li>
-        <li role="presentation" [ngClass]="{'active': url === '/parameters'}"><a [routerLink]="['/parameters']">Parameters</a></li>
-      </ul>
+<div class="container">
+  <div class="page-header">
+    <h1>Iron Ore Trading - {{title}}</h1>
+  </div>
+  <div id="content">
+    <!--
+          <div>
+            &lt;!&ndash; Nav tabs &ndash;&gt;
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" [ngClass]="{'active': url === '/instruments'}"><a [routerLink]="['/instruments']">Instruments</a></li>
+              <li role="presentation" [ngClass]="{'active': url === '/parameters'}"><a [routerLink]="['/parameters']">Parameters</a></li>
+              <li role="presentation" [ngClass]="{'active': url === '/tradingSession'}"><a [routerLink]="['/tradingSession']">Trading Session</a></li>
+            </ul>
 
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <p></p>
-
+            &lt;!&ndash; Tab panes &ndash;&gt;
+            <div class="tab-content">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+    -->
+    <nav mat-tab-nav-bar class="tabbed-content">
+      <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+        {{link.label}}
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
   </div>
 </div>

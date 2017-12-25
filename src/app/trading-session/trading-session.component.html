@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-6">
+    <h3>Instrument Pair</h3>
+    <div>
+      <mat-form-field>
+        <mat-select placeholder="SGX Instrument">
+          <mat-option *ngFor="let instrument of sgxInstruments | async" [value]="instrument">
+            {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select placeholder="Dce Instrument">
+          <mat-option *ngFor="let instrument of dceInstruments | async" [value]="instrument">
+            {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <h3>Session Details</h3>
+    <div>
+      <mat-form-field>
+        <input matInput [(ngModel)]="exchangeRate" type="number" placeholder="Exchange Rate" class="right-align">
+        <span matSuffix>&nbsp;CNY per USD</span>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [(ngModel)]="date" placeholder="Trading Date" type="date">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div class="action-row">
+  <button mat-raised-button color="primary">Start</button>&nbsp;
+  <button mat-raised-button color="accent">Accent</button>&nbsp;
+  <button mat-raised-button color="warn">Stop</button>&nbsp;
+  <button mat-raised-button disabled>Disabled</button>
+</div>

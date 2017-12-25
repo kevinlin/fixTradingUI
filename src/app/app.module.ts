@@ -5,31 +5,36 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
+import {MaterialModule} from './material.module';
+
 import {AppComponent} from './app.component';
 import {InstrumentsComponent} from './instruments/instruments.component';
 import {ParametersComponent} from './parameters/parameters.component';
+import {TradingSessionComponent} from './trading-session/trading-session.component';
 
-import {MaterialModule} from './material.module';
 import {InstrumentService} from './service/instrument.service';
 import {ParametersService} from './service/parameters.service';
+import {TradingSessionService} from './service/trading-session.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     InstrumentsComponent,
-    ParametersComponent
+    ParametersComponent,
+    TradingSessionComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    AppRoutingModule,
     MaterialModule
   ],
   providers: [
     InstrumentService,
-    ParametersService
+    ParametersService,
+    TradingSessionService
   ],
   bootstrap: [AppComponent]
 })
