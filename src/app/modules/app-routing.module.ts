@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {InstrumentsComponent} from './instruments/instruments.component';
-import {ParametersComponent} from './parameters/parameters.component';
-import {TradingSessionComponent} from './trading-session/trading-session.component';
+import {InstrumentsComponent} from '../instruments/instruments.component';
+import {ParametersComponent} from '../parameters/parameters.component';
+import {TradingSessionComponent} from '../trading-session/trading-session.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/tradingSession', pathMatch: 'full'},

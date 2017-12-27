@@ -1,11 +1,11 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {AppRoutingModule} from './app-routing.module';
-import {MaterialModule} from './material.module';
+import {AppRoutingModule} from './modules/app-routing.module';
+import {MaterialModule} from './modules/material.module';
 
 import {AppComponent} from './app.component';
 import {InstrumentsComponent} from './instruments/instruments.component';
