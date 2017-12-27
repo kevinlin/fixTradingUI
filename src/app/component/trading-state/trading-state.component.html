@@ -27,7 +27,7 @@
                 'label-danger':  tradingState.lastAction === 'STOP_SHORT_LOSS'
               }">{{tradingState.lastAction}}</span>
             </h3></td>
-            <td>{{tradingState.tradingPosition.shortPosition}}</td>
+            <td class="right-align">{{tradingState.tradingPosition.shortPosition}}</td>
           </tr>
           <tr>
             <th>Best SGX {{tradingState.sgxInstrument.symbol}} Bid Price</th>
@@ -47,7 +47,7 @@
           <tr>
             <th>Best DCE {{tradingState.dceInstrument.symbol}} Ask Price</th>
             <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
-            <td>&nbsp;</td>
+            <td class="success right-align">{{tradingState.dceBestAskSize}}</td>
           </tr>
           <tr>
             <th>Price Difference (SGX - DCE)</th>
@@ -140,12 +140,12 @@
                 'label-danger':  tradingState.lastAction === 'STOP_LONG_LOSS'
               }">{{tradingState.lastAction}}</span>
             </h3></td>
-            <td>{{tradingState.tradingPosition.longPosition}}</td>
+            <td class="right-align">{{tradingState.tradingPosition.longPosition}}</td>
           </tr>
           <tr>
-            <th>Best SGX {{tradingState.sgxInstrument.symbol}} Bid Price</th>
-            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
-            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+            <th>Best SGX {{tradingState.sgxInstrument.symbol}} Ask Price</th>
+            <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestAskSize}}</td>
           </tr>
           <tr>
             <th>Exchange Rate (USD -> CNY)</th>
@@ -154,17 +154,17 @@
           </tr>
           <tr>
             <th>In CNY Equivalent</th>
-            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice}}</td>
+            <td class="info right-align">{{tradingState.sgxAskMinusDceBid + tradingState.dceBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
           </tr>
           <tr>
-            <th>Best DCE {{tradingState.dceInstrument.symbol}} Ask Price</th>
-            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
-            <td>&nbsp;</td>
+            <th>Best DCE {{tradingState.dceInstrument.symbol}} Bid Price</th>
+            <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.dceBestBidSize}}</td>
           </tr>
           <tr>
             <th>Price Difference (SGX - DCE)</th>
-            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk}}</td>
+            <td class="info right-align">{{tradingState.sgxAskMinusDceBid}}</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
