@@ -1,46 +1,46 @@
 <div class="row">
-  <div class="col-xs-6">
+  <div class="col-xs-4 form-container">
     <h3>Instrument Pair</h3>
-    <div>
-      <mat-form-field>
-        <mat-select placeholder="SGX Instrument">
-          <mat-option *ngFor="let instrument of sgxInstruments | async" [value]="instrument">
-            {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-select placeholder="Dce Instrument">
-          <mat-option *ngFor="let instrument of dceInstruments | async" [value]="instrument">
-            {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="col-xs-6">
-    <h3>Session Details</h3>
-    <div>
-      <mat-form-field>
-        <input matInput [(ngModel)]="exchangeRate" type="number" placeholder="Exchange Rate" class="right-align">
-        <span matSuffix>&nbsp;CNY per USD</span>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput [(ngModel)]="date" placeholder="Trading Date" type="date">
-      </mat-form-field>
-    </div>
     <mat-form-field>
-      <textarea matInput placeholder="Textarea"></textarea>
+      <mat-select [(ngModel)]="tradingSession.sgxInstrument.symbol" placeholder="SGX Instrument" required="true">
+        <mat-option *ngFor="let instrument of sgxInstruments | async" [value]="instrument.symbol">
+          {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+        </mat-option>
+      </mat-select>
     </mat-form-field>
+    <mat-form-field>
+      <mat-select [(ngModel)]="tradingSession.dceInstrument.symbol" placeholder="Dce Instrument" required="true">
+        <mat-option *ngFor="let instrument of dceInstruments | async" [value]="instrument.symbol">
+          {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingSession.date" placeholder="Trading Date" type="date" required="true">
+    </mat-form-field>
+  </div>
+  <div class="col-xs-4 form-container">
+    <h3>Opening Details</h3>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingSession.sgxInstrumentOpenPrice" type="number" placeholder="SGX Instrument Opening Price" required="true" class="right-align">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingSession.dceInstrumentOpenPrice" type="number" placeholder="DCE Instrument Opening Price" required="true" class="right-align">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingSession.openExchangeRate" type="number" placeholder="Exchange Rate" required="true" class="right-align">
+      <span matSuffix>&nbsp;CNY per USD</span>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-4">
+    <h3>Session State</h3>
+    <h1><span class="label label-default" [ngClass]="{'label-success': tradingSession.sessionState === 'START', 'label-danger': tradingSession.sessionState ==='STOP'}">
+      {{tradingSession.sessionState}}
+    </span></h1>
   </div>
 </div>
 <div class="action-row">
-  <button mat-raised-button color="primary">Start</button>&nbsp;
-  <button mat-raised-button color="accent">Accent</button>&nbsp;
-  <button mat-raised-button color="warn">Stop</button>&nbsp;
-  <button mat-raised-button disabled>Disabled</button>
+  <button mat-raised-button color="primary" (click)="startSession()">Start Session</button>&nbsp;
+  <button mat-raised-button color="accent" disabled>Suspend</button>&nbsp;
+  <button mat-raised-button color="warn" (click)="stopSession()">Stop Session</button>
 </div>

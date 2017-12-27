@@ -1,9 +1,26 @@
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
+import {TradingSession} from '../model/trading-session';
 
 @Injectable()
 export class TradingSessionService {
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
+  }
+
+  private tradingSessionUrl = '/api/tradingSession';
+
+  public getTradingSession(): Observable<TradingSession> {
+    return this.httpClient.get<TradingSession>(this.tradingSessionUrl);
+  }
+
+  public startTradingSession(tradingSession: TradingSession): Observable<TradingSession> {
+    return this.httpClient.post<TradingSession>(this.tradingSessionUrl, tradingSession);
+  }
+
+  public stopTradingSession(): Observable<TradingSession> {
+    return this.httpClient.get<TradingSession>(this.tradingSessionUrl + '/stop');
   }
 
 }

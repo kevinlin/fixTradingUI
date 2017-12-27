@@ -29,9 +29,7 @@ export class ParametersComponent implements OnInit {
     this.parametersService.updateParameters(this.tradingParameters).subscribe(
       parameters => {
         this.tradingParameters = parameters;
-        this.snackBar.open('Trading Parameters', 'successful saved', {
-          duration: 3000,
-        });
+        this.snackBar.open('Trading Parameters', 'successful saved', {duration: 3000});
       }
     );
   }

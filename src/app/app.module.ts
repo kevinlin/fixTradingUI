@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
@@ -12,6 +12,7 @@ import {InstrumentsComponent} from './instruments/instruments.component';
 import {ParametersComponent} from './parameters/parameters.component';
 import {TradingSessionComponent} from './trading-session/trading-session.component';
 
+import {GlobalErrorHandler} from './service/global-error-handler';
 import {InstrumentService} from './service/instrument.service';
 import {ParametersService} from './service/parameters.service';
 import {TradingSessionService} from './service/trading-session.service';
@@ -32,9 +33,13 @@ import {TradingSessionService} from './service/trading-session.service';
     MaterialModule
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
     InstrumentService,
     ParametersService,
-    TradingSessionService
+    TradingSessionService,
   ],
   bootstrap: [AppComponent]
 })
