@@ -21,6 +21,7 @@ export class TradingStateComponent implements OnInit {
   tradingState: TradingState;
   tradingParameters: TradingParameters;
   proposedShortSize: number;
+  proposedLongSize: number;
   shortSize: number;
   longSize: number;
 
@@ -32,11 +33,11 @@ export class TradingStateComponent implements OnInit {
       console.log('Current session: ');
       console.log(session);
       if (session != null) {
-        this.tradingStateService.getTradingState().subscribe(state => {
-          this.onTradingStateChange(state);
-        }, error => {
-          this.handleHttpError(error);
-        });
+        this.loadTradingState();
+        setInterval(() => {
+          this.loadTradingState();
+        }, 5000);
+
         this.parametersService.getParameters().subscribe(parameters => {
           this.tradingParameters = parameters;
         });
@@ -46,6 +47,7 @@ export class TradingStateComponent implements OnInit {
     }, error => {
       this.handleHttpError(error);
     });
+
   }
 
   openShort() {
@@ -120,10 +122,19 @@ export class TradingStateComponent implements OnInit {
     });
   }
 
+  private loadTradingState() {
+    this.tradingStateService.getTradingState().subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
   private onTradingStateChange(state) {
     console.log(state);
     this.tradingState = state;
-    this.proposedShortSize = Math.min(state.sgxBestBidSize, state.dceBestAskPrice);
+    this.proposedShortSize = Math.min(state.sgxBestBidSize, state.dceBestAskSize);
+    this.proposedLongSize = Math.min(state.sgxBestAskSize, state.dceBestBidSize);
     this.loading = false;
   }
 
