@@ -1,2 +1,4 @@
-export class TradingPosition {
+export interface TradingPosition {
+  shortPosition: number;
+  longPosition: number;
 }

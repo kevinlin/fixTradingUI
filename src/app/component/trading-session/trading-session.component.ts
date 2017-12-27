@@ -19,9 +19,9 @@ export class TradingSessionComponent implements OnInit {
   }
 
   private loading: boolean;
-  private sgxInstruments: Observable<Instrument[]>;
-  private dceInstruments: Observable<Instrument[]>;
-  private tradingSession: TradingSession;
+  sgxInstruments: Observable<Instrument[]>;
+  dceInstruments: Observable<Instrument[]>;
+  tradingSession: TradingSession;
 
   ngOnInit() {
     this.loading = true;
@@ -32,7 +32,8 @@ export class TradingSessionComponent implements OnInit {
       dceInstrument: {symbol: null}
     };
     this.tradingSessionService.getTradingSession().subscribe(session => {
-      console.log('Current session: ' + session);
+      console.log('Current session: ');
+      console.log(session);
       if (session == null) {
         session = <TradingSession> {
           sgxInstrument: {symbol: null},
@@ -41,12 +42,17 @@ export class TradingSessionComponent implements OnInit {
       }
       this.tradingSession = session;
       this.loading = false;
+    }, error => {
+      console.log(error);
+      this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
+      this.loading = false;
     });
   }
 
   startSession(): void {
     this.tradingSessionService.startTradingSession(this.tradingSession).subscribe(session => {
-      console.log('Session started: ' + session);
+      console.log('Session started: ');
+      console.log(session);
       this.tradingSession = session;
       this.snackBar.open('Trading Session', 'started', {duration: 3000});
     }, error => {
@@ -57,7 +63,8 @@ export class TradingSessionComponent implements OnInit {
 
   stopSession(): void {
     this.tradingSessionService.stopTradingSession().subscribe(session => {
-      console.log('Session stopped: ' + session);
+      console.log('Session stopped: ');
+      console.log(session);
       this.tradingSession = session;
       this.snackBar.open('Trading Session', 'stopped', {duration: 3000});
     }, error => {

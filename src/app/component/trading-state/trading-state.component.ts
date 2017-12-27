@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {TradingParameters} from '../../model/trading-parameters';
+import {TradingState} from '../../model/trading-state';
 import {TradingSessionService} from '../../service/trading-session.service';
-import {TradingSession} from '../../model/trading-session';
+import {TradingStateService} from '../../service/trading-state.service';
+import {ParametersService} from '../../service/parameters.service';
 
 @Component({
   selector: 'app-trading-state',
@@ -10,20 +13,124 @@ import {TradingSession} from '../../model/trading-session';
 })
 export class TradingStateComponent implements OnInit {
 
-  constructor(private tradingSessionService: TradingSessionService, private snackBar: MatSnackBar) {
+  constructor(private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
+              private parametersService: ParametersService, private snackBar: MatSnackBar) {
   }
 
   private loading: boolean;
-  private tradingSession: TradingSession;
+  tradingState: TradingState;
+  tradingParameters: TradingParameters;
+  proposedShortSize: number;
+  shortSize: number;
+  longSize: number;
 
   ngOnInit() {
     this.loading = true;
+    this.tradingParameters = <TradingParameters>{};
 
     this.tradingSessionService.getTradingSession().subscribe(session => {
-      console.log('Current session: ' + session);
-      this.tradingSession = session;
-      this.loading = false;
+      console.log('Current session: ');
+      console.log(session);
+      if (session != null) {
+        this.tradingStateService.getTradingState().subscribe(state => {
+          this.onTradingStateChange(state);
+        }, error => {
+          this.handleHttpError(error);
+        });
+        this.parametersService.getParameters().subscribe(parameters => {
+          this.tradingParameters = parameters;
+        });
+      } else {
+        this.loading = false;
+      }
+    }, error => {
+      this.handleHttpError(error);
     });
+  }
+
+  openShort() {
+    this.loading = true;
+    this.tradingStateService.openShort(this.shortSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  closeShort() {
+    this.loading = true;
+    this.tradingStateService.closeShort(this.shortSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  stopShortLoss() {
+    this.loading = true;
+    this.tradingStateService.stopShortLoss().subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  openShortAgain() {
+    this.loading = true;
+    this.tradingStateService.openShortAgain(this.shortSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  openLong() {
+    this.loading = true;
+    this.tradingStateService.openLong(this.longSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  closeLong() {
+    this.loading = true;
+    this.tradingStateService.closeLong(this.longSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  stopLongLoss() {
+    this.loading = true;
+    this.tradingStateService.stopLongLoss().subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  openLongAgain() {
+    this.loading = true;
+    this.tradingStateService.openLongAgain(this.longSize).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  private onTradingStateChange(state) {
+    console.log(state);
+    this.tradingState = state;
+    this.proposedShortSize = Math.min(state.sgxBestBidSize, state.dceBestAskPrice);
+    this.loading = false;
+  }
+
+  private handleHttpError(error) {
+    console.log(error);
+    this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
+    this.loading = false;
   }
 
 }

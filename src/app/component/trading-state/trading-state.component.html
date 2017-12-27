@@ -1,27 +1,230 @@
-<div *ngIf="!loading && tradingSession != null; else elseBlock" class="row">
+<div *ngIf="!loading && tradingState != null; else elseBlock" class="row">
   <div class="col-xs-6">
     <mat-card>
       <mat-card-header>
         <div mat-card-avatar>
-          <mat-icon>arrow_downward</mat-icon>
+          <mat-icon class="md-48">trending_down</mat-icon>
         </div>
-        <mat-card-title>Short</mat-card-title>
-        <mat-card-subtitle>Sell {{tradingSession.sgxInstrument.symbol}} Buy {{tradingSession.dceInstrument.symbol}}</mat-card-subtitle>
+        <mat-card-title><h3>Short Strategy</h3></mat-card-title>
+        <mat-card-subtitle>Sell {{tradingState.sgxInstrument.symbol}} Buy {{tradingState.dceInstrument.symbol}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
-        </p>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>Price</th>
+            <th>Size</th>
+          </tr>
+          </thead>
+          <tr>
+            <th>Current Position</th>
+            <td><h3>
+              <span class="label" [ngClass]="{
+                'label-default': tradingState.lastAction === 'NONE',
+                'label-success': tradingState.lastAction === 'SHORT' || tradingState.lastAction === 'SHORT_AGAIN',
+                'label-warning': tradingState.lastAction === 'CLOSE_SHORT',
+                'label-danger':  tradingState.lastAction === 'STOP_SHORT_LOSS'
+              }">{{tradingState.lastAction}}</span>
+            </h3></td>
+            <td>{{tradingState.tradingPosition.shortPosition}}</td>
+          </tr>
+          <tr>
+            <th>Best SGX {{tradingState.sgxInstrument.symbol}} Bid Price</th>
+            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+          </tr>
+          <tr>
+            <th>Exchange Rate (USD -> CNY)</th>
+            <td class="warning right-align">{{tradingState.exchangeRate}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>In CNY Equivalent</th>
+            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+          </tr>
+          <tr>
+            <th>Best DCE {{tradingState.dceInstrument.symbol}} Ask Price</th>
+            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Price Difference (SGX - DCE)</th>
+            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Next Action</th>
+            <td><h3>
+              <span class="label" [ngClass]="{
+                'label-default': tradingState.nextAction === 'NONE',
+                'label-success': tradingState.nextAction === 'SHORT' || tradingState.nextAction === 'SHORT_AGAIN',
+                'label-warning': tradingState.nextAction === 'CLOSE_SHORT',
+                'label-danger':  tradingState.nextAction === 'STOP_SHORT_LOSS'
+              }">{{tradingState.nextAction}}</span>
+            </h3></td>
+            <td class="right-align">{{proposedShortSize}}</td>
+          </tr>
+        </table>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Paramters</mat-panel-title>
+              <mat-panel-description>Parameters for Short Strategy</mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>Average Difference</th>
+                <td class="warning right-align">{{tradingParameters.average}}</td>
+              </tr>
+              <tr>
+                <th>Open Short when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.average + tradingParameters.shortStart}}</td>
+              </tr>
+              <tr>
+                <th>Close Short when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.average + tradingParameters.shortClose}}</td>
+              </tr>
+              <tr>
+                <th>Stop Loss when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.average + tradingParameters.shortStopLoss}}</td>
+              </tr>
+              <tr>
+                <th>Start Short Again when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.average + tradingParameters.shortStartAgain}}</td>
+              </tr>
+            </table>
+          </mat-expansion-panel>
+        </mat-accordion>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <div>
+          <mat-form-field>
+            <input matInput [(ngModel)]="shortSize" type="number" placeholder="Short Size" required class="right-align">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="openShort()" [disabled]="tradingState.lastAction === 'STOP_SHORT_LOSS'">Open Short</button>
+        <button mat-raised-button color="accent" (click)="closeShort()" [disabled]="tradingState.tradingPosition.shortPosition <= 0">Close Short</button>
+        <button mat-raised-button color="warn" (click)="stopShortLoss()" [disabled]="tradingState.tradingPosition.shortPosition <= 0">Stop Loss</button>
+        <button mat-raised-button color="primary" (click)="openShortAgain()" [disabled]="tradingState.lastAction !== 'STOP_SHORT_LOSS'">Start Short Again</button>
       </mat-card-actions>
     </mat-card>
   </div>
-  <div class="col-xs-6">.col-md-6</div>
+  <div class="col-xs-6">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <mat-icon class="md-48">trending_up</mat-icon>
+        </div>
+        <mat-card-title><h3>Long Strategy</h3></mat-card-title>
+        <mat-card-subtitle>Buy {{tradingState.sgxInstrument.symbol}} Sell {{tradingState.dceInstrument.symbol}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>Price</th>
+            <th>Size</th>
+          </tr>
+          </thead>
+          <tr>
+            <th>Current Position</th>
+            <td><h3>
+              <span class="label" [ngClass]="{
+                'label-default': tradingState.lastAction === 'NONE',
+                'label-success': tradingState.lastAction === 'LONG' || tradingState.lastAction === 'LONG_AGAIN',
+                'label-warning': tradingState.lastAction === 'CLOSE_LONG',
+                'label-danger':  tradingState.lastAction === 'STOP_LONG_LOSS'
+              }">{{tradingState.lastAction}}</span>
+            </h3></td>
+            <td>{{tradingState.tradingPosition.longPosition}}</td>
+          </tr>
+          <tr>
+            <th>Best SGX {{tradingState.sgxInstrument.symbol}} Bid Price</th>
+            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+          </tr>
+          <tr>
+            <th>Exchange Rate (USD -> CNY)</th>
+            <td class="warning right-align">{{tradingState.exchangeRate}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>In CNY Equivalent</th>
+            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+          </tr>
+          <tr>
+            <th>Best DCE {{tradingState.dceInstrument.symbol}} Ask Price</th>
+            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Price Difference (SGX - DCE)</th>
+            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk}}</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Next Action</th>
+            <td><h3>
+              <span class="label" [ngClass]="{
+                'label-default': tradingState.nextAction === 'NONE',
+                'label-success': tradingState.nextAction === 'LONG' || tradingState.nextAction === 'LONG_AGAIN',
+                'label-warning': tradingState.nextAction === 'CLOSE_LONG',
+                'label-danger':  tradingState.nextAction === 'STOP_LONG_LOSS'
+              }">{{tradingState.nextAction}}</span>
+            </h3></td>
+            <td class="right-align">{{proposedLongSize}}</td>
+          </tr>
+        </table>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Paramters</mat-panel-title>
+              <mat-panel-description>Parameters for Long Strategy</mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>Average Difference</th>
+                <td class="warning right-align">{{tradingParameters.average}}</td>
+              </tr>
+              <tr>
+                <th>Open Long when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.longStart}}</td>
+              </tr>
+              <tr>
+                <th>Close Long when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.longClose}}</td>
+              </tr>
+              <tr>
+                <th>Stop Loss when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.longStopLoss}}</td>
+              </tr>
+              <tr>
+                <th>Start Long Again when difference reaches:</th>
+                <td class="warning right-align">{{tradingParameters.longStartAgain}}</td>
+              </tr>
+            </table>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+      <mat-card-actions>
+        <div>
+          <mat-form-field>
+            <input matInput [(ngModel)]="longSize" type="number" placeholder="Long Size" required class="right-align">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="openLong()" [disabled]="tradingState.lastAction === 'STOP_LONG_LOSS'">Open Long</button>
+        <button mat-raised-button color="accent" (click)="closeLong()" [disabled]="tradingState.tradingPosition.longPosition <= 0">Close Long</button>
+        <button mat-raised-button color="warn" (click)="stopLongLoss()" [disabled]="tradingState.tradingPosition.longPosition <= 0">Stop Loss</button>
+        <button mat-raised-button color="primary" (click)="openLongAgain()" [disabled]="tradingState.lastAction !== 'STOP_LONG_LOSS'">Start Long Again</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
 <ng-template #elseBlock>
   <mat-spinner></mat-spinner>
