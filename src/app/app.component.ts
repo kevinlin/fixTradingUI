@@ -7,7 +7,7 @@ import {NavigationEnd, Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private navLinks = [
+  navLinks = [
     {
       path: '/instruments',
       label: 'Instruments'
@@ -19,6 +19,10 @@ export class AppComponent {
     {
       path: '/tradingSession',
       label: 'Trading Session'
+    },
+    {
+      path: '/tradingState',
+      label: 'Trading State'
     }
   ];
   private title: string;

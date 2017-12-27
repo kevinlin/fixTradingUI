@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {InstrumentService} from '../service/instrument.service';
 import {Observable} from 'rxjs/Observable';
-import {Instrument} from '../model/instrument';
+import {Instrument} from '../../model/instrument';
+import {InstrumentService} from '../../service/instrument.service';
 
 @Component({
   selector: 'app-instruments',

@@ -1,11 +1,11 @@
-///<reference path="../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
+///<reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, OnInit} from '@angular/core';
-import {TradingSessionService} from '../service/trading-session.service';
-import {InstrumentService} from '../service/instrument.service';
-import {Instrument} from '../model/instrument';
-import {Observable} from 'rxjs/Observable';
-import {TradingSession} from '../model/trading-session';
 import {MatSnackBar} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
+import {Instrument} from '../../model/instrument';
+import {TradingSession} from '../../model/trading-session';
+import {InstrumentService} from '../../service/instrument.service';
+import {TradingSessionService} from '../../service/trading-session.service';
 
 @Component({
   selector: 'app-trading-session',
@@ -14,7 +14,8 @@ import {MatSnackBar} from '@angular/material';
 })
 export class TradingSessionComponent implements OnInit {
 
-  constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService, private snackBar: MatSnackBar) {
+  constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService,
+              private snackBar: MatSnackBar) {
   }
 
   private loading: boolean;

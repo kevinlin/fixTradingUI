@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {TradingParameters} from '../model/trading-parameters';
-import {ParametersService} from '../service/parameters.service';
+import {TradingParameters} from '../../model/trading-parameters';
+import {ParametersService} from '../../service/parameters.service';
 
 @Component({
   selector: 'app-parameters',
