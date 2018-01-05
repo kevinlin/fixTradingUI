@@ -140,8 +140,31 @@ export class TradingStateComponent implements OnInit {
 
   private handleHttpError(error) {
     console.log(error);
-    this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
+    const message = error.error ? error.error.message : error.message;
+    this.snackBar.open('Error occurred', message, {duration: 3000});
     this.loading = false;
+  }
+
+  private lookupTradingAction(action: string): string {
+    if (action === 'NONE') {
+      return '初始';
+    } else if (action === 'SHORT') {
+      return '做空建仓';
+    } else if (action === 'LONE') {
+      return '做多建仓';
+    } else if (action === 'CLOSE_SHORT') {
+      return '做空平仓';
+    } else if (action === 'CLOSE_LONG') {
+      return '做多平仓';
+    } else if (action === 'STOP_SHORT_LOSS') {
+      return '做空止损';
+    } else if (action === 'STOP_LONG_LOSS') {
+      return '做多止损';
+    } else if (action === 'SHORT_AGAIN') {
+      return '做空止损后再建仓';
+    } else if (action === 'LONG_AGAIN') {
+      return '做多止损后再建仓';
+    }
   }
 
 }
