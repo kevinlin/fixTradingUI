@@ -1,6 +1,6 @@
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
-import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
