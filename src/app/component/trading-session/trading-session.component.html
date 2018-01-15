@@ -16,17 +16,11 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.date" placeholder="Trading Date" type="date" required>
-      </mat-form-field>
     </div>
     <div class="col-xs-4 form-container">
-      <h3>Opening Details</h3>
+      <h3>Session Details</h3>
       <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.sgxInstrumentOpenPrice" type="number" placeholder="SGX Instrument Opening Price" required class="right-align">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.dceInstrumentOpenPrice" type="number" placeholder="DCE Instrument Opening Price" required class="right-align">
+        <input matInput [(ngModel)]="tradingSession.date" placeholder="Trading Date" type="date" required>
       </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingSession.openExchangeRate" type="number" placeholder="Exchange Rate" required class="right-align">

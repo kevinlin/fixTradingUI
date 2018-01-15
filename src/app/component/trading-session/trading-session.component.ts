@@ -1,7 +1,7 @@
-///<reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
+
 import {Instrument} from '../../model/instrument';
 import {TradingSession} from '../../model/trading-session';
 import {InstrumentService} from '../../service/instrument.service';
