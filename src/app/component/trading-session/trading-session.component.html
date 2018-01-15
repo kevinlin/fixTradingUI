@@ -23,7 +23,8 @@
         <input matInput [(ngModel)]="tradingSession.date" placeholder="Trading Date" type="date" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.openExchangeRate" type="number" placeholder="Exchange Rate" required class="right-align">
+        <input matInput [(ngModel)]="tradingSession.benchmarkExchangeRate" type="number"
+               placeholder="Benchmark Exchange Rate" required class="right-align">
         <span matSuffix>&nbsp;CNY per USD</span>
       </mat-form-field>
     </div>

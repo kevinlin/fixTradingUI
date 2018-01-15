@@ -5,5 +5,5 @@ export interface TradingSession {
   sgxInstrument: Instrument;
   dceInstrument: Instrument;
   sessionState: string;
-  openExchangeRate: number;
+  benchmarkExchangeRate: number;
 }
