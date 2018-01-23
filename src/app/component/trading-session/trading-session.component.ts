@@ -18,7 +18,7 @@ export class TradingSessionComponent implements OnInit {
               private snackBar: MatSnackBar) {
   }
 
-  private loading: boolean;
+  public loading: boolean;
   sgxInstruments: Observable<Instrument[]>;
   dceInstruments: Observable<Instrument[]>;
   tradingSession: TradingSession;

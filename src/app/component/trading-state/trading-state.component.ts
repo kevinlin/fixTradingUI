@@ -17,7 +17,7 @@ export class TradingStateComponent implements OnInit {
               private parametersService: ParametersService, private snackBar: MatSnackBar) {
   }
 
-  private loading: boolean;
+  public loading: boolean;
   tradingState: TradingState;
   tradingParameters: TradingParameters;
   proposedShortSize: number;

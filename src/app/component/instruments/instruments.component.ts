@@ -13,10 +13,10 @@ export class InstrumentsComponent implements OnInit {
   constructor(private instrumentService: InstrumentService) {
   }
 
-  private sgxInstruments: Observable<Instrument[]>;
-  private dceInstruments: Observable<Instrument[]>;
-  private selectedSgxInstrument: Instrument;
-  private selectedDceInstrument: Instrument;
+  public sgxInstruments: Observable<Instrument[]>;
+  public dceInstruments: Observable<Instrument[]>;
+  public selectedSgxInstrument: Instrument;
+  public selectedDceInstrument: Instrument;
 
   ngOnInit() {
     this.sgxInstruments = this.instrumentService.getInstruments('SGX');
