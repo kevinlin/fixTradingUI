@@ -25,7 +25,7 @@ export class AppComponent {
       label: 'Trading State'
     }
   ];
-  private title: string;
+  public title: string;
 
   constructor(private router: Router) {
     router.events.subscribe(
