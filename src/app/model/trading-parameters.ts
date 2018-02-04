@@ -1,4 +1,5 @@
 export interface TradingParameters {
+  miscellaneousCharge: number;
   average: number;
   shortStart: number;
   shortClose: number;

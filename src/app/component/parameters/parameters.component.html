@@ -1,48 +1,63 @@
 <form class="form">
   <mat-grid-list cols="2" rowHeight="60px">
-    <mat-grid-tile [colspan]="2">
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput [(ngModel)]="tradingParameters.miscellaneousCharge" name="miscellaneousCharge" placeholder="港杂费" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.average" name="average" placeholder="基准价差" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.shortStart" name="shortStart" placeholder="做空建仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.longStart" name="longStart" placeholder="做多建仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.shortClose" name="shortClose" placeholder="做空平仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.longClose" name="longClose" placeholder="做多平仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.shortStopLoss" name="shortStopLoss" placeholder="做空止损参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.longStopLoss" name="longStopLoss" placeholder="做多止损参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.shortStartAgain" name="shortStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingParameters.longStartAgain" name="longStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
+        <span matSuffix>&nbsp;CNY</span>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
