@@ -1,13 +1,25 @@
 <div *ngIf="!loading && tradingState != null; else elseBlock" class="row">
   <div class="row">
-    <div class="col-xs-4 form-container">
+    <div class="col-xs-3 form-container">
       <mat-form-field>
         <input matInput [(ngModel)]="benchmarkExchangeRate" type="number" placeholder="远期基准汇率" required class="right-align">
-        <span matSuffix>&nbsp;CNY per USD</span>
+        <span matSuffix>&nbsp;USD/CNY</span>
       </mat-form-field>
     </div>
-    <div class="col-xs-4 action-row">
+    <div class="col-xs-1 action-row">
       <button mat-raised-button color="primary" (click)="updateExchangeRate()">更新</button>&nbsp;
+    </div>
+    <div class="col-xs-3 col-xs-offset-2 form-container">
+      <mat-form-field>
+        <input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align">
+        <span matSuffix>&nbsp;USD/CNY </span>
+      </mat-form-field>
+    </div>
+    <div class="col-xs-3 form-container">
+      <mat-form-field>
+        <input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align">
+        <span matSuffix>&nbsp;USD/CNY</span>
+      </mat-form-field>
     </div>
 
   </div>
@@ -21,17 +33,17 @@
         <mat-card-subtitle>卖出SGX {{tradingState.sgxInstrument.symbol}} 买入DCE {{tradingState.dceInstrument.symbol}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
           <thead>
           <tr>
             <th>&nbsp;</th>
-            <th>价格</th>
-            <th>手（100吨）</th>
+            <th class="right-align">价格</th>
+            <th colspan="2" class="right-align">手</th>
           </tr>
           </thead>
           <tr>
             <th>当前操作</th>
-            <td><h3>
+            <td colspan="2"><h3>
               <span class="label" [ngClass]="{
                 'label-default': tradingState.lastAction === 'NONE',
                 'label-success': tradingState.lastAction === 'SHORT' || tradingState.lastAction === 'SHORT_AGAIN',
@@ -42,27 +54,40 @@
             <td class="right-align">{{tradingState.tradingPosition.shortPosition}}</td>
           </tr>
           <tr>
-            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优买入价</th>
-            <td class="info right-align">{{tradingState.sgxBestBidPrice}}</td>
-            <td class="info right-align">{{tradingState.sgxBestBidSize}}</td>
+            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优买入价（美元）</th>
+            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
           </tr>
           <tr>
-            <th>汇率（USD->CNY 买入价-低）</th>
-            <td class="warning right-align" colspan="2">{{tradingState.benchmarkExchangeRate}}</td>
+            <th>汇率 USD/CNY</th>
+            <th class="right-align">基准</th>
+            <th class="right-align">实时</th>
+            <th>&nbsp;</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="warning right-align">{{tradingState.benchmarkExchangeRate}}</td>
+            <td class="warning right-align"><input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align"></td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <th>等效人民币价</th>
-            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice}}</td>
-            <td class="info right-align">{{tradingState.sgxBestBidSize}}</td>
+            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice | number}}</td>
+            <td class="info right-align">{{calculateSgxBestBidPriceInCny() | number}}</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
-            <th>DCE {{tradingState.dceInstrument.symbol}} 最优卖出价格</th>
-            <td class="info right-align">{{tradingState.dceBestAskPrice}}</td>
-            <td class="info right-align">{{tradingState.dceBestAskSize}}</td>
+            <th>DCE {{tradingState.dceInstrument.symbol}} 最优卖出价</th>
+            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.dceBestAskSize}}</td>
           </tr>
           <tr>
-            <th>价差 （SGX买入价-DCE卖出价）</th>
-            <td class="info right-align" colspan="2"><h1>{{tradingState.sgxBidMinusDceAsk}}</h1></td>
+            <th>价差（SGX买入-DCE卖出）</th>
+            <td class="info right-align"><h3>{{tradingState.sgxBidMinusDceAsk | number}}</h3></td>
+            <td class="info right-align"><h3>{{calculateSgxBestBidPriceInCny() - tradingState.dceBestAskPrice | number}}</h3></td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <th>建议操作</th>
@@ -136,17 +161,17 @@
         <mat-card-subtitle>买入SGX {{tradingState.sgxInstrument.symbol}} 卖出DCE {{tradingState.dceInstrument.symbol}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
           <thead>
           <tr>
             <th>&nbsp;</th>
-            <th>价格</th>
-            <th class="right-align">手（100吨）</th>
+            <th colspan="2">价格</th>
+            <th>手</th>
           </tr>
           </thead>
           <tr>
             <th>当前操作</th>
-            <td><h3>
+            <td colspan="2"><h3>
               <span class="label" [ngClass]="{
                 'label-default': tradingState.lastAction === 'NONE',
                 'label-success': tradingState.lastAction === 'LONG' || tradingState.lastAction === 'LONG_AGAIN',
@@ -157,31 +182,45 @@
             <td class="right-align">{{tradingState.tradingPosition.longPosition}}</td>
           </tr>
           <tr>
-            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优卖出价</th>
-            <td class="info right-align">{{tradingState.sgxBestAskPrice}}</td>
-            <td class="info right-align">{{tradingState.sgxBestAskSize}}</td>
+            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优卖出价（美元）</th>
+            <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
+            <td class="success right-align">{{tradingState.sgxBestAskSize}}</td>
           </tr>
           <tr>
-            <th>汇率（USD->CNY 卖出价-高）</th>
-            <td class="warning right-align" colspan="2">{{tradingState.benchmarkExchangeRate}}</td>
+            <th>汇率 USD/CNY</th>
+            <th class="right-align">基准</th>
+            <th class="right-align">实时</th>
+            <th>&nbsp;</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="warning right-align">{{tradingState.benchmarkExchangeRate}}</td>
+            <td class="warning right-align"><input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align"></td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <th>等效人民币价格</th>
-            <td class="info right-align">{{tradingState.sgxAskMinusDceBid + tradingState.dceBestBidPrice}}</td>
-            <td class="info right-align">{{tradingState.sgxBestAskSize}}</td>
+            <td class="info right-align">{{tradingState.sgxAskMinusDceBid + tradingState.dceBestBidPrice | number}}</td>
+            <td class="info right-align">{{calculateSgxBestAskPriceInCny() | number}}</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <th>DCE {{tradingState.dceInstrument.symbol}} 最优买入价</th>
-            <td class="info right-align">{{tradingState.dceBestBidPrice}}</td>
-            <td class="info right-align">{{tradingState.dceBestBidSize}}</td>
+            <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
+            <td class="success right-align">{{tradingState.dceBestBidSize}}</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
-            <th>价差 (SGX卖出价 - DCE买入价)</th>
-            <td class="info right-align" colspan="2"><h1>{{tradingState.sgxAskMinusDceBid}}</h1></td>
+            <th>价差 (SGX卖出-DCE买入)</th>
+            <td class="info right-align"><h3>{{tradingState.sgxAskMinusDceBid | number}}</h3></td>
+            <td class="info right-align"><h3>{{calculateSgxBestAskPriceInCny() - tradingState.dceBestBidPrice | number}}</h3></td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <th>建议操作</th>
-            <td><h3>
+            <td colspan="2"><h3>
               <span class="label" [ngClass]="{
                 'label-default': tradingState.nextAction === 'NONE',
                 'label-success': tradingState.nextAction === 'LONG' || tradingState.nextAction === 'LONG_AGAIN',
