@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import * as numbro from 'numbro';
 import {TradingParameters} from '../../model/trading-parameters';
 import {TradingState} from '../../model/trading-state';
 import {ParametersService} from '../../service/parameters.service';
 import {TradingSessionService} from '../../service/trading-session.service';
 import {TradingStateService} from '../../service/trading-state.service';
-import numbro = require('numbro');
 
 @Component({
   selector: 'app-trading-state',
@@ -28,7 +28,6 @@ export class TradingStateComponent implements OnInit {
   proposedLongSize: number;
   shortSize: number;
   longSize: number;
-  myNmbro = numbro;
 
   ngOnInit() {
     this.loading = true;
