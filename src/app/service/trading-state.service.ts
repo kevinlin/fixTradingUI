@@ -16,6 +16,10 @@ export class TradingStateService {
     return this.httpClient.get<TradingState>(this.tradingStateUrl);
   }
 
+  public updateExchangeRate(exchangeRate: number): Observable<TradingState> {
+    return this.httpClient.get<TradingState>(this.tradingStateUrl + '/update?exchangeRate=' + exchangeRate);
+  }
+
   public openShort(size: number): Observable<TradingState> {
     return this.httpClient.get<TradingState>(this.tradingStateUrl + '/openShort?size=' + size);
   }

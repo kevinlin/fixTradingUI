@@ -12,7 +12,7 @@ export interface TradingState {
   dceBestBidSize: number;
   dceBestAskPrice: number;
   dceBestAskSize: number;
-  exchangeRate: number;
+  benchmarkExchangeRate: number;
 
   sgxBidMinusDceAsk: number;
   sgxAskMinusDceBid: number;

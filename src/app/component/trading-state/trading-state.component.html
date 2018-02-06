@@ -1,4 +1,16 @@
 <div *ngIf="!loading && tradingState != null; else elseBlock" class="row">
+  <div class="row">
+    <div class="col-xs-4 form-container">
+      <mat-form-field>
+        <input matInput [(ngModel)]="benchmarkExchangeRate" type="number" placeholder="远期基准汇率" required class="right-align">
+        <span matSuffix>&nbsp;CNY per USD</span>
+      </mat-form-field>
+    </div>
+    <div class="col-xs-4 action-row">
+      <button mat-raised-button color="primary" (click)="updateExchangeRate()">更新</button>&nbsp;
+    </div>
+
+  </div>
   <div class="col-xs-6">
     <mat-card>
       <mat-card-header>
@@ -36,7 +48,7 @@
           </tr>
           <tr>
             <th>汇率（USD->CNY 买入价-低）</th>
-            <td class="warning right-align" colspan="2">{{tradingState.exchangeRate}}</td>
+            <td class="warning right-align" colspan="2">{{tradingState.benchmarkExchangeRate}}</td>
           </tr>
           <tr>
             <th>等效人民币价</th>
@@ -151,7 +163,7 @@
           </tr>
           <tr>
             <th>汇率（USD->CNY 卖出价-高）</th>
-            <td class="warning right-align" colspan="2">{{tradingState.exchangeRate}}</td>
+            <td class="warning right-align" colspan="2">{{tradingState.benchmarkExchangeRate}}</td>
           </tr>
           <tr>
             <th>等效人民币价格</th>

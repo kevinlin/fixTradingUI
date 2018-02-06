@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {TradingParameters} from '../../model/trading-parameters';
 import {TradingState} from '../../model/trading-state';
+import {ParametersService} from '../../service/parameters.service';
 import {TradingSessionService} from '../../service/trading-session.service';
 import {TradingStateService} from '../../service/trading-state.service';
-import {ParametersService} from '../../service/parameters.service';
 
 @Component({
   selector: 'app-trading-state',
@@ -17,9 +17,10 @@ export class TradingStateComponent implements OnInit {
               private parametersService: ParametersService, private snackBar: MatSnackBar) {
   }
 
-  public loading: boolean;
+  loading: boolean;
   tradingState: TradingState;
   tradingParameters: TradingParameters;
+  benchmarkExchangeRate: number;
   proposedShortSize: number;
   proposedLongSize: number;
   shortSize: number;
@@ -47,7 +48,14 @@ export class TradingStateComponent implements OnInit {
     }, error => {
       this.handleHttpError(error);
     });
+  }
 
+  updateExchangeRate() {
+    this.tradingStateService.updateExchangeRate(this.benchmarkExchangeRate).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
   }
 
   openShort() {
@@ -133,6 +141,9 @@ export class TradingStateComponent implements OnInit {
   private onTradingStateChange(state) {
     console.log(state);
     this.tradingState = state;
+    if (this.benchmarkExchangeRate === null) {
+      this.benchmarkExchangeRate = state.benchmarkExchangeRate;
+    }
     this.proposedShortSize = Math.min(state.sgxBestBidSize, state.dceBestAskSize);
     this.proposedLongSize = Math.min(state.sgxBestAskSize, state.dceBestBidSize);
     this.loading = false;
@@ -145,7 +156,7 @@ export class TradingStateComponent implements OnInit {
     this.loading = false;
   }
 
-  private lookupTradingAction(action: string): string {
+  lookupTradingAction(action: string): string {
     if (action === 'NONE') {
       return '初始';
     } else if (action === 'SHORT') {
