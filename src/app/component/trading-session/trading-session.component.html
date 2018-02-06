@@ -3,14 +3,14 @@
     <div class="col-xs-4 form-container">
       <h3>Instrument Pair</h3>
       <mat-form-field>
-        <mat-select [(ngModel)]="tradingSession.sgxInstrument.symbol" placeholder="SGX Instrument" required="true">
+        <mat-select [(ngModel)]="tradingSession.sgxInstrument.symbol" placeholder="新交所期货合约" required="true">
           <mat-option *ngFor="let instrument of sgxInstruments | async" [value]="instrument.symbol">
             {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select [(ngModel)]="tradingSession.dceInstrument.symbol" placeholder="Dce Instrument" required="true">
+        <mat-select [(ngModel)]="tradingSession.dceInstrument.symbol" placeholder="大商所期货合约" required="true">
           <mat-option *ngFor="let instrument of dceInstruments | async" [value]="instrument.symbol">
             {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
           </mat-option>
@@ -20,10 +20,10 @@
     <div class="col-xs-4 form-container">
       <h3>Session Details</h3>
       <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.date" placeholder="Trading Date" type="date" required>
+        <input matInput [(ngModel)]="tradingSession.date" placeholder="交易日" type="date" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [(ngModel)]="tradingSession.benchmarkExchangeRate" type="number" placeholder="Benchmark Exchange Rate" required class="right-align">
+        <input matInput [(ngModel)]="tradingSession.benchmarkExchangeRate" type="number" placeholder="远期基准汇率" required class="right-align">
         <span matSuffix>&nbsp;CNY per USD</span>
       </mat-form-field>
     </div>
