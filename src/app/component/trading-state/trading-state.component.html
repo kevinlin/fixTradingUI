@@ -60,6 +60,31 @@
             <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
           </tr>
           <tr>
+            <td colspan="4">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Bid Stack</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr>
+                      <th>Position</th>
+                      <th class="right-align">Price</th>
+                      <th class="right-align">Size</th>
+                      <th>Time</th>
+                    </tr>
+                    <tr *ngFor="let order of tradingState.sgxBidStack">
+                      <td>{{order.positionNo}}</td>
+                      <td class="right-align">{{order.price | number}}</td>
+                      <td class="right-align">{{order.size}}</td>
+                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                    </tr>
+                  </table>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
+          </tr>
+          <tr>
             <th>汇率 USD/CNY</th>
             <th class="right-align">基准</th>
             <th class="right-align">实时</th>
@@ -82,6 +107,31 @@
             <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestAskSize}}</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Ask Stack</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr>
+                      <th>Position</th>
+                      <th class="right-align">Price</th>
+                      <th class="right-align">Size</th>
+                      <th>Time</th>
+                    </tr>
+                    <tr *ngFor="let order of tradingState.dceAskStack">
+                      <td>{{order.positionNo}}</td>
+                      <td class="right-align">{{order.price | number}}</td>
+                      <td class="right-align">{{order.size}}</td>
+                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                    </tr>
+                  </table>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
           </tr>
           <tr>
             <th>价差（SGX买入-DCE卖出）</th>
@@ -188,6 +238,31 @@
             <td class="success right-align">{{tradingState.sgxBestAskSize}}</td>
           </tr>
           <tr>
+            <td colspan="4">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Ask Stack</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr>
+                      <th>Position</th>
+                      <th class="right-align">Price</th>
+                      <th class="right-align">Size</th>
+                      <th>Time</th>
+                    </tr>
+                    <tr *ngFor="let order of tradingState.sgxAskStack">
+                      <td>{{order.positionNo}}</td>
+                      <td class="right-align">{{order.price | number}}</td>
+                      <td class="right-align">{{order.size}}</td>
+                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                    </tr>
+                  </table>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
+          </tr>
+          <tr>
             <th>汇率 USD/CNY</th>
             <th class="right-align">基准</th>
             <th class="right-align">实时</th>
@@ -211,6 +286,31 @@
             <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestBidSize}}</td>
             <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Bid Stack</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr>
+                      <th>Position</th>
+                      <th class="right-align">Price</th>
+                      <th class="right-align">Size</th>
+                      <th>Time</th>
+                    </tr>
+                    <tr *ngFor="let order of tradingState.dceBidStack">
+                      <td>{{order.positionNo}}</td>
+                      <td class="right-align">{{order.price | number}}</td>
+                      <td class="right-align">{{order.size}}</td>
+                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                    </tr>
+                  </table>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </td>
           </tr>
           <tr>
             <th>价差 (SGX卖出-DCE买入)</th>
