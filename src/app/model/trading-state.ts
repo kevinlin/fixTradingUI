@@ -3,26 +3,23 @@ import {MarketDataEntry} from './market-data-entry';
 import {TradingPosition} from './trading-position';
 
 export interface TradingState {
-  benchmarkExchangeRate: number;
-
   sgxInstrument: Instrument;
-  sgxBestBidPrice: number;
-  sgxBestBidSize: number;
-  sgxBidStack: MarketDataEntry[];
-  sgxBestAskPrice: number;
-  sgxBestAskSize: number;
-  sgxAskStack: MarketDataEntry[];
-
   dceInstrument: Instrument;
-  dceBestBidPrice: number;
-  dceBestBidSize: number;
-  dceBidStack: MarketDataEntry[];
-  dceBestAskPrice: number;
-  dceBestAskSize: number;
-  dceAskStack: MarketDataEntry[];
 
+  shortExchangeRate: number;
+  sgxBestBid: MarketDataEntry;
+  dceBestAsk: MarketDataEntry;
+  sgxBidStack: MarketDataEntry[];
+  dceAskStack: MarketDataEntry[];
   sgxBidMinusDceAsk: number;
+
+  longExchangeRate: number;
+  sgxBestAsk: MarketDataEntry;
+  dceBestBid: MarketDataEntry;
+  sgxAskStack: MarketDataEntry[];
+  dceBidStack: MarketDataEntry[];
   sgxAskMinusDceBid: number;
+
   tradingPosition: TradingPosition;
   lastAction: string;
   nextAction: string;

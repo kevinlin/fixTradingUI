@@ -16,8 +16,9 @@ export class TradingStateService {
     return this.httpClient.get<TradingState>(this.tradingStateUrl);
   }
 
-  public updateExchangeRate(exchangeRate: number): Observable<TradingState> {
-    return this.httpClient.get<TradingState>(this.tradingStateUrl + '/update?exchangeRate=' + exchangeRate);
+  public updateExchangeRate(exchangeRate: number, isShort: boolean): Observable<TradingState> {
+    const paramName = isShort ? 'shortExchangeRate' : 'longExchangeRate';
+    return this.httpClient.get<TradingState>(this.tradingStateUrl + '/update?' + paramName + '=' + exchangeRate);
   }
 
   public openShort(size: number): Observable<TradingState> {

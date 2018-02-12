@@ -14,20 +14,18 @@ import {TradingStateService} from '../../service/trading-state.service';
 })
 export class TradingStateComponent implements OnInit {
 
-  constructor(private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
-              private parametersService: ParametersService, private snackBar: MatSnackBar) {
-  }
-
   loading: boolean;
   tradingState: TradingState;
   tradingParameters: TradingParameters;
-  benchmarkExchangeRate: number;
   shortExchangeRate: number;
   longExchangeRate: number;
   proposedShortSize: number;
   proposedLongSize: number;
   shortSize: number;
   longSize: number;
+
+  constructor(private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService, private parametersService: ParametersService, private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -53,9 +51,22 @@ export class TradingStateComponent implements OnInit {
     });
   }
 
-  updateExchangeRate() {
-    this.loading = true;
-    this.tradingStateService.updateExchangeRate(this.benchmarkExchangeRate).subscribe(state => {
+  onKeyupShortExchangeRate(event: any) {
+    const exchangeRate = event.target.value;
+    console.log('ShortExchangeRate changed: ' + exchangeRate);
+    console.log(event);
+    this.tradingStateService.updateExchangeRate(exchangeRate, true).subscribe(state => {
+      this.onTradingStateChange(state);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  onKeyupLongExchangeRate(event: any) {
+    const exchangeRate = event.target.value;
+    console.log('LongExchangeRate changed: ' + exchangeRate);
+    console.log(event);
+    this.tradingStateService.updateExchangeRate(exchangeRate, false).subscribe(state => {
       this.onTradingStateChange(state);
     }, error => {
       this.handleHttpError(error);
@@ -144,14 +155,18 @@ export class TradingStateComponent implements OnInit {
 
   private onTradingStateChange(state) {
     console.log(state);
-    this.tradingState = state;
-    if (!this.benchmarkExchangeRate) {
-      this.benchmarkExchangeRate = state.benchmarkExchangeRate;
-      this.shortExchangeRate = state.benchmarkExchangeRate;
-      this.longExchangeRate = state.benchmarkExchangeRate;
+    if (!state) {
+      return;
     }
-    this.proposedShortSize = Math.min(state.sgxBestBidSize, state.dceBestAskSize);
-    this.proposedLongSize = Math.min(state.sgxBestAskSize, state.dceBestBidSize);
+    this.tradingState = state;
+    if (!this.shortExchangeRate && state.shortExchangeRate) {
+      this.shortExchangeRate = state.shortExchangeRate;
+    }
+    if (!this.longExchangeRate && state.longExchangeRate) {
+      this.longExchangeRate = state.longExchangeRate;
+    }
+    this.proposedShortSize = Math.min(state.sgxBestBid.size, state.dceBestAsk.size);
+    this.proposedLongSize = Math.min(state.sgxBestAsk.size, state.dceBestBid.size);
     this.loading = false;
   }
 
@@ -163,19 +178,19 @@ export class TradingStateComponent implements OnInit {
   }
 
   calculateSgxBestBidPriceInCny(): number {
-    if (!this.tradingState.sgxBestBidPrice || !this.shortExchangeRate || !this.tradingParameters.miscellaneousCharge) {
+    if (!this.tradingState.sgxBestBid.price || !this.tradingState.shortExchangeRate || !this.tradingParameters.miscellaneousCharge) {
       return 0;
     }
-    const sgxBestBidPrice = numbro(this.tradingState.sgxBestBidPrice);
-    return sgxBestBidPrice.multiply(1.17).multiply(this.shortExchangeRate).add(this.tradingParameters.miscellaneousCharge).value();
+    const sgxBestBidPrice = numbro(this.tradingState.sgxBestBid.price);
+    return sgxBestBidPrice.multiply(1.17).multiply(this.tradingState.shortExchangeRate).add(this.tradingParameters.miscellaneousCharge).value();
   }
 
   calculateSgxBestAskPriceInCny(): number {
-    if (!this.tradingState.sgxBestAskPrice || !this.longExchangeRate || !this.tradingParameters.miscellaneousCharge) {
+    if (!this.tradingState.sgxBestAsk.price || !this.tradingState.longExchangeRate || !this.tradingParameters.miscellaneousCharge) {
       return 0;
     }
-    const sgxBestAskPrice = numbro(this.tradingState.sgxBestAskPrice);
-    return sgxBestAskPrice.multiply(1.17).multiply(this.longExchangeRate).add(this.tradingParameters.miscellaneousCharge).value();
+    const sgxBestAskPrice = numbro(this.tradingState.sgxBestAsk.price);
+    return sgxBestAskPrice.multiply(1.17).multiply(this.tradingState.longExchangeRate).add(this.tradingParameters.miscellaneousCharge).value();
   }
 
   lookupTradingAction(action: string): string {

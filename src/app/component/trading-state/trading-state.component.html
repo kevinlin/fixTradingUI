@@ -1,28 +1,20 @@
 <div *ngIf="!loading && tradingState != null; else elseBlock" class="row">
-  <div class="row">
-    <div class="col-xs-3 form-container">
-      <mat-form-field>
-        <input matInput [(ngModel)]="benchmarkExchangeRate" type="number" placeholder="远期基准汇率" required class="right-align">
-        <span matSuffix>&nbsp;USD/CNY</span>
-      </mat-form-field>
+  <!--
+    <div class="row">
+      <div class="col-xs-3 form-container">
+        <mat-form-field>
+          <input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align" (keyup)="onKeyupShortExchangeRate($event)">
+          <span matSuffix>&nbsp;USD/CNY </span>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-3 form-container">
+        <mat-form-field>
+          <input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align" (keyup)="onKeyupLongExchangeRate($event)">
+          <span matSuffix>&nbsp;USD/CNY</span>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-xs-1 action-row">
-      <button mat-raised-button color="primary" (click)="updateExchangeRate()">更新</button>&nbsp;
-    </div>
-    <div class="col-xs-3 col-xs-offset-2 form-container">
-      <mat-form-field>
-        <input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align">
-        <span matSuffix>&nbsp;USD/CNY </span>
-      </mat-form-field>
-    </div>
-    <div class="col-xs-3 form-container">
-      <mat-form-field>
-        <input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align">
-        <span matSuffix>&nbsp;USD/CNY</span>
-      </mat-form-field>
-    </div>
-
-  </div>
+  -->
   <div class="col-xs-6">
     <mat-card>
       <mat-card-header>
@@ -38,33 +30,32 @@
           <tr>
             <th>&nbsp;</th>
             <th class="right-align">价格</th>
-            <th colspan="2" class="right-align">手</th>
+            <th class="right-align">手</th>
           </tr>
           </thead>
           <tr>
             <th>当前操作</th>
-            <td colspan="2"><h3>
-              <span class="label" [ngClass]="{
+            <td>
+              <h3><span class="label" [ngClass]="{
                 'label-default': tradingState.lastAction === 'NONE',
                 'label-success': tradingState.lastAction === 'SHORT' || tradingState.lastAction === 'SHORT_AGAIN',
                 'label-warning': tradingState.lastAction === 'CLOSE_SHORT',
                 'label-danger':  tradingState.lastAction === 'STOP_SHORT_LOSS'
-              }">{{lookupTradingAction(tradingState.lastAction)}}</span>
-            </h3></td>
+              }">{{lookupTradingAction(tradingState.lastAction)}}</span></h3>
+            </td>
             <td class="right-align">{{tradingState.tradingPosition.shortPosition}}</td>
           </tr>
           <tr>
             <th>SGX {{tradingState.sgxInstrument.symbol}} 最高买入价（美元）</th>
-            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
-            <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
-            <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBid.price}}</td>
+            <td class="success right-align">{{tradingState.sgxBestBid.size}}</td>
           </tr>
           <tr>
-            <td colspan="4">
+            <td colspan="3">
               <mat-accordion *ngIf="tradingState.sgxBidStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Bid Stack</mat-panel-title>
+                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Bid Stack [{{tradingState.sgxBidStack.length}}]</mat-panel-title>
                     <mat-panel-description>{{tradingState.sgxBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -86,35 +77,28 @@
             </td>
           </tr>
           <tr>
-            <th>汇率 USD/CNY</th>
-            <th class="right-align">基准</th>
-            <th class="right-align">实时</th>
-            <th>&nbsp;</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td class="warning right-align">{{tradingState.benchmarkExchangeRate}}</td>
-            <td class="warning right-align"><input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align"></td>
+            <th>美元现汇买入价</th>
+            <td class="warning">
+              <input matInput [(ngModel)]="shortExchangeRate" type="number" placeholder="美元现汇买入价" required class="right-align" (keyup)="onKeyupShortExchangeRate($event)">
+            </td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>等效人民币价</th>
-            <td class="info right-align">{{tradingState.sgxBidMinusDceAsk + tradingState.dceBestAskPrice | number}}</td>
             <td class="info right-align">{{calculateSgxBestBidPriceInCny() | number}}</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>DCE {{tradingState.dceInstrument.symbol}} 最低卖出价</th>
-            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
-            <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
-            <td class="success right-align">{{tradingState.dceBestAskSize}}</td>
+            <td class="success right-align">{{tradingState.dceBestAsk.price}}</td>
+            <td class="success right-align">{{tradingState.dceBestAsk.size}}</td>
           </tr>
           <tr>
-            <td colspan="4">
+            <td colspan="3">
               <mat-accordion *ngIf="tradingState.dceAskStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Ask Stack</mat-panel-title>
+                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Ask Stack [{{tradingState.dceAskStack.length}}]</mat-panel-title>
                     <mat-panel-description>{{tradingState.dceAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -137,20 +121,19 @@
           </tr>
           <tr>
             <th>价差（卖出SGX-买入DCE）</th>
-            <td class="info right-align"><h3>{{tradingState.sgxBidMinusDceAsk | number}}</h3></td>
-            <td class="info right-align"><h3>{{calculateSgxBestBidPriceInCny() - tradingState.dceBestAskPrice | number}}</h3></td>
+            <td class="info right-align"><h3>{{calculateSgxBestBidPriceInCny() - tradingState.dceBestAsk.price | number}}</h3></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>建议操作</th>
-            <td><h3>
-              <span class="label" [ngClass]="{
+            <td>
+              <h3><span class="label" [ngClass]="{
                 'label-default': tradingState.nextAction === 'NONE',
                 'label-success': tradingState.nextAction === 'SHORT' || tradingState.nextAction === 'SHORT_AGAIN',
                 'label-warning': tradingState.nextAction === 'CLOSE_SHORT',
                 'label-danger':  tradingState.nextAction === 'STOP_SHORT_LOSS'
-              }">{{lookupTradingAction(tradingState.nextAction)}}</span>
-            </h3></td>
+              }">{{lookupTradingAction(tradingState.nextAction)}}</span></h3>
+            </td>
             <td class="right-align">{{proposedShortSize}}</td>
           </tr>
         </table>
@@ -217,13 +200,13 @@
           <thead>
           <tr>
             <th>&nbsp;</th>
-            <th colspan="2">价格</th>
+            <th>价格</th>
             <th>手</th>
           </tr>
           </thead>
           <tr>
             <th>当前操作</th>
-            <td colspan="2"><h3>
+            <td><h3>
               <span class="label" [ngClass]="{
                 'label-default': tradingState.lastAction === 'NONE',
                 'label-success': tradingState.lastAction === 'LONG' || tradingState.lastAction === 'LONG_AGAIN',
@@ -235,16 +218,15 @@
           </tr>
           <tr>
             <th>SGX {{tradingState.sgxInstrument.symbol}} 最低卖出价（美元）</th>
-            <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
-            <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
-            <td class="success right-align">{{tradingState.sgxBestAskSize}}</td>
+            <td class="success right-align">{{tradingState.sgxBestAsk.price}}</td>
+            <td class="success right-align">{{tradingState.sgxBestAsk.size}}</td>
           </tr>
           <tr>
-            <td colspan="4">
+            <td colspan="3">
               <mat-accordion *ngIf="tradingState.sgxAskStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Ask Stack</mat-panel-title>
+                    <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Ask Stack [{{tradingState.sgxAskStack.length}}]</mat-panel-title>
                     <mat-panel-description>{{tradingState.sgxAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -266,36 +248,29 @@
             </td>
           </tr>
           <tr>
-            <th>汇率 USD/CNY</th>
-            <th class="right-align">基准</th>
-            <th class="right-align">实时</th>
-            <th>&nbsp;</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td class="warning right-align">{{tradingState.benchmarkExchangeRate}}</td>
-            <td class="warning right-align"><input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align"></td>
+            <th>美元现汇卖出价</th>
+            <td class="warning">
+              <input matInput [(ngModel)]="longExchangeRate" type="number" placeholder="美元现汇卖出价" required class="right-align" (keyup)="onKeyupLongExchangeRate($event)">
+            </td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>等效人民币价格</th>
-            <td class="info right-align">{{tradingState.sgxAskMinusDceBid + tradingState.dceBestBidPrice | number}}</td>
             <td class="info right-align">{{calculateSgxBestAskPriceInCny() | number}}</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>DCE {{tradingState.dceInstrument.symbol}} 最高买入价</th>
-            <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
-            <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
-            <td class="success right-align">{{tradingState.dceBestBidSize}}</td>
+            <td class="success right-align">{{tradingState.dceBestBid.price}}</td>
+            <td class="success right-align">{{tradingState.dceBestBid.size}}</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="4">
+            <td colspan="3">
               <mat-accordion *ngIf="tradingState.dceBidStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
-                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Bid Stack</mat-panel-title>
+                    <mat-panel-title>{{tradingState.dceInstrument.symbol}} Bid Stack [{{tradingState.dceBidStack.length}}]</mat-panel-title>
                     <mat-panel-description>{{tradingState.dceBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
@@ -318,20 +293,19 @@
           </tr>
           <tr>
             <th>价差 (买入SGX-卖出DCE)</th>
-            <td class="info right-align"><h3>{{tradingState.sgxAskMinusDceBid | number}}</h3></td>
-            <td class="info right-align"><h3>{{calculateSgxBestAskPriceInCny() - tradingState.dceBestBidPrice | number}}</h3></td>
+            <td class="info right-align"><h3>{{calculateSgxBestAskPriceInCny() - tradingState.dceBestBid.price | number}}</h3></td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <th>建议操作</th>
-            <td colspan="2"><h3>
-              <span class="label" [ngClass]="{
+            <td>
+              <h3><span class="label" [ngClass]="{
                 'label-default': tradingState.nextAction === 'NONE',
                 'label-success': tradingState.nextAction === 'LONG' || tradingState.nextAction === 'LONG_AGAIN',
                 'label-warning': tradingState.nextAction === 'CLOSE_LONG',
                 'label-danger':  tradingState.nextAction === 'STOP_LONG_LOSS'
-              }">{{lookupTradingAction(tradingState.nextAction)}}</span>
-            </h3></td>
+              }">{{lookupTradingAction(tradingState.nextAction)}}</span></h3>
+            </td>
             <td class="right-align">{{proposedLongSize}}</td>
           </tr>
         </table>
