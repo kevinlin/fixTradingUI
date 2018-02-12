@@ -327,19 +327,19 @@
               </tr>
               <tr>
                 <th>做多建仓参数</th>
-                <td class="warning right-align">{{tradingParameters.longStart}}</td>
+                <td class="warning right-align">{{tradingParameters.average - tradingParameters.longStart}}</td>
               </tr>
               <tr>
                 <th>做多平仓参数</th>
-                <td class="warning right-align">{{tradingParameters.longClose}}</td>
+                <td class="warning right-align">{{tradingParameters.average - tradingParameters.longClose}}</td>
               </tr>
               <tr>
                 <th>做多止损参数</th>
-                <td class="warning right-align">{{tradingParameters.longStopLoss}}</td>
+                <td class="warning right-align">{{tradingParameters.average - tradingParameters.longStopLoss}}</td>
               </tr>
               <tr>
                 <th>做空止损后再建仓参数</th>
-                <td class="warning right-align">{{tradingParameters.longStartAgain}}</td>
+                <td class="warning right-align">{{tradingParameters.average - tradingParameters.longStartAgain}}</td>
               </tr>
             </table>
           </mat-expansion-panel>

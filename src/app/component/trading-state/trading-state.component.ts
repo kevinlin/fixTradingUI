@@ -54,7 +54,6 @@ export class TradingStateComponent implements OnInit {
   onKeyupShortExchangeRate(event: any) {
     const exchangeRate = event.target.value;
     console.log('ShortExchangeRate changed: ' + exchangeRate);
-    console.log(event);
     this.tradingStateService.updateExchangeRate(exchangeRate, true).subscribe(state => {
       this.onTradingStateChange(state);
     }, error => {
@@ -65,7 +64,6 @@ export class TradingStateComponent implements OnInit {
   onKeyupLongExchangeRate(event: any) {
     const exchangeRate = event.target.value;
     console.log('LongExchangeRate changed: ' + exchangeRate);
-    console.log(event);
     this.tradingStateService.updateExchangeRate(exchangeRate, false).subscribe(state => {
       this.onTradingStateChange(state);
     }, error => {
@@ -198,7 +196,7 @@ export class TradingStateComponent implements OnInit {
       return '初始';
     } else if (action === 'SHORT') {
       return '做空建仓';
-    } else if (action === 'LONE') {
+    } else if (action === 'LONG') {
       return '做多建仓';
     } else if (action === 'CLOSE_SHORT') {
       return '做空平仓';
