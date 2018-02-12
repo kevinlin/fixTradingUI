@@ -54,17 +54,18 @@
             <td class="right-align">{{tradingState.tradingPosition.shortPosition}}</td>
           </tr>
           <tr>
-            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优买入价（美元）</th>
+            <th>SGX {{tradingState.sgxInstrument.symbol}} 最高买入价（美元）</th>
             <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.sgxBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.sgxBestBidSize}}</td>
           </tr>
           <tr>
             <td colspan="4">
-              <mat-accordion>
+              <mat-accordion *ngIf="tradingState.sgxBidStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Bid Stack</mat-panel-title>
+                    <mat-panel-description>{{tradingState.sgxBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -103,17 +104,18 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <th>DCE {{tradingState.dceInstrument.symbol}} 最优卖出价</th>
+            <th>DCE {{tradingState.dceInstrument.symbol}} 最低卖出价</th>
             <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestAskSize}}</td>
           </tr>
           <tr>
             <td colspan="4">
-              <mat-accordion>
+              <mat-accordion *ngIf="tradingState.dceAskStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.dceInstrument.symbol}} Ask Stack</mat-panel-title>
+                    <mat-panel-description>{{tradingState.dceAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -134,7 +136,7 @@
             </td>
           </tr>
           <tr>
-            <th>价差（SGX买入-DCE卖出）</th>
+            <th>价差（卖出SGX-买入DCE）</th>
             <td class="info right-align"><h3>{{tradingState.sgxBidMinusDceAsk | number}}</h3></td>
             <td class="info right-align"><h3>{{calculateSgxBestBidPriceInCny() - tradingState.dceBestAskPrice | number}}</h3></td>
             <td>&nbsp;</td>
@@ -232,17 +234,18 @@
             <td class="right-align">{{tradingState.tradingPosition.longPosition}}</td>
           </tr>
           <tr>
-            <th>SGX {{tradingState.sgxInstrument.symbol}} 最优卖出价（美元）</th>
+            <th>SGX {{tradingState.sgxInstrument.symbol}} 最低卖出价（美元）</th>
             <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.sgxBestAskPrice}}</td>
             <td class="success right-align">{{tradingState.sgxBestAskSize}}</td>
           </tr>
           <tr>
             <td colspan="4">
-              <mat-accordion>
+              <mat-accordion *ngIf="tradingState.sgxAskStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Ask Stack</mat-panel-title>
+                    <mat-panel-description>{{tradingState.sgxAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -281,7 +284,7 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <th>DCE {{tradingState.dceInstrument.symbol}} 最优买入价</th>
+            <th>DCE {{tradingState.dceInstrument.symbol}} 最高买入价</th>
             <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestBidPrice}}</td>
             <td class="success right-align">{{tradingState.dceBestBidSize}}</td>
@@ -289,10 +292,11 @@
           </tr>
           <tr>
             <td colspan="4">
-              <mat-accordion>
+              <mat-accordion *ngIf="tradingState.dceBidStack">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.dceInstrument.symbol}} Bid Stack</mat-panel-title>
+                    <mat-panel-description>{{tradingState.dceBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -313,7 +317,7 @@
             </td>
           </tr>
           <tr>
-            <th>价差 (SGX卖出-DCE买入)</th>
+            <th>价差 (买入SGX-卖出DCE)</th>
             <td class="info right-align"><h3>{{tradingState.sgxAskMinusDceBid | number}}</h3></td>
             <td class="info right-align"><h3>{{calculateSgxBestAskPriceInCny() - tradingState.dceBestBidPrice | number}}</h3></td>
             <td>&nbsp;</td>
