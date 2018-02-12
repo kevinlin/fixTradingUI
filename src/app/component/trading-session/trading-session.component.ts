@@ -37,7 +37,8 @@ export class TradingSessionComponent implements OnInit {
       if (session == null) {
         session = <TradingSession> {
           sgxInstrument: {symbol: null},
-          dceInstrument: {symbol: null}
+          dceInstrument: {symbol: null},
+          date: this.dateToYMD(new Date())
         };
       }
       this.tradingSession = session;
@@ -47,6 +48,13 @@ export class TradingSessionComponent implements OnInit {
       this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
       this.loading = false;
     });
+  }
+
+  dateToYMD(date: Date): string {
+    const d = date.getDate();
+    const m = date.getMonth() + 1;
+    const y = date.getFullYear();
+    return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
   }
 
   startSession(): void {
