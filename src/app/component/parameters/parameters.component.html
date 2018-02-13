@@ -1,67 +1,91 @@
-<form class="form">
-  <mat-grid-list cols="2" rowHeight="60px">
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.miscellaneousCharge" name="miscellaneousCharge" placeholder="港杂费" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.average" name="average" placeholder="基准价差" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.shortStart" name="shortStart" placeholder="做空建仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.longStart" name="longStart" placeholder="做多建仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.shortClose" name="shortClose" placeholder="做空平仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.longClose" name="longClose" placeholder="做多平仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.shortStopLoss" name="shortStopLoss" placeholder="做空止损参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.longStopLoss" name="longStopLoss" placeholder="做多止损参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.shortStartAgain" name="shortStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field>
-        <input matInput [(ngModel)]="tradingParameters.longStartAgain" name="longStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
-        <span matSuffix>&nbsp;CNY</span>
-      </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <div class="action-row">
-    <button mat-raised-button color="primary" (click)="saveTradingParameters()">Save Changes</button>
+<div class="row">
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.miscellaneousCharge" name="miscellaneousCharge" placeholder="港杂费" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
   </div>
-</form>
+  <div class="col-xs-3 col-xs-offset-3">
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.average" name="average" placeholder="基准价差" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.shortStart" name="shortStart" placeholder="做空建仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.shortClose" name="shortClose" placeholder="做空平仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.shortStopLoss" name="shortStopLoss" placeholder="做空止损参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.shortStartAgain" name="shortStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average + tradingParameters.shortStart" [readonly]="true" placeholder="触发做空建仓价差" type="number" class="right-align">
+      <span matPrefix>>&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average + tradingParameters.shortClose" [readonly]="true" placeholder="触发做空平仓价差" type="number" class="right-align">
+      <span matPrefix><&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average + tradingParameters.shortStopLoss" [readonly]="true" placeholder="触发做空止损价差" type="number" class="right-align">
+      <span matPrefix>>&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average + tradingParameters.shortStartAgain" [readonly]="true" placeholder="触发做空止损后再建仓价差" type="number" class="right-align">
+      <span matPrefix>>&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.longStart" name="longStart" placeholder="做多建仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.longClose" name="longClose" placeholder="做多平仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.longStopLoss" name="longStopLoss" placeholder="做多止损参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="tradingParameters.longStartAgain" name="longStartAgain" placeholder="做空止损后再建仓参数" type="number" class="right-align">
+      <span matPrefix>¥&nbsp;</span>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-3">
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average - tradingParameters.longStart" [readonly]="true" placeholder="触发做多建仓价差" type="number" class="right-align">
+      <span matPrefix><&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average - tradingParameters.longClose" [readonly]="true" placeholder="触发做多平仓价差" type="number" class="right-align">
+      <span matPrefix>>&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average - tradingParameters.longStopLoss" [readonly]="true" placeholder="触发做多止损价差" type="number" class="right-align">
+      <span matPrefix><&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [ngModel]="tradingParameters.average - tradingParameters.longStartAgain" [readonly]="true" placeholder="触发做多止损后再建仓价差" type="number" class="right-align">
+      <span matPrefix><&nbsp;¥&nbsp;</span>
+    </mat-form-field>
+  </div>
+</div>
+<div class="action-row">
+  <button mat-raised-button color="primary" (click)="saveTradingParameters()">Save Changes</button>
+</div>
