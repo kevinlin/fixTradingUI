@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-
-import {environment} from '../../environments/environment';
 import {InstrumentsComponent} from '../component/instruments/instruments.component';
 import {ParametersComponent} from '../component/parameters/parameters.component';
 import {TradingSessionComponent} from '../component/trading-session/trading-session.component';
@@ -16,7 +14,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: !environment.production, useHash: true})],
+  imports: [RouterModule.forRoot(routes, {enableTracing: false, useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

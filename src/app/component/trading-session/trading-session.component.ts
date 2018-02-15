@@ -40,6 +40,8 @@ export class TradingSessionComponent implements OnInit {
           dceInstrument: {symbol: null},
           date: this.dateToYMD(new Date())
         };
+      } else if (session.sessionState === 'STOP') {
+        session.sessionState = this.dateToYMD(new Date());
       }
       this.tradingSession = session;
       this.loading = false;

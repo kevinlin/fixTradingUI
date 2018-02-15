@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import * as numbro from 'numbro';
+
 import {TradingParameters} from '../../model/trading-parameters';
 import {TradingState} from '../../model/trading-state';
 import {ParametersService} from '../../service/parameters.service';
+import {StompClientService} from '../../service/stomp-client.service';
 import {TradingSessionService} from '../../service/trading-session.service';
 import {TradingStateService} from '../../service/trading-state.service';
+
 
 @Component({
   selector: 'app-trading-state',
@@ -24,7 +27,8 @@ export class TradingStateComponent implements OnInit {
   shortSize: number;
   longSize: number;
 
-  constructor(private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService, private parametersService: ParametersService, private snackBar: MatSnackBar) {
+  constructor(private stompClient: StompClientService, private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
+              private parametersService: ParametersService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -36,12 +40,20 @@ export class TradingStateComponent implements OnInit {
       console.log(session);
       if (session != null) {
         this.loadTradingState();
-        setInterval(() => {
-          this.loadTradingState();
-        }, 5000);
-
+        // setInterval(() => {
+        //   this.loadTradingState();
+        // }, 5000);
         this.parametersService.getParameters().subscribe(parameters => {
           this.tradingParameters = parameters;
+        });
+
+        this.stompClient.subscribeTradingState(state => {
+          this.onTradingStateChange(state);
+          this.snackBar.open('Trading State', 'changed', {duration: 3000});
+        });
+        this.stompClient.subscribeTradingParameters(parameters => {
+          this.tradingParameters = parameters;
+          this.snackBar.open('Trading Parameters', 'changed', {duration: 3000});
         });
       } else {
         this.loading = false;
@@ -163,8 +175,12 @@ export class TradingStateComponent implements OnInit {
     if (!this.longExchangeRate && state.longExchangeRate) {
       this.longExchangeRate = state.longExchangeRate;
     }
-    this.proposedShortSize = Math.min(state.sgxBestBid.size, state.dceBestAsk.size);
-    this.proposedLongSize = Math.min(state.sgxBestAsk.size, state.dceBestBid.size);
+    if (state.sgxBestBid && state.dceBestAsk) {
+      this.proposedShortSize = Math.min(state.sgxBestBid.size, state.dceBestAsk.size);
+    }
+    if (state.sgxBestAsk && state.dceBestBid) {
+      this.proposedLongSize = Math.min(state.sgxBestAsk.size, state.dceBestBid.size);
+    }
     this.loading = false;
   }
 
