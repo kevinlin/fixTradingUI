@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import * as numbro from 'numbro';
+import {Notification} from '../../model/notification';
 
 import {TradingParameters} from '../../model/trading-parameters';
 import {TradingState} from '../../model/trading-state';
@@ -47,6 +48,10 @@ export class TradingStateComponent implements OnInit {
           this.tradingParameters = parameters;
         });
 
+
+        this.stompClient.subscribeNotification((notification: Notification) => {
+          this.snackBar.open(notification.message, notification.action, {duration: 3000});
+        });
         this.stompClient.subscribeTradingState(state => {
           this.onTradingStateChange(state);
           this.snackBar.open('Trading State', 'changed', {duration: 3000});
@@ -192,7 +197,7 @@ export class TradingStateComponent implements OnInit {
   }
 
   calculateSgxBestBidPriceInCny(): number {
-    if (!this.tradingState.sgxBestBid.price || !this.tradingState.shortExchangeRate || !this.tradingParameters.miscellaneousCharge) {
+    if (!this.tradingState.sgxBestBid || !this.tradingState.shortExchangeRate || !this.tradingParameters.miscellaneousCharge) {
       return 0;
     }
     const sgxBestBidPrice = numbro(this.tradingState.sgxBestBid.price);
@@ -200,7 +205,7 @@ export class TradingStateComponent implements OnInit {
   }
 
   calculateSgxBestAskPriceInCny(): number {
-    if (!this.tradingState.sgxBestAsk.price || !this.tradingState.longExchangeRate || !this.tradingParameters.miscellaneousCharge) {
+    if (!this.tradingState.sgxBestAsk || !this.tradingState.longExchangeRate || !this.tradingParameters.miscellaneousCharge) {
       return 0;
     }
     const sgxBestAskPrice = numbro(this.tradingState.sgxBestAsk.price);

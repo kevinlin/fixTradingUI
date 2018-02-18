@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {Notification} from '../../model/notification';
 
 import {TradingParameters} from '../../model/trading-parameters';
 import {ParametersService} from '../../service/parameters.service';
@@ -21,6 +22,9 @@ export class ParametersComponent implements OnInit {
     this.tradingParameters = <TradingParameters>{};
     this.parametersService.getParameters().subscribe(parameters => {
       this.tradingParameters = parameters;
+    });
+    this.stompClient.subscribeNotification((notification: Notification) => {
+      this.snackBar.open(notification.message, notification.action, {duration: 3000});
     });
     this.stompClient.subscribeTradingParameters(parameters => {
       this.snackBar.open('Trading Parameters', 'changed', {duration: 3000});

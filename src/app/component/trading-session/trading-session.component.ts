@@ -3,8 +3,10 @@ import {MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 
 import {Instrument} from '../../model/instrument';
+import {Notification} from '../../model/notification';
 import {TradingSession} from '../../model/trading-session';
 import {InstrumentService} from '../../service/instrument.service';
+import {StompClientService} from '../../service/stomp-client.service';
 import {TradingSessionService} from '../../service/trading-session.service';
 
 @Component({
@@ -14,8 +16,7 @@ import {TradingSessionService} from '../../service/trading-session.service';
 })
 export class TradingSessionComponent implements OnInit {
 
-  constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService,
-              private snackBar: MatSnackBar) {
+  constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService, private stompClient: StompClientService, private snackBar: MatSnackBar) {
   }
 
   loading: boolean;
@@ -49,6 +50,10 @@ export class TradingSessionComponent implements OnInit {
       console.log(error);
       this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
       this.loading = false;
+    });
+
+    this.stompClient.subscribeNotification((notification: Notification) => {
+      this.snackBar.open(notification.message, notification.action, {duration: 3000});
     });
   }
 
