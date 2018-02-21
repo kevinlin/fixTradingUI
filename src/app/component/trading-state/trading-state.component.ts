@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatSnackBar} from '@angular/material';
 import * as numbro from 'numbro';
 import {Notification} from '../../model/notification';
@@ -16,7 +17,7 @@ import {TradingStateService} from '../../service/trading-state.service';
   templateUrl: './trading-state.component.html',
   styleUrls: ['./trading-state.component.css']
 })
-export class TradingStateComponent implements OnInit {
+export class TradingStateComponent implements OnInit, OnDestroy {
 
   loading: boolean;
   tradingState: TradingState;
@@ -33,6 +34,7 @@ export class TradingStateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('TradingStateComponent onInit');
     this.loading = true;
     this.tradingParameters = <TradingParameters>{};
 
@@ -66,6 +68,10 @@ export class TradingStateComponent implements OnInit {
     }, error => {
       this.handleHttpError(error);
     });
+  }
+
+  ngOnDestroy(): void {
+    console.log('TradingStateComponent onDestroy');
   }
 
   onKeyupShortExchangeRate(event: any) {

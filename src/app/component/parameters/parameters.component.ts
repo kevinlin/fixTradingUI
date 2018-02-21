@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatSnackBar} from '@angular/material';
 import {Notification} from '../../model/notification';
 
@@ -11,7 +12,7 @@ import {StompClientService} from '../../service/stomp-client.service';
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })
-export class ParametersComponent implements OnInit {
+export class ParametersComponent implements OnInit, OnDestroy {
 
   constructor(private parametersService: ParametersService, private stompClient: StompClientService, private snackBar: MatSnackBar) {
   }
@@ -19,6 +20,7 @@ export class ParametersComponent implements OnInit {
   tradingParameters: TradingParameters;
 
   ngOnInit() {
+    console.log('ParametersComponent onInit');
     this.tradingParameters = <TradingParameters>{};
     this.parametersService.getParameters().subscribe(parameters => {
       this.tradingParameters = parameters;
@@ -31,6 +33,10 @@ export class ParametersComponent implements OnInit {
       console.log(parameters);
       this.tradingParameters = parameters;
     });
+  }
+
+  ngOnDestroy(): void {
+    console.log('ParametersComponent onDestroy');
   }
 
   saveTradingParameters() {

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 
@@ -14,7 +15,7 @@ import {TradingSessionService} from '../../service/trading-session.service';
   templateUrl: './trading-session.component.html',
   styleUrls: ['./trading-session.component.css']
 })
-export class TradingSessionComponent implements OnInit {
+export class TradingSessionComponent implements OnInit, OnDestroy {
 
   constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService, private stompClient: StompClientService, private snackBar: MatSnackBar) {
   }
@@ -25,6 +26,7 @@ export class TradingSessionComponent implements OnInit {
   tradingSession: TradingSession;
 
   ngOnInit() {
+    console.log('TradingSessionComponent onInit');
     this.loading = true;
     this.sgxInstruments = this.instrumentService.getInstruments('SGX');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
@@ -55,6 +57,10 @@ export class TradingSessionComponent implements OnInit {
     this.stompClient.subscribeNotification((notification: Notification) => {
       this.snackBar.open(notification.message, notification.action, {duration: 3000});
     });
+  }
+
+  ngOnDestroy(): void {
+    console.log('TradingSessionComponent onDestroy');
   }
 
   dateToYMD(date: Date): string {
