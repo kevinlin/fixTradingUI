@@ -4,29 +4,30 @@ import {MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 
 import {Instrument} from '../../model/instrument';
-import {Notification} from '../../model/notification';
 import {TradingSession} from '../../model/trading-session';
 import {InstrumentService} from '../../service/instrument.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {TradingSessionService} from '../../service/trading-session.service';
+import {BaseComponent} from '../base-component';
 
 @Component({
   selector: 'app-trading-session',
   templateUrl: './trading-session.component.html',
   styleUrls: ['./trading-session.component.css']
 })
-export class TradingSessionComponent implements OnInit, OnDestroy {
+export class TradingSessionComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService, private stompClient: StompClientService, private snackBar: MatSnackBar) {
+  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
+    super(stompClient, snackBar);
   }
 
-  loading: boolean;
   sgxInstruments: Observable<Instrument[]>;
   dceInstruments: Observable<Instrument[]>;
   tradingSession: TradingSession;
 
   ngOnInit() {
-    console.log('TradingSessionComponent onInit');
+    console.log('TradingSessionComponent onInit()->');
+    this.baseOnInit();
     this.loading = true;
     this.sgxInstruments = this.instrumentService.getInstruments('SGX');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
@@ -49,48 +50,42 @@ export class TradingSessionComponent implements OnInit, OnDestroy {
       this.tradingSession = session;
       this.loading = false;
     }, error => {
-      console.log(error);
-      this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
-      this.loading = false;
-    });
-
-    this.stompClient.subscribeNotification((notification: Notification) => {
-      this.snackBar.open(notification.message, notification.action, {duration: 3000});
+      this.handleHttpError(error);
     });
   }
 
   ngOnDestroy(): void {
-    console.log('TradingSessionComponent onDestroy');
+    console.log('TradingSessionComponent onDestroy()->');
+    this.baseOnDestroy();
   }
 
-  dateToYMD(date: Date): string {
+  startSession(): void {
+    this.tradingSessionService.startTradingSession(this.tradingSession).subscribe(session => {
+      this.onTradingSessionChange(session);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  stopSession(): void {
+    this.tradingSessionService.stopTradingSession().subscribe(session => {
+      this.onTradingSessionChange(session);
+    }, error => {
+      this.handleHttpError(error);
+    });
+  }
+
+  private dateToYMD(date: Date): string {
     const d = date.getDate();
     const m = date.getMonth() + 1;
     const y = date.getFullYear();
     return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
   }
 
-  startSession(): void {
-    this.tradingSessionService.startTradingSession(this.tradingSession).subscribe(session => {
-      console.log('Session started: ');
-      console.log(session);
-      this.tradingSession = session;
-      this.snackBar.open('Trading Session', 'started', {duration: 3000});
-    }, error => {
-      console.log(error);
-      this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
-    });
+  private onTradingSessionChange(session: TradingSession) {
+    console.log(session);
+    this.tradingSession = session;
+    this.snackBar.open('Trading Session', session.sessionState, {duration: 3000});
   }
 
-  stopSession(): void {
-    this.tradingSessionService.stopTradingSession().subscribe(session => {
-      console.log('Session stopped: ');
-      console.log(session);
-      this.tradingSession = session;
-      this.snackBar.open('Trading Session', 'stopped', {duration: 3000});
-    }, error => {
-      console.log(error);
-      this.snackBar.open('Error occurred', error.error.message, {duration: 3000});
-    });
-  }
 }

@@ -28,68 +28,76 @@ export class StompClientService implements OnDestroy {
 
   ngOnDestroy() {
     if (this.connected) {
-      if (this.tradingStateSubscription && this.tradingStateSubscription.unsubscribe) {
-        this.tradingStateSubscription.unsubscribe();
-      }
-      if (this.tradingParametersSubscription && this.tradingParametersSubscription.unsubscribe) {
-        this.tradingParametersSubscription.unsubscribe();
-      }
-
       this.stomp.disconnect().then(() => {
         console.log('Stomp client disconnected');
       });
     }
   }
 
-  public subscribeNotification(callback: any) {
+  public subscribeNotification(callback: any): any {
     if (!this.connected) {
       this.stomp.after('init').then(() => {
         this.doSubscribeNotification(callback);
       });
     } else {
-      if (this.notificationSubscription && this.notificationSubscription.unsubscribe) {
-        this.notificationSubscription.unsubscribe();
-      }
       this.doSubscribeNotification(callback);
     }
+
+    return this.notificationSubscription;
   }
 
   private doSubscribeNotification(callback: any) {
     this.notificationSubscription = this.stomp.subscribe('/topic/notification', callback);
   }
 
-  public subscribeTradingState(callback: any) {
+  public unsubscribeNotification() {
+    if (this.notificationSubscription && this.notificationSubscription.unsubscribe) {
+      this.notificationSubscription.unsubscribe();
+    }
+  }
+
+  public subscribeTradingState(callback: any): any {
     if (!this.connected) {
       this.stomp.after('init').then(() => {
         this.doSubscribeTradingState(callback);
       });
     } else {
-      if (this.tradingStateSubscription && this.tradingStateSubscription.unsubscribe) {
-        this.tradingStateSubscription.unsubscribe();
-      }
       this.doSubscribeTradingState(callback);
     }
+
+    return this.tradingStateSubscription;
   }
 
   private doSubscribeTradingState(callback: any) {
     this.tradingStateSubscription = this.stomp.subscribe('/topic/tradingState', callback);
   }
 
-  public subscribeTradingParameters(callback: any) {
+  public unsubscribeTradingState() {
+    if (this.tradingStateSubscription && this.tradingStateSubscription.unsubscribe) {
+      this.tradingStateSubscription.unsubscribe();
+    }
+  }
+
+  public subscribeTradingParameters(callback: any): any {
     if (!this.connected) {
       this.stomp.after('init').then(() => {
         this.doSubscribeTradingParameters(callback);
       });
     } else {
-      if (this.tradingParametersSubscription && this.tradingParametersSubscription.unsubscribe) {
-        this.tradingParametersSubscription.unsubscribe();
-      }
       this.doSubscribeTradingParameters(callback);
     }
+
+    return this.tradingParametersSubscription;
   }
 
   private doSubscribeTradingParameters(callback: any) {
     this.tradingParametersSubscription = this.stomp.subscribe('/topic/tradingParameters', callback);
+  }
+
+  public unsubscribeTradingParameters() {
+    if (this.tradingParametersSubscription && this.tradingParametersSubscription.unsubscribe) {
+      this.tradingParametersSubscription.unsubscribe();
+    }
   }
 
   public send(topic: string, data: any) {

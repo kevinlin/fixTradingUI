@@ -24,14 +24,15 @@ export class InstrumentsComponent extends BaseComponent implements OnInit, OnDes
   public selectedDceInstrument: Instrument;
 
   ngOnInit() {
+    console.log('InstrumentsComponent onInit()->');
     this.baseOnInit();
-    console.log('InstrumentsComponent onInit');
     this.sgxInstruments = this.instrumentService.getInstruments('SGX');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
   }
 
   ngOnDestroy(): void {
-    console.log('InstrumentsComponent onDestroy');
+    console.log('InstrumentsComponent onDestroy()->');
+    this.baseOnDestroy();
   }
 
 }

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatSnackBar} from '@angular/material';
 import * as numbro from 'numbro';
-import {Notification} from '../../model/notification';
 
 import {TradingParameters} from '../../model/trading-parameters';
 import {TradingState} from '../../model/trading-state';
@@ -10,6 +9,7 @@ import {ParametersService} from '../../service/parameters.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {TradingSessionService} from '../../service/trading-session.service';
 import {TradingStateService} from '../../service/trading-state.service';
+import {BaseComponent} from '../base-component';
 
 
 @Component({
@@ -17,9 +17,8 @@ import {TradingStateService} from '../../service/trading-state.service';
   templateUrl: './trading-state.component.html',
   styleUrls: ['./trading-state.component.css']
 })
-export class TradingStateComponent implements OnInit, OnDestroy {
+export class TradingStateComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  loading: boolean;
   tradingState: TradingState;
   tradingParameters: TradingParameters;
   shortExchangeRate: number;
@@ -29,12 +28,14 @@ export class TradingStateComponent implements OnInit, OnDestroy {
   shortSize: number;
   longSize: number;
 
-  constructor(private stompClient: StompClientService, private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
-              private parametersService: ParametersService, private snackBar: MatSnackBar) {
+  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
+              private parametersService: ParametersService) {
+    super(stompClient, snackBar);
   }
 
   ngOnInit() {
-    console.log('TradingStateComponent onInit');
+    console.log('TradingStateComponent onInit()->');
+    this.baseOnInit();
     this.loading = true;
     this.tradingParameters = <TradingParameters>{};
 
@@ -43,17 +44,13 @@ export class TradingStateComponent implements OnInit, OnDestroy {
       console.log(session);
       if (session != null) {
         this.loadTradingState();
-        // setInterval(() => {
-        //   this.loadTradingState();
-        // }, 5000);
         this.parametersService.getParameters().subscribe(parameters => {
           this.tradingParameters = parameters;
         });
 
-
-        this.stompClient.subscribeNotification((notification: Notification) => {
-          this.snackBar.open(notification.message, notification.action, {duration: 3000});
-        });
+        // setInterval(() => {
+        //   this.loadTradingState();
+        // }, 5000);
         this.stompClient.subscribeTradingState(state => {
           this.onTradingStateChange(state);
           this.snackBar.open('Trading State', 'changed', {duration: 3000});
@@ -71,7 +68,11 @@ export class TradingStateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('TradingStateComponent onDestroy');
+    console.log('TradingStateComponent onDestroy()->');
+    this.baseOnDestroy();
+
+    this.stompClient.unsubscribeTradingState();
+    this.stompClient.unsubscribeTradingParameters();
   }
 
   onKeyupShortExchangeRate(event: any) {
@@ -192,13 +193,6 @@ export class TradingStateComponent implements OnInit, OnDestroy {
     if (state.sgxBestAsk && state.dceBestBid) {
       this.proposedLongSize = Math.min(state.sgxBestAsk.size, state.dceBestBid.size);
     }
-    this.loading = false;
-  }
-
-  private handleHttpError(error) {
-    console.log(error);
-    const message = error.error ? error.error.message : error.message;
-    this.snackBar.open('Error occurred', message, {duration: 3000});
     this.loading = false;
   }
 

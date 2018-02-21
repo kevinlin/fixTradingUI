@@ -1,42 +1,45 @@
 import {Component, OnInit} from '@angular/core';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatSnackBar} from '@angular/material';
-import {Notification} from '../../model/notification';
 
 import {TradingParameters} from '../../model/trading-parameters';
 import {ParametersService} from '../../service/parameters.service';
 import {StompClientService} from '../../service/stomp-client.service';
+import {BaseComponent} from '../base-component';
 
 @Component({
   selector: 'app-parameters',
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })
-export class ParametersComponent implements OnInit, OnDestroy {
+export class ParametersComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(private parametersService: ParametersService, private stompClient: StompClientService, private snackBar: MatSnackBar) {
+  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private parametersService: ParametersService) {
+    super(stompClient, snackBar);
   }
 
   tradingParameters: TradingParameters;
 
   ngOnInit() {
-    console.log('ParametersComponent onInit');
+    console.log('ParametersComponent onInit()->');
+    this.baseOnInit();
+
     this.tradingParameters = <TradingParameters>{};
     this.parametersService.getParameters().subscribe(parameters => {
       this.tradingParameters = parameters;
     });
-    this.stompClient.subscribeNotification((notification: Notification) => {
-      this.snackBar.open(notification.message, notification.action, {duration: 3000});
-    });
     this.stompClient.subscribeTradingParameters(parameters => {
-      this.snackBar.open('Trading Parameters', 'changed', {duration: 3000});
       console.log(parameters);
       this.tradingParameters = parameters;
+      this.snackBar.open('Trading Parameters', 'changed', {duration: 3000});
     });
   }
 
   ngOnDestroy(): void {
-    console.log('ParametersComponent onDestroy');
+    console.log('ParametersComponent onDestroy()->');
+    this.baseOnDestroy();
+
+    this.stompClient.unsubscribeTradingParameters();
   }
 
   saveTradingParameters() {

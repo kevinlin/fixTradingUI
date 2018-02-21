@@ -23,21 +23,6 @@
     <h3>铁矿石跨境交易 - {{title}}</h3>
   </div>
   <div id="content">
-    <!--
-          <div>
-            &lt;!&ndash; Nav tabs &ndash;&gt;
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" [ngClass]="{'active': url === '/instruments'}"><a [routerLink]="['/instruments']">Instruments</a></li>
-              <li role="presentation" [ngClass]="{'active': url === '/parameters'}"><a [routerLink]="['/parameters']">Parameters</a></li>
-              <li role="presentation" [ngClass]="{'active': url === '/tradingSession'}"><a [routerLink]="['/tradingSession']">Trading Session</a></li>
-            </ul>
-
-            &lt;!&ndash; Tab panes &ndash;&gt;
-            <div class="tab-content">
-              <router-outlet></router-outlet>
-            </div>
-          </div>
-    -->
     <nav mat-tab-nav-bar class="tabbed-content">
       <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
         {{link.label}}
