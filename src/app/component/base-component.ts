@@ -4,7 +4,7 @@ import {StompClientService} from '../service/stomp-client.service';
 
 export class BaseComponent {
 
-  protected loading: boolean;
+  public loading: boolean;
 
   constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar) {
   }

@@ -56,7 +56,8 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Bid Stack [{{tradingState.sgxBidStack.length}}]</mat-panel-title>
-                    <mat-panel-description>{{tradingState.sgxBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
+                    <mat-panel-description>{{tradingState.sgxBidStack[0]?.timestamp | date:'MMM d, HH:mm:ss.SSS'}}
+                    </mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -66,10 +67,10 @@
                       <th>Time</th>
                     </tr>
                     <tr *ngFor="let order of tradingState.sgxBidStack">
-                      <td>{{order.positionNo}}</td>
+                      <td>{{order?.positionNo}}</td>
                       <td class="right-align">{{order?.price | number}}</td>
                       <td class="right-align">{{order?.size}}</td>
-                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                      <td>{{order?.timestamp | date:'HH:mm:ss.SSS'}}</td>
                     </tr>
                   </table>
                 </mat-expansion-panel>
@@ -99,7 +100,8 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.dceInstrument.symbol}} Ask Stack [{{tradingState.dceAskStack.length}}]</mat-panel-title>
-                    <mat-panel-description>{{tradingState.dceAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
+                    <mat-panel-description>{{tradingState.dceAskStack[0]?.timestamp | date:'MMM d, HH:mm:ss.SSS'}}
+                    </mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -109,10 +111,10 @@
                       <th>Time</th>
                     </tr>
                     <tr *ngFor="let order of tradingState.dceAskStack">
-                      <td>{{order.positionNo}}</td>
+                      <td>{{order?.positionNo}}</td>
                       <td class="right-align">{{order?.price | number}}</td>
                       <td class="right-align">{{order?.size}}</td>
-                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                      <td>{{order?.timestamp | date:'HH:mm:ss.SSS'}}</td>
                     </tr>
                   </table>
                 </mat-expansion-panel>
@@ -229,7 +231,8 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.sgxInstrument.symbol}} Ask Stack [{{tradingState.sgxAskStack.length}}]</mat-panel-title>
-                    <mat-panel-description>{{tradingState.sgxAskStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
+                    <mat-panel-description>{{tradingState.sgxAskStack[0]?.timestamp | date:'MMM d, HH:mm:ss.SSS'}}
+                    </mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -239,10 +242,10 @@
                       <th>Time</th>
                     </tr>
                     <tr *ngFor="let order of tradingState.sgxAskStack">
-                      <td>{{order.positionNo}}</td>
+                      <td>{{order?.positionNo}}</td>
                       <td class="right-align">{{order?.price | number}}</td>
                       <td class="right-align">{{order?.size}}</td>
-                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                      <td>{{order?.timestamp | date:'HH:mm:ss.SSS'}}</td>
                     </tr>
                   </table>
                 </mat-expansion-panel>
@@ -273,7 +276,8 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>{{tradingState.dceInstrument.symbol}} Bid Stack [{{tradingState.dceBidStack.length}}]</mat-panel-title>
-                    <mat-panel-description>{{tradingState.dceBidStack[0].timestamp | date:'MMM d, HH:mm:ss.SSS'}}</mat-panel-description>
+                    <mat-panel-description>{{tradingState.dceBidStack[0]?.timestamp | date:'MMM d, HH:mm:ss.SSS'}}
+                    </mat-panel-description>
                   </mat-expansion-panel-header>
                   <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
@@ -283,10 +287,10 @@
                       <th>Time</th>
                     </tr>
                     <tr *ngFor="let order of tradingState.dceBidStack">
-                      <td>{{order.positionNo}}</td>
+                      <td>{{order?.positionNo}}</td>
                       <td class="right-align">{{order?.price | number}}</td>
                       <td class="right-align">{{order?.size}}</td>
-                      <td>{{order.timestamp | date:'HH:mm:ss.SSS'}}</td>
+                      <td>{{order?.timestamp | date:'HH:mm:ss.SSS'}}</td>
                     </tr>
                   </table>
                 </mat-expansion-panel>
