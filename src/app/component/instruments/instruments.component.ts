@@ -18,15 +18,15 @@ export class InstrumentsComponent extends BaseComponent implements OnInit, OnDes
     super(stompClient, snackBar);
   }
 
-  public sgxInstruments: Observable<Instrument[]>;
+  public shfeInstruments: Observable<Instrument[]>;
   public dceInstruments: Observable<Instrument[]>;
-  public selectedSgxInstrument: Instrument;
+  public selectedShfeInstrument: Instrument;
   public selectedDceInstrument: Instrument;
 
   ngOnInit() {
     console.log('InstrumentsComponent onInit()->');
     this.baseOnInit();
-    this.sgxInstruments = this.instrumentService.getInstruments('SGX');
+    this.shfeInstruments = this.instrumentService.getInstruments('SHFE');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
   }
 

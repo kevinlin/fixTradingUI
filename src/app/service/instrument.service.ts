@@ -12,6 +12,10 @@ export class InstrumentService {
 
   private instrumentsUrl = '/api/instrument';
 
+  public getAllInstruments(): Observable<Instrument[]> {
+    return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/all');
+  }
+
   public getInstruments(exchange: string): Observable<Instrument[]> {
     return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/' + exchange);
   }
