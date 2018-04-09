@@ -21,27 +21,25 @@ export class TradingSessionComponent extends BaseComponent implements OnInit, On
     super(stompClient, snackBar);
   }
 
-  sgxInstruments: Observable<Instrument[]>;
-  dceInstruments: Observable<Instrument[]>;
+  allInstruments: Observable<Instrument[]>;
   tradingSession: TradingSession;
 
   ngOnInit() {
     console.log('TradingSessionComponent onInit()->');
     this.baseOnInit();
     this.loading = true;
-    this.sgxInstruments = this.instrumentService.getInstruments('SGX');
-    this.dceInstruments = this.instrumentService.getInstruments('DCE');
+    this.allInstruments = this.instrumentService.getAllInstruments();
     this.tradingSession = <TradingSession> {
-      sgxInstrument: {symbol: null},
-      dceInstrument: {symbol: null}
+      lhsInstrument: {symbol: null},
+      rhsInstrument: {symbol: null}
     };
     this.tradingSessionService.getTradingSession().subscribe(session => {
       console.log('Current session: ');
       console.log(session);
       if (session == null) {
         session = <TradingSession> {
-          sgxInstrument: {symbol: null},
-          dceInstrument: {symbol: null},
+          lhsInstrument: {symbol: null},
+          rhsInstrument: {symbol: null},
           date: this.dateToYMD(new Date())
         };
       } else if (session.sessionState === 'STOP') {
