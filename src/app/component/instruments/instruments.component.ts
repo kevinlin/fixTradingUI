@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {MatSnackBar} from '@angular/material';
-import {Observable} from 'rxjs/Observable';
-import {Instrument} from '../../model/instrument';
-import {InstrumentService} from '../../service/instrument.service';
-import {StompClientService} from '../../service/stomp-client.service';
-import {BaseComponent} from '../base-component';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
+import { Instrument } from '../../model/instrument';
+import { InstrumentService } from '../../service/instrument.service';
+import { StompClientService } from '../../service/stomp-client.service';
+import { BaseComponent } from '../base-component';
 
 @Component({
   selector: 'app-instruments',

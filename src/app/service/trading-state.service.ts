@@ -1,8 +1,8 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import {TradingState} from '../model/trading-state';
+import { TradingState } from '../model/trading-state';
 
 @Injectable()
 export class TradingStateService {

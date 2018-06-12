@@ -1,8 +1,8 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import {TradingParameters} from '../model/trading-parameters';
+import { TradingParameters } from '../model/trading-parameters';
 
 @Injectable()
 export class ParametersService {
