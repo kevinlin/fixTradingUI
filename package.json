@@ -25,6 +25,7 @@
     "@angular/router": "^6.0.3",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
+    "net": "^1.0.2",
     "numbro": "^2.0.6",
     "rxjs": "^6.0.0",
     "sockjs-client": "^1.1.5",
