@@ -2,7 +2,9 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {StompService} from './stomp.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class StompClientService implements OnDestroy {
 
   private connected = false;

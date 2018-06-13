@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
-import { TradingSession } from '../model/trading-session';
+import {TradingSession} from '../model/trading-session';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TradingSessionService {
 
   constructor(private httpClient: HttpClient) {

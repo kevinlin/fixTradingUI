@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
-import { Instrument } from '../model/instrument';
+import {Instrument} from '../model/instrument';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class InstrumentService {
 
   constructor(private httpClient: HttpClient) {

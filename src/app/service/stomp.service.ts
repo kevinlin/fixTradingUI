@@ -20,7 +20,9 @@ interface Config {
   queueCheckTime?: number;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class StompService {
 
   public config = null;
@@ -86,7 +88,7 @@ export class StompService {
   /**
    * Successfull connection to server
    */
-  public onConnect = (frame: any) => {
+  public onConnect(frame: any) {
     this.status = 'CONNECTED';
     this.resolveConPromise();
     this.timer = null;
@@ -96,7 +98,7 @@ export class StompService {
   /**
    * Unsuccessfull connection to server
    */
-  public onError = (error: string) => {
+  public onError(error: string) {
     console.error(`Error: ${error}`);
 
     // Check error and try reconnect

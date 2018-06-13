@@ -14,12 +14,6 @@ import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
 
 import {GlobalErrorHandler} from './service/global-error-handler';
-import {InstrumentService} from './service/instrument.service';
-import {ParametersService} from './service/parameters.service';
-import {StompClientService} from './service/stomp-client.service';
-import {StompService} from './service/stomp.service';
-import {TradingSessionService} from './service/trading-session.service';
-import {TradingStateService} from './service/trading-state.service';
 
 @NgModule({
   declarations: [
@@ -42,12 +36,12 @@ import {TradingStateService} from './service/trading-state.service';
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
     },
-    InstrumentService,
-    ParametersService,
-    StompClientService,
-    StompService,
-    TradingSessionService,
-    TradingStateService
+    // InstrumentService,
+    // ParametersService,
+    // StompClientService,
+    // StompService,
+    // TradingSessionService,
+    // TradingStateService
   ],
   bootstrap: [AppComponent]
 })
