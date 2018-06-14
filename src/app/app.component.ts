@@ -1,5 +1,8 @@
-import {Component} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +10,12 @@ import {NavigationEnd, Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
+
   navLinks = [
     {
       path: '/instruments',
@@ -25,21 +34,21 @@ export class AppComponent {
       label: 'Trading State'
     }
   ];
-  public title: string;
+  title: string;
 
-  constructor(private router: Router) {
+  private static capitalize(string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
     router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
           // console.log(event);
-          this.title = this.capitalize(event.url.slice(1));
+          this.title = AppComponent.capitalize(event.url.slice(1));
         }
       }
     );
-  }
-
-  private capitalize(string): string {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
 }
