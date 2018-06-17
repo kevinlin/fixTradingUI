@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
-import { LeftNavComponent } from './component/left-nav/left-nav.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
 import { TradingSessionComponent } from './component/trading-session/trading-session.component';
 import { TradingStateComponent } from './component/trading-state/trading-state.component';
+import { TradingStrategyListComponent } from './component/trading-strategy-list/trading-strategy-list.component';
 import { AppRoutingModule } from './module/app-routing.module';
 import { MaterialModule } from './module/material.module';
 import { GlobalErrorHandler } from './service/global-error-handler';
@@ -21,9 +21,10 @@ import { GlobalErrorHandler } from './service/global-error-handler';
     AppComponent,
     InstrumentsComponent,
     ParametersComponent,
+    SideNavComponent,
     TradingSessionComponent,
     TradingStateComponent,
-    SideNavComponent
+    TradingStrategyListComponent
   ],
   imports: [
     LayoutModule,
@@ -32,7 +33,7 @@ import { GlobalErrorHandler } from './service/global-error-handler';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule,
+    MaterialModule
   ],
   providers: [
     {

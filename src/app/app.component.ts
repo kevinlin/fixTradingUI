@@ -17,22 +17,11 @@ export class AppComponent {
     );
 
   navLinks = [
-    {
-      path: '/instruments',
-      label: 'Instruments'
-    },
-    {
-      path: '/parameters',
-      label: 'Trading Parameters'
-    },
-    {
-      path: '/tradingSession',
-      label: 'Trading Session'
-    },
-    {
-      path: '/tradingState',
-      label: 'Trading State'
-    }
+    { path: '/instruments', label: 'Instruments' },
+    { path: '/strategies', label: 'Trading Strategies' },
+    { path: '/parameters', label: 'Trading Parameters' },
+    { path: '/tradingSession', label: 'Trading Session' },
+    { path: '/tradingState', label: 'Trading State' }
   ];
   title: string;
 
