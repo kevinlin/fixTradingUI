@@ -1,26 +1,49 @@
 <div class="mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
-
-    <!-- Id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
     </ng-container>
-
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>策略名称</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="instruments">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>品种</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{row.symbol1Coefficient}} {{row.symbol1}}<br/>
+        {{row.symbol2Coefficient}} {{row.symbol2}}<br/>
+        {{row.symbol3Coefficient}} {{row.symbol3}} {{row.constantFactor}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="direction">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>利差方向</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.direction}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.state}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-raised-button color="accent" (click)="editStrategy(row)">Edit</button>&nbsp;
+        <button mat-raised-button color="warn" (click)="deleteStrategy(row)">Delete</button>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
-  <mat-paginator #paginator
-                 [length]="dataSource.data.length"
-                 [pageIndex]="0"
-                 [pageSize]="5"
-                 [pageSizeOptions]="[10, 25, 50]">
+  <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
   </mat-paginator>
 </div>
+<br/>
+<div class="action-row">
+  <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
+</div>
+<mat-divider></mat-divider>
+<p>&nbsp;</p>
+<app-trading-strategy-detail [selectedStrategy]="selectedStrategy"></app-trading-strategy-detail>
+<p>&nbsp;</p>

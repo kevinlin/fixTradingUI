@@ -1,48 +1,36 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
+import { merge, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/operators';
 
-// TODO: Replace this with your own data model type
-export interface TradingStrategyListItem {
-  name: string;
-  id: number;
-}
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: TradingStrategyListItem[] = [
-  { id: 1, name: 'Hydrogen' },
-  { id: 2, name: 'Helium' },
-  { id: 3, name: 'Lithium' },
-  { id: 4, name: 'Beryllium' },
-  { id: 5, name: 'Boron' },
-  { id: 6, name: 'Carbon' },
-  { id: 7, name: 'Nitrogen' },
-  { id: 8, name: 'Oxygen' },
-  { id: 9, name: 'Fluorine' },
-  { id: 10, name: 'Neon' },
-  { id: 11, name: 'Sodium' },
-  { id: 12, name: 'Magnesium' },
-  { id: 13, name: 'Aluminum' },
-  { id: 14, name: 'Silicon' },
-  { id: 15, name: 'Phosphorus' },
-  { id: 16, name: 'Sulfur' },
-  { id: 17, name: 'Chlorine' },
-  { id: 18, name: 'Argon' },
-  { id: 19, name: 'Potassium' },
-  { id: 20, name: 'Calcium' },
-];
+import { TradingStrategy } from '../../model/trading-strategy';
+import { TradingStrategyService } from '../../service/trading-strategy.service';
 
 /**
  * Data source for the TradingStrategyList view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class TradingStrategyListDataSource extends DataSource<TradingStrategyListItem> {
-  data: TradingStrategyListItem[] = EXAMPLE_DATA;
+export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
+  data: TradingStrategy[] = [];
+  dataSubject = new BehaviorSubject<TradingStrategy[]>([]);
 
-  constructor(private paginator: MatPaginator, private sort: MatSort) {
+  constructor(private tradingStrategyService: TradingStrategyService, private paginator: MatPaginator, private sort: MatSort) {
     super();
+    this.dataSubject.subscribe(newData => {
+      this.data = newData;
+    });
+    this.tradingStrategyService.dataChanged.subscribe(changedData => {
+      this.refreshData();
+    });
+    this.refreshData();
+  }
+
+  refreshData() {
+    this.tradingStrategyService.findAll().subscribe(result => {
+      this.dataSubject.next(result);
+    });
   }
 
   /**
@@ -50,11 +38,10 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategyLis
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<TradingStrategyListItem[]> {
-    // Combine everything that affects the rendered data into one update
-    // stream for the data-table to consume.
+  connect(): Observable<TradingStrategy[]> {
+    // Combine everything that affects the rendered data into one updatestream for the data-table to consume.
     const dataMutations = [
-      observableOf(this.data),
+      this.dataSubject,
       this.paginator.page,
       this.sort.sortChange
     ];
@@ -62,9 +49,11 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategyLis
     // Set the paginators length
     this.paginator.length = this.data.length;
 
-    return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
-    }));
+    return merge(...dataMutations).pipe(
+      map(() => {
+        return this.getPagedData(this.getSortedData([...this.data]));
+      })
+    );
   }
 
   /**
@@ -78,7 +67,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategyLis
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: TradingStrategyListItem[]) {
+  private getPagedData(data: TradingStrategy[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -87,7 +76,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategyLis
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: TradingStrategyListItem[]) {
+  private getSortedData(data: TradingStrategy[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -99,6 +88,10 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategyLis
           return compare(a.name, b.name, isAsc);
         case 'id':
           return compare(+a.id, +b.id, isAsc);
+        case 'instruments':
+          return compare(+a.symbol1, +b.symbol1, isAsc);
+        case 'diretion':
+          return compare(+a.direction, +b.direction, isAsc);
         default:
           return 0;
       }

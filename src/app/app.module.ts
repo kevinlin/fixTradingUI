@@ -11,6 +11,7 @@ import { ParametersComponent } from './component/parameters/parameters.component
 import { SideNavComponent } from './component/side-nav/side-nav.component';
 import { TradingSessionComponent } from './component/trading-session/trading-session.component';
 import { TradingStateComponent } from './component/trading-state/trading-state.component';
+import { TradingStrategyDetailComponent } from './component/trading-strategy-detail/trading-strategy-detail.component';
 import { TradingStrategyListComponent } from './component/trading-strategy-list/trading-strategy-list.component';
 import { AppRoutingModule } from './module/app-routing.module';
 import { MaterialModule } from './module/material.module';
@@ -24,6 +25,7 @@ import { GlobalErrorHandler } from './service/global-error-handler';
     SideNavComponent,
     TradingSessionComponent,
     TradingStateComponent,
+    TradingStrategyDetailComponent,
     TradingStrategyListComponent
   ],
   imports: [
