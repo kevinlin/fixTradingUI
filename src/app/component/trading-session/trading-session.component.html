@@ -1,6 +1,6 @@
 <div *ngIf="!loading; else elseBlock">
   <div class="row">
-    <div class="col-xs-4 form-container">
+    <div class="col form-container">
       <h3>Instrument Pair</h3>
       <mat-form-field>
         <mat-select [(ngModel)]="tradingSession.lhsInstrument.symbol" placeholder="期货合约1" required="true">
@@ -17,13 +17,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-xs-4 form-container">
+    <div class="col form-container">
       <h3>Session Details</h3>
       <mat-form-field>
         <input matInput [(ngModel)]="tradingSession.date" placeholder="交易日" type="date" required>
       </mat-form-field>
     </div>
-    <div class="col-xs-4">
+    <div class="col">
       <h3>Session State</h3>
       <h1><span class="label label-default" [ngClass]="{
           'label-success': tradingSession.sessionState === 'START',

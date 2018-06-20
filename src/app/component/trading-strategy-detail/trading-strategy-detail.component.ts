@@ -18,7 +18,7 @@ export class TradingStrategyDetailComponent implements OnInit {
 
   allInstruments: Observable<Instrument[]>;
   Direction = Direction;
-  DirectionValues = Object.values(Direction).filter(e => typeof(e) == "number");
+  DirectionValues = Object.values(Direction).filter(e => typeof(e) == "string");
 
   constructor(private instrumentService: InstrumentService, private tradingStrategyService: TradingStrategyService, private snackBar: MatSnackBar) {
     this.allInstruments = this.instrumentService.getAllInstruments();
@@ -30,7 +30,7 @@ export class TradingStrategyDetailComponent implements OnInit {
   saveStrategy() {
     this.tradingStrategyService.save(this.selectedStrategy).subscribe(result => {
       this.selectedStrategy = result;
-      this.snackBar.open('Trading Strategy: \'' + toDelete.name + '\'', 'deleted', { duration: 3000 });
+      this.snackBar.open('Trading Strategy: \'' + this.selectedStrategy.name + '\'', 'saved', { duration: 3000 });
     })
   }
 

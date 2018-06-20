@@ -1,27 +1,27 @@
 <div *ngIf="selectedStrategy">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col">
       <strong>ID: </strong>
       <span>{{selectedStrategy.id}}</span>
     </div>
-    <div class="col-xs-3">
+    <div class="col">
       <mat-form-field>
         <input matInput [(ngModel)]="selectedStrategy.name" name="name" placeholder="策略名" type="text">
       </mat-form-field>
     </div>
-    <div class="col-xs-3">
+    <div class="col">
       <div fxLayout fxLayoutAlign="center center" fxLayoutGap="30px">
-        <label>策略方向</label>
+        <label>利差方向</label>
         <mat-radio-group class="radio-group" [(ngModel)]="selectedStrategy.direction">
           <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.direction==choice" [value]="choice">
-            {{Direction[choice]}}
+            {{choice}}
           </mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col">
       <mat-form-field>
         <mat-select [(ngModel)]="selectedStrategy.symbol1" required="true" placeholder="期货合约1">
           <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
@@ -36,7 +36,7 @@
         <input matInput [(ngModel)]="selectedStrategy.symbol1LotsPerOrder" name="symbol1LotsPerOrder" required="true" placeholder="合约1交易手数" type="number" class="right-align">
       </mat-form-field>
     </div>
-    <div class="col-xs-3">
+    <div class="col">
       <mat-form-field>
         <mat-select [(ngModel)]="selectedStrategy.symbol2" required="true" placeholder="期货合约2">
           <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
@@ -51,7 +51,7 @@
         <input matInput [(ngModel)]="selectedStrategy.symbol2LotsPerOrder" name="symbol2LotsPerOrder" required="true" placeholder="合约2交易手数" type="number" class="right-align">
       </mat-form-field>
     </div>
-    <div class="col-xs-3">
+    <div class="col">
       <mat-form-field>
         <mat-select [(ngModel)]="selectedStrategy.symbol3" placeholder="期货合约3" required="false">
           <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
@@ -66,7 +66,7 @@
         <input matInput [(ngModel)]="selectedStrategy.symbol3LotsPerOrder" name="symbol3LotsPerOrder" placeholder="合约3交易手数" type="number" class="right-align" required="false">
       </mat-form-field>
     </div>
-    <div class="col-xs-3">
+    <div class="col">
       <mat-form-field>
         <input matInput [(ngModel)]="selectedStrategy.constantFactor" name="constantFactor" required="true" placeholder="常数项系数" type="number" class="right-align">
       </mat-form-field>

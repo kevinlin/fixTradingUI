@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-xs-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [(ngModel)]="tradingParameters.miscellaneousCharge" name="miscellaneousCharge" placeholder="港杂费" type="number" class="right-align">
       <span matPrefix>¥&nbsp;</span>
     </mat-form-field>
   </div>
-  <div class="col-xs-3 col-xs-offset-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [(ngModel)]="tradingParameters.average" name="average" placeholder="基准价差" type="number" class="right-align">
       <span matPrefix>¥&nbsp;</span>
@@ -13,7 +13,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [(ngModel)]="tradingParameters.shortStart" name="shortStart" placeholder="做空建仓参数" type="number" class="right-align">
       <span matPrefix>¥&nbsp;</span>
@@ -31,7 +31,7 @@
       <span matPrefix>¥&nbsp;</span>
     </mat-form-field>
   </div>
-  <div class="col-xs-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [ngModel]="tradingParameters.average + tradingParameters.shortStart" [readonly]="true" placeholder="触发做空建仓价差" type="number" class="right-align">
       <span matPrefix>>&nbsp;¥&nbsp;</span>
@@ -49,7 +49,7 @@
       <span matPrefix>>&nbsp;¥&nbsp;</span>
     </mat-form-field>
   </div>
-  <div class="col-xs-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [(ngModel)]="tradingParameters.longStart" name="longStart" placeholder="做多建仓参数" type="number" class="right-align">
       <span matPrefix>¥&nbsp;</span>
@@ -67,7 +67,7 @@
       <span matPrefix>¥&nbsp;</span>
     </mat-form-field>
   </div>
-  <div class="col-xs-3">
+  <div class="col">
     <mat-form-field>
       <input matInput [ngModel]="tradingParameters.average - tradingParameters.longStart" [readonly]="true" placeholder="触发做多建仓价差" type="number" class="right-align">
       <span matPrefix><&nbsp;¥&nbsp;</span>
