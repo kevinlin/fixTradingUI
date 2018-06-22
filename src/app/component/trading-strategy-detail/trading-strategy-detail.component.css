@@ -18,7 +18,7 @@ input.right-align {
 
 .radio-group {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .radio-button {
