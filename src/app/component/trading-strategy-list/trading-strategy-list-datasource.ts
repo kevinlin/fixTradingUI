@@ -1,7 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map } from 'rxjs/operators';
 
 import { TradingStrategy } from '../../model/trading-strategy';
@@ -14,22 +13,11 @@ import { TradingStrategyService } from '../../service/trading-strategy.service';
  */
 export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
   data: TradingStrategy[] = [];
-  dataSubject = new BehaviorSubject<TradingStrategy[]>([]);
 
   constructor(private tradingStrategyService: TradingStrategyService, private paginator: MatPaginator, private sort: MatSort) {
     super();
-    this.dataSubject.subscribe(newData => {
+    this.tradingStrategyService.dataSubject.subscribe(newData => {
       this.data = newData;
-    });
-    this.tradingStrategyService.dataChanged.subscribe(changedData => {
-      this.refreshData();
-    });
-    this.refreshData();
-  }
-
-  refreshData() {
-    this.tradingStrategyService.findAll().subscribe(result => {
-      this.dataSubject.next(result);
     });
   }
 
@@ -41,7 +29,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
   connect(): Observable<TradingStrategy[]> {
     // Combine everything that affects the rendered data into one updatestream for the data-table to consume.
     const dataMutations = [
-      this.dataSubject,
+      this.tradingStrategyService.dataSubject,
       this.paginator.page,
       this.sort.sortChange
     ];

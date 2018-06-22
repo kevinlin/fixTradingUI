@@ -6,21 +6,17 @@ export class TradingStrategy {
   direction: Direction;
   symbol1: string;
   symbol1Coefficient: number;
+  symbol1Direction: Direction;
+  symbol1LotRatio: number;
   symbol2: string;
   symbol2Coefficient: number;
+  symbol2Direction: Direction;
+  symbol2LotRatio: number;
   symbol3: string;
   symbol3Coefficient: number;
-  constantFactor: number;
-
-  // Execution default
-  symbol1Direction: Direction;
-  symbol1LotsPerOrder: number;
-  symbol2Direction: Direction;
-  symbol2LotsPerOrder: number;
   symbol3Direction: Direction;
-  symbol3LotsPerOrder: number;
-  startTime: string;
-  interval: number;
+  symbol3LotRatio: number;
+  constantFactor: number;
 
   // State
   state: string;

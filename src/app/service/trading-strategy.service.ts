@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { TradingStrategy } from '../model/trading-strategy';
 
@@ -9,15 +10,18 @@ import { TradingStrategy } from '../model/trading-strategy';
 })
 export class TradingStrategyService {
 
-  dataChanged = new Subject<TradingStrategy>();
+  public dataSubject = new BehaviorSubject<TradingStrategy[]>([]);
 
   constructor(private httpClient: HttpClient) {
+    this.refreshData();
   }
 
   private tradingStrategyUrl = '/api/tradingStrategy';
 
-  public findAll(): Observable<TradingStrategy[]> {
-    return this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all');
+  private refreshData() {
+    this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all').subscribe(result => {
+      this.dataSubject.next(result);
+    });
   }
 
   public findById(id: number): Observable<TradingStrategy> {
@@ -25,19 +29,19 @@ export class TradingStrategyService {
   }
 
   public delete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
-    const observable = this.httpClient.delete<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id);
-    observable.subscribe(result => {
-      this.dataChanged.next(tradingStrategy);
-    });
-    return observable;
+    return this.httpClient.delete<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id).pipe(
+      tap(data => {
+        this.refreshData();
+      })
+    );
   }
 
   public save(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
-    const observable = this.httpClient.post<TradingStrategy>(this.tradingStrategyUrl, tradingStrategy);
-    observable.subscribe(result => {
-      this.dataChanged.next(tradingStrategy);
-    });
-    return observable;
+    return this.httpClient.post<TradingStrategy>(this.tradingStrategyUrl, tradingStrategy).pipe(
+      tap(data => {
+        this.refreshData();
+      })
+    );
   }
 
 }
