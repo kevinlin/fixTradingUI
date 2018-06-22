@@ -4,6 +4,7 @@ export class TradingStrategy {
   id: number;
   name: string;
   direction: Direction;
+  marketDirection: Direction;
   symbol1: string;
   symbol1Coefficient: number;
   symbol1Direction: Direction;
