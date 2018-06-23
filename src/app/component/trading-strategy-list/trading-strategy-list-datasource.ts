@@ -7,8 +7,7 @@ import { TradingStrategy } from '../../model/trading-strategy';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
 
 /**
- * Data source for the TradingStrategyList view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
+ * Data source for the TradingStrategyList view. This class should encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
 export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
@@ -22,8 +21,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
   }
 
   /**
-   * Connect this data source to the table. The table will only update when
-   * the returned stream emits new items.
+   * Connect this data source to the table. The table will only update when the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<TradingStrategy[]> {
@@ -45,8 +43,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
   }
 
   /**
-   *  Called when the table is being destroyed. Use this function, to clean up
-   * any open connections or free any held resources that were set up during connect.
+   * Called when the table is being destroyed. Use this function, to clean up any open connections or free any held resources that were set up during connect.
    */
   disconnect() {
   }
@@ -61,8 +58,7 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
   }
 
   /**
-   * Sort the data (client-side). If you're using server-side sorting,
-   * this would be replaced by requesting the appropriate data from the server.
+   * Sort the data (client-side). If you're using server-side sorting, this would be replaced by requesting the appropriate data from the server.
    */
   private getSortedData(data: TradingStrategy[]) {
     if (!this.sort.active || this.sort.direction === '') {
@@ -72,14 +68,14 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name':
-          return compare(a.name, b.name, isAsc);
         case 'id':
           return compare(+a.id, +b.id, isAsc);
+        case 'name':
+          return compare(a.name, b.name, isAsc);
         case 'instruments':
-          return compare(+a.symbol1, +b.symbol1, isAsc);
-        case 'diretion':
-          return compare(+a.direction, +b.direction, isAsc);
+          return compare(a.symbol1, b.symbol1, isAsc);
+        case 'direction':
+          return compare(a.direction, b.direction, isAsc);
         default:
           return 0;
       }

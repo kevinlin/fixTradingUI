@@ -19,9 +19,13 @@ export class TradingStrategyService {
   private tradingStrategyUrl = '/api/tradingStrategy';
 
   private refreshData() {
-    this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all').subscribe(result => {
+    this.findAll().subscribe(result => {
       this.dataSubject.next(result);
     });
+  }
+
+  public findAll(): Observable<TradingStrategy[]> {
+    return this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all');
   }
 
   public findById(id: number): Observable<TradingStrategy> {
