@@ -9,10 +9,13 @@ import { AppComponent } from './app.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
+import { TradingExecutionDetailComponent } from './component/trading-execution-detail/trading-execution-detail.component';
+import { TradingExecutionListComponent } from './component/trading-execution-list/trading-execution-list.component';
 import { TradingSessionComponent } from './component/trading-session/trading-session.component';
 import { TradingStateComponent } from './component/trading-state/trading-state.component';
 import { TradingStrategyDetailComponent } from './component/trading-strategy-detail/trading-strategy-detail.component';
 import { TradingStrategyListComponent } from './component/trading-strategy-list/trading-strategy-list.component';
+import { TradingStrategyViewComponent } from './component/trading-strategy-view/trading-strategy-view.component';
 import { AppRoutingModule } from './module/app-routing.module';
 import { MaterialModule } from './module/material.module';
 import { GlobalErrorHandler } from './service/global-error-handler';
@@ -23,10 +26,13 @@ import { GlobalErrorHandler } from './service/global-error-handler';
     InstrumentsComponent,
     ParametersComponent,
     SideNavComponent,
+    TradingExecutionListComponent,
+    TradingExecutionDetailComponent,
     TradingSessionComponent,
     TradingStateComponent,
     TradingStrategyDetailComponent,
-    TradingStrategyListComponent
+    TradingStrategyListComponent,
+    TradingStrategyViewComponent
   ],
   imports: [
     LayoutModule,

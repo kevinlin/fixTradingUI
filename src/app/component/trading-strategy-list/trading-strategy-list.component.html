@@ -40,9 +40,11 @@
   </mat-paginator>
 </div>
 <br/>
-<div class="action-row">
-  <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
+<div *ngIf="selectedStrategy">
+  <div class="action-row">
+    <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
+  </div>
+  <br/>
+  <app-trading-strategy-detail [selectedStrategy]="selectedStrategy"></app-trading-strategy-detail>
 </div>
-<br/>
-<app-trading-strategy-detail [selectedStrategy]="selectedStrategy"></app-trading-strategy-detail>
 <p>&nbsp;</p>

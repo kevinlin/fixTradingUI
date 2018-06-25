@@ -17,7 +17,6 @@ export class TradingStrategyDetailComponent implements OnInit {
   @Input() selectedStrategy: TradingStrategy;
 
   allInstruments: Observable<Instrument[]>;
-  Direction = Direction;
   DirectionValues = Object.values(Direction).filter(e => typeof(e) == "string");
 
   constructor(private instrumentService: InstrumentService, private tradingStrategyService: TradingStrategyService, private snackBar: MatSnackBar) {

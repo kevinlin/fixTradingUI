@@ -1,113 +1,111 @@
-<div *ngIf="selectedStrategy">
-  <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar>
-        <mat-icon class="md-48">timeline</mat-icon>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="md-48">timeline</mat-icon>
+    </div>
+    <mat-card-title><h3>策略 - {{selectedStrategy.name}} ({{selectedStrategy.id}})</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.name" type="text" placeholder="策略名">
+        </mat-form-field>
       </div>
-      <mat-card-title><h3>策略 - {{selectedStrategy.name}} ({{selectedStrategy.id}})</h3></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.name" name="name" placeholder="策略名" type="text">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="direction">利差方向</label>
-            <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedStrategy.direction" [required]="true">
-              <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.direction==choice" [value]="choice">
-                {{choice}}
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="marketDirection">基本面</label>
-            <mat-radio-group id="marketDirection" class="radio-group" [(ngModel)]="selectedStrategy.marketDirection" [required]="true">
-              <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.marketDirection==choice" [value]="choice">
-                {{choice}}
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="direction">策略方向</label>
+          <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedStrategy.direction" [required]="true">
+            <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.direction==choice" [value]="choice">
+              {{choice}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field>
-            <mat-select [(ngModel)]="selectedStrategy.symbol1" placeholder="期货合约1" [required]="true">
-              <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
-                {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol1Coefficient" type="number" placeholder="合约1系数" class="right-align" [required]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol1LotRatio" type="number" placeholder="合约1交易手数" class="right-align" [required]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol1Direction" type="text" placeholder="合约1方向" [disabled]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol1Position" type="number" placeholder="合约1手数" [disabled]="true">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <mat-select [(ngModel)]="selectedStrategy.symbol2" placeholder="期货合约2" [required]="true">
-              <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
-                {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol2Coefficient" type="number" placeholder="合约2系数" class="right-align" [required]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol2LotRatio" type="number" placeholder="合约2交易手数" class="right-align" [required]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol2Direction" type="text" placeholder="合约2方向" [disabled]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol2Position" type="number" placeholder="合约2手数" [disabled]="true">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <mat-select [(ngModel)]="selectedStrategy.symbol3" placeholder="期货合约3" [required]="false">
-              <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
-                {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol3Coefficient" type="number" placeholder="合约3系数" class="right-align" [required]="false">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol3LotRatio" type="number" placeholder="合约3交易手数" class="right-align" [required]="false">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol3Direction" type="text" placeholder="合约3方向" [disabled]="true">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.symbol3Position" type="number" placeholder="合约3手数" [disabled]="true">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedStrategy.constantFactor" type="number" placeholder="常数项系数" class="right-align" [required]="true">
-          </mat-form-field>
+      <div class="col">
+        <div class="form-group">
+          <label for="marketDirection">基本面</label>
+          <mat-radio-group id="marketDirection" class="radio-group" [(ngModel)]="selectedStrategy.marketDirection" [required]="true">
+            <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.marketDirection==choice" [value]="choice">
+              {{choice}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="saveStrategy()">Save</button>&nbsp;
-      <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedStrategy.symbol1" placeholder="期货合约1" [required]="true">
+            <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
+              {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol1Coefficient" type="number" placeholder="合约1系数" class="right-align" [required]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol1LotRatio" type="number" placeholder="合约1交易手数" class="right-align" [required]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol1Direction" type="text" placeholder="合约1方向" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol1Position" type="number" placeholder="合约1手数" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedStrategy.symbol2" placeholder="期货合约2" [required]="true">
+            <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
+              {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol2Coefficient" type="number" placeholder="合约2系数" class="right-align" [required]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol2LotRatio" type="number" placeholder="合约2交易手数" class="right-align" [required]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol2Direction" type="text" placeholder="合约2方向" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol2Position" type="number" placeholder="合约2手数" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedStrategy.symbol3" placeholder="期货合约3" [required]="false">
+            <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
+              {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol3Coefficient" type="number" placeholder="合约3系数" class="right-align" [required]="false">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol3LotRatio" type="number" placeholder="合约3交易手数" class="right-align" [required]="false">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol3Direction" type="text" placeholder="合约3方向" [disabled]="true">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.symbol3Position" type="number" placeholder="合约3手数" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.constantFactor" type="number" placeholder="常数项系数" class="right-align" [required]="true">
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveStrategy()">Save</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
