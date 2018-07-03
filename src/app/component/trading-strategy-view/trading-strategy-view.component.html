@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="col">
+  <div class="col-3">
     <mat-form-field>
       <input matInput [(ngModel)]="selectedStrategy.name" type="text" placeholder="策略名" [disabled]="true">
     </mat-form-field>
     ({{selectedStrategy.id}})
   </div>
-  <div class="col">
+  <div class="col-3">
     <mat-form-field>
       <input matInput [(ngModel)]="selectedStrategy.direction" type="text" placeholder="策略方向" [disabled]="true">
     </mat-form-field>
   </div>
-  <div class="col">
+  <div class="col-6">
     <div class="form-group">
       <label>合约</label>
       <span class="form-control disabled">
