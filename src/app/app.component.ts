@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import * as LogRocket from 'logrocket';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -31,6 +32,8 @@ export class AppComponent {
   }
 
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+    LogRocket.init('rsvpaj/fixtrading');
+
     router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
