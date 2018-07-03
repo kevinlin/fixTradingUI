@@ -36,6 +36,7 @@ export class TradingExecutionListComponent implements OnInit {
 
   selectedStrategyChanged() {
     this.dataSource = new TradingExecutionListDataSource(this.selectedStrategy, this.tradingExecutionService, this.paginator, this.sort);
+    this.selectedExecution = null;
   }
 
   newExecution() {
@@ -44,6 +45,7 @@ export class TradingExecutionListComponent implements OnInit {
   }
 
   editExecution(toEdit: TradingExecution) {
+    this.selectedStrategy = toEdit.tradingStrategy;
     this.selectedExecution = toEdit;
   }
 
