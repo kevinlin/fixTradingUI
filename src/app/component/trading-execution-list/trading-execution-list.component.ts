@@ -20,9 +20,9 @@ export class TradingExecutionListComponent extends BaseComponent implements OnIn
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  private allStrategies: Observable<TradingStrategy[]>;
-  private selectedStrategy: TradingStrategy;
-  private selectedExecution: TradingExecution;
+  allStrategies: Observable<TradingStrategy[]>;
+  selectedStrategy: TradingStrategy;
+  selectedExecution: TradingExecution;
   dataSource: TradingExecutionListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
