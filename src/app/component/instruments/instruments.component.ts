@@ -14,7 +14,7 @@ import { BaseComponent } from '../base-component';
 })
 export class InstrumentsComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private instrumentService: InstrumentService) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private instrumentService: InstrumentService) {
     super(stompClient, snackBar);
   }
 
@@ -32,7 +32,6 @@ export class InstrumentsComponent extends BaseComponent implements OnInit, OnDes
 
   ngOnDestroy(): void {
     console.log('InstrumentsComponent onDestroy()->');
-    this.baseOnDestroy();
   }
 
 }

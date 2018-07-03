@@ -1,14 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {MatSnackBar} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { MatSnackBar } from '@angular/material';
+import { Message } from '@stomp/stompjs';
+import { componentDestroyed } from 'ng2-rx-componentdestroyed';
+import { takeUntil } from 'rxjs/operators';
 
-import {TradingParameters} from '../../model/trading-parameters';
-import {TradingState} from '../../model/trading-state';
-import {ParametersService} from '../../service/parameters.service';
-import {StompClientService} from '../../service/stomp-client.service';
-import {TradingSessionService} from '../../service/trading-session.service';
-import {TradingStateService} from '../../service/trading-state.service';
-import {BaseComponent} from '../base-component';
+import { TradingParameters } from '../../model/trading-parameters';
+import { TradingState } from '../../model/trading-state';
+import { ParametersService } from '../../service/parameters.service';
+import { StompClientService } from '../../service/stomp-client.service';
+import { TradingSessionService } from '../../service/trading-session.service';
+import { TradingStateService } from '../../service/trading-state.service';
+import { BaseComponent } from '../base-component';
 
 
 @Component({
@@ -25,8 +28,8 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
   shortSize: number;
   longSize: number;
 
-  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService,
-              private parametersService: ParametersService) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingSessionService: TradingSessionService,
+              private tradingStateService: TradingStateService, private parametersService: ParametersService) {
     super(stompClient, snackBar);
   }
 
@@ -48,14 +51,19 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
         // setInterval(() => {
         //   this.loadTradingState();
         // }, 5000);
-        this.stompClient.subscribeTradingState(state => {
-          this.onTradingStateChange(state);
-          this.snackBar.open('Trading State', 'changed', {duration: 3000});
-        });
-        this.stompClient.subscribeTradingParameters(parameters => {
-          this.tradingParameters = parameters;
-          this.snackBar.open('Trading Parameters', 'changed', {duration: 3000});
-        });
+        this.stompClient.subscribeTradingState()
+          .pipe(takeUntil(componentDestroyed(this)))
+          .subscribe((message: Message) => {
+            const state = JSON.parse(message.body);
+            this.onTradingStateChange(state);
+            this.snackBar.open('Trading State', 'changed', { duration: 3000 });
+          });
+        this.stompClient.subscribeTradingParameters()
+          .pipe(takeUntil(componentDestroyed(this)))
+          .subscribe((message: Message) => {
+            this.tradingParameters = JSON.parse(message.body);
+            this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
+          });
       } else {
         this.loading = false;
       }
@@ -66,10 +74,6 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
 
   ngOnDestroy(): void {
     console.log('TradingStateComponent onDestroy()->');
-    this.baseOnDestroy();
-
-    this.stompClient.unsubscribeTradingState();
-    this.stompClient.unsubscribeTradingParameters();
   }
 
   onKeyupShortExchangeRate(event: any) {

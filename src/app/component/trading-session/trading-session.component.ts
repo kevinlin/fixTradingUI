@@ -54,7 +54,6 @@ export class TradingSessionComponent extends BaseComponent implements OnInit, On
 
   ngOnDestroy(): void {
     console.log('TradingSessionComponent onDestroy()->');
-    this.baseOnDestroy();
   }
 
   startSession(): void {

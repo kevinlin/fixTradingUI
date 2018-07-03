@@ -4,8 +4,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { TradingExecution } from '../../model/trading-execution';
 
 import { TradingStrategy } from '../../model/trading-strategy';
+import { StompClientService } from '../../service/stomp-client.service';
 import { TradingExecutionService } from '../../service/trading-execution.service';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
+import { BaseComponent } from '../base-component';
 import { TradingExecutionListDataSource } from './trading-execution-list-datasource';
 
 @Component({
@@ -13,7 +15,7 @@ import { TradingExecutionListDataSource } from './trading-execution-list-datasou
   templateUrl: './trading-execution-list.component.html',
   styleUrls: ['./trading-execution-list.component.css']
 })
-export class TradingExecutionListComponent implements OnInit {
+export class TradingExecutionListComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -26,11 +28,14 @@ export class TradingExecutionListComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'strategy', 'date', 'executionAction', 'action'];
 
-  constructor(private tradingStrategyService: TradingStrategyService, private tradingExecutionService: TradingExecutionService, private snackBar: MatSnackBar) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService,
+              private tradingExecutionService: TradingExecutionService) {
+    super(stompClient, snackBar);
     this.allStrategies = tradingStrategyService.findAll();
   }
 
   ngOnInit() {
+    this.baseOnInit();
     this.dataSource = new TradingExecutionListDataSource(this.selectedStrategy, this.tradingExecutionService, this.paginator, this.sort);
   }
 

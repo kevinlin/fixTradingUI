@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { TradingStrategy } from '../../model/trading-strategy';
+import { StompClientService } from '../../service/stomp-client.service';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
+import { BaseComponent } from '../base-component';
 import { TradingStrategyListDataSource } from './trading-strategy-list-datasource';
 
 @Component({
@@ -9,7 +11,7 @@ import { TradingStrategyListDataSource } from './trading-strategy-list-datasourc
   templateUrl: './trading-strategy-list.component.html',
   styleUrls: ['./trading-strategy-list.component.css']
 })
-export class TradingStrategyListComponent implements OnInit {
+export class TradingStrategyListComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -20,10 +22,12 @@ export class TradingStrategyListComponent implements OnInit {
 
   selectedStrategy: TradingStrategy;
 
-  constructor(private tradingStrategyService: TradingStrategyService, private snackBar: MatSnackBar) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService) {
+    super(stompClient, snackBar);
   }
 
   ngOnInit() {
+    this.baseOnInit();
     this.dataSource = new TradingStrategyListDataSource(this.tradingStrategyService, this.paginator, this.sort);
   }
 
