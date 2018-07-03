@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.name" type="text" placeholder="策略名" [disabled]="true">
+    </mat-form-field>
+    ({{selectedStrategy.id}})
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.direction" type="text" placeholder="策略方向" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <div class="form-group">
+      <label>合约</label>
+      <span class="form-control disabled">
+        {{selectedStrategy.symbol1Coefficient}} {{selectedStrategy.symbol1}} {{selectedStrategy.symbol2Coefficient}} {{selectedStrategy.symbol2}} {{selectedStrategy.symbol3Coefficient}}
+        {{selectedStrategy.symbol3}} {{selectedStrategy.constantFactor}}
+      </span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol1Coefficient" type="number" placeholder="合约1系数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol1LotRatio" type="number" placeholder="合约1交易手数" class="right-align" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol2Coefficient" type="number" placeholder="合约2系数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol2LotRatio" type="number" placeholder="合约2交易手数" class="right-align" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol3Coefficient" type="number" placeholder="合约3系数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.symbol3LotRatio" type="number" placeholder="合约3交易手数" class="right-align" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.constantFactor" type="number" placeholder="常数项系数" class="right-align" [disabled]="true">
+    </mat-form-field>
+  </div>
+</div>
