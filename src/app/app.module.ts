@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
-import * as SockJS from 'sockjs-client';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -26,9 +25,10 @@ import { GlobalErrorHandler } from './service/global-error-handler';
 const stompConfig: StompConfig = {
   // Which server?
   // url: 'ws://127.0.0.1:15674/ws',
-  url: () => {
-    return new SockJS('/stomp');
-  },
+  url: 'ws://127.0.0.1:8080/stomp',
+  // url: () => {
+  //   return new SockJS('/stomp');
+  // },
 
   // Headers
   // Typical keys: login, passcode, host
