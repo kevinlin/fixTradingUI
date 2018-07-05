@@ -18,7 +18,7 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
 
   public dataSource: TradingStrategyListDataSource;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'instruments', 'direction', 'state', 'action'];
+  displayedColumns = ['id', 'name', 'instruments', 'marketDirection', 'positionDirection', 'units', 'action'];
 
   selectedStrategy: TradingStrategy;
 

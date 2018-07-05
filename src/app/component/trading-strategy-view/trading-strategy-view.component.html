@@ -1,21 +1,26 @@
 <div class="row">
-  <div class="col-3">
+  <div class="col-2">
     <mat-form-field>
       <input matInput [(ngModel)]="selectedStrategy.name" type="text" placeholder="策略名" [disabled]="true">
     </mat-form-field>
     ({{selectedStrategy.id}})
   </div>
-  <div class="col-3">
+  <div class="col-2">
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.direction" type="text" placeholder="策略方向" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.positionDirection" type="text" placeholder="持仓方向" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col-2">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.marketDirection" type="text" placeholder="基本面方向" [disabled]="true">
     </mat-form-field>
   </div>
   <div class="col-6">
     <div class="form-group">
-      <label>合约</label>
+      <label>合约价差公式</label>
       <span class="form-control disabled">
-        {{selectedStrategy.symbol1Coefficient}} {{selectedStrategy.symbol1}} {{selectedStrategy.symbol2Coefficient}} {{selectedStrategy.symbol2}} {{selectedStrategy.symbol3Coefficient}}
-        {{selectedStrategy.symbol3}} {{selectedStrategy.constantFactor}}
+        {{selectedStrategy.contract1Coefficient}} {{selectedStrategy.contract1Symbol}} {{selectedStrategy.contract2Coefficient}} {{selectedStrategy.contract2Symbol}} {{selectedStrategy.contract3Coefficient}}
+        {{selectedStrategy.contract3Symbol}} {{selectedStrategy.constantFactor}}
       </span>
     </div>
   </div>
@@ -23,26 +28,44 @@
 <div class="row">
   <div class="col">
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol1Coefficient" type="number" placeholder="合约1系数" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.contract1Symbol" type="text" placeholder="合约1代码" [disabled]="true">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol1LotRatio" type="number" placeholder="合约1交易手数" class="right-align" [disabled]="true">
-    </mat-form-field>
-  </div>
-  <div class="col">
-    <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol2Coefficient" type="number" placeholder="合约2系数" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.contract1Coefficient" type="number" placeholder="合约1系数" [disabled]="true">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol2LotRatio" type="number" placeholder="合约2交易手数" class="right-align" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.contract1LotsPerUnit" type="number" placeholder="合约1单位手数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract1Lots" type="number" placeholder="合约1 {{selectedStrategy.contract1Side}} 手数" class="right-align" [disabled]="true">
     </mat-form-field>
   </div>
   <div class="col">
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol3Coefficient" type="number" placeholder="合约3系数" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.contract2Symbol" type="text" placeholder="合约2代码" [disabled]="true">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="selectedStrategy.symbol3LotRatio" type="number" placeholder="合约3交易手数" class="right-align" [disabled]="true">
+      <input matInput [(ngModel)]="selectedStrategy.contract2Coefficient" type="number" placeholder="合约2系数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract2LotsPerUnit" type="number" placeholder="合约2单位手数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract2Lots" type="number" placeholder="合约2 {{selectedStrategy.contract2Side}} 手数" class="right-align" [disabled]="true">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract3Symbol" type="text" placeholder="合约3代码" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract3Coefficient" type="number" placeholder="合约3系数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract3LotsPerUnit" type="number" placeholder="合约3单位手数" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="selectedStrategy.contract3Lots" type="number" placeholder="合约3 {{selectedStrategy.contract3Side}} 手数" class="right-align" [disabled]="true">
     </mat-form-field>
   </div>
   <div class="col">

@@ -1,0 +1,65 @@
+<div *ngIf="selectedOperation">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon class="md-48">playlist_play</mat-icon>
+      </div>
+      <mat-card-title><h3>{{selectedOperation.tradingStrategy?.name}} ({{selectedOperation.id}})</h3></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="direction">方向</label>
+            <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true">
+              <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedOperation.direction==choice" [value]="choice">
+                {{choice}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="operationType">执行动作</label>
+            <mat-radio-group id="operationType" class="radio-group" [(ngModel)]="selectedOperation.operationType" [required]="true">
+              <mat-radio-button class="radio-button" *ngFor="let choice of OperationTypeValues" [checked]="selectedOperation.executionAction==choice" [value]="choice">
+                {{choice}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input matInput [(ngModel)]="selectedOperation.totalBatches" type="number" placeholder="执行批次" [required]="true">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput [(ngModel)]="selectedOperation.unitsPerBatch" type="number" placeholder="每批单位" [required]="true">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput [(ngModel)]="selectedOperation.startTime" type="time" placeholder="开始时间" [required]="true">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput [(ngModel)]="selectedOperation.interval" type="number" placeholder="执行间隔（分钟）" [required]="true">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="saveExecution()">Save</button>&nbsp;
+      <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -3,18 +3,18 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { TradingExecution } from '../../model/trading-execution';
+import { TradingOperation } from '../../model/trading-operation';
 import { TradingStrategy } from '../../model/trading-strategy';
-import { TradingExecutionService } from '../../service/trading-execution.service';
+import { TradingOperationService } from '../../service/trading-operation.service';
 
 /**
- * Data source for the TradingExecutionList view. This class should encapsulate all logic for fetching and manipulating the displayed data
+ * Data source for the TradingOperationList view. This class should encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class TradingExecutionListDataSource extends DataSource<TradingExecution> {
-  data: TradingExecution[] = [];
+export class TradingOperationListDataSource extends DataSource<TradingOperation> {
+  data: TradingOperation[] = [];
 
-  constructor(private selectedStratgy: TradingStrategy, private tradingExecutionService: TradingExecutionService, private paginator: MatPaginator, private sort: MatSort) {
+  constructor(private selectedStratgy: TradingStrategy, private tradingExecutionService: TradingOperationService, private paginator: MatPaginator, private sort: MatSort) {
     super();
     this.tradingExecutionService.dataSubject.subscribe(newData => {
       this.data = newData.filter(execution => {
@@ -27,7 +27,7 @@ export class TradingExecutionListDataSource extends DataSource<TradingExecution>
    * Connect this data source to the table. The table will only update when the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<TradingExecution[]> {
+  connect(): Observable<TradingOperation[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -55,7 +55,7 @@ export class TradingExecutionListDataSource extends DataSource<TradingExecution>
   /**
    * Paginate the data (client-side). If you're using server-side pagination, this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: TradingExecution[]) {
+  private getPagedData(data: TradingOperation[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -63,7 +63,7 @@ export class TradingExecutionListDataSource extends DataSource<TradingExecution>
   /**
    * Sort the data (client-side). If you're using server-side sorting, this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: TradingExecution[]) {
+  private getSortedData(data: TradingOperation[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -77,8 +77,12 @@ export class TradingExecutionListDataSource extends DataSource<TradingExecution>
           return compare(a.tradingStrategy.name, b.tradingStrategy.name, isAsc);
         case 'date':
           return compare(a.date, b.date, isAsc);
-        case 'executionAction':
-          return compare(a.executionAction, b.executionAction, isAsc);
+        case 'direction':
+          return compare(a.direction, b.direction, isAsc);
+        case 'operationState':
+          return compare(a.operationState, b.operationState, isAsc);
+        case 'operationType':
+          return compare(a.operationType, b.operationType, isAsc);
         default:
           return 0;
       }

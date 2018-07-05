@@ -1,31 +1,33 @@
-import { Direction } from './Direction';
+import { Direction } from './direction.enum';
 
 export class TradingStrategy {
+  // Strategy details
   id: number;
   name: string;
-  direction: Direction;
-  marketDirection: Direction;
-  symbol1: string;
-  symbol1Coefficient: number;
-  symbol1Direction: Direction;
-  symbol1LotRatio: number;
-  symbol2: string;
-  symbol2Coefficient: number;
-  symbol2Direction: Direction;
-  symbol2LotRatio: number;
-  symbol3: string;
-  symbol3Coefficient: number;
-  symbol3Direction: Direction;
-  symbol3LotRatio: number;
+
+  // Contract details
+  contract1Symbol: string;
+  contract1Coefficient: number;
+  contract1LotsPerUnit: number;
+  contract2Symbol: string;
+  contract2Coefficient: number;
+  contract2LotsPerUnit: number;
+  contract3Symbol: string;
+  contract3Coefficient: number;
+  contract3LotsPerUnit: number;
   constantFactor: number;
 
   // State
-  state: string;
-  symbol1Position: number;
-  symbol2Position: number;
-  symbol3Position: number;
+  marketDirection: Direction;
+  positionDirection: Direction;
+  units: number;
+  contract1Side: string;
+  contract1Lots: number;
+  contract2Side: string;
+  contract2Lots: number;
+  contract3Side: string;
+  contract3Lots: number;
 
   constructor() {
   }
-
 }

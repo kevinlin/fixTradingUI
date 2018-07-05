@@ -9,20 +9,24 @@
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="instruments">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>品种</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>合约价差公式</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        {{row.symbol1Coefficient}} {{row.symbol1}}<br/>
-        {{row.symbol2Coefficient}} {{row.symbol2}}<br/>
-        {{row.symbol3Coefficient}} {{row.symbol3}} {{row.constantFactor}}
+        {{row.contract1Coefficient}} {{row.contract1Symbol}}<br/>
+        {{row.contract2Coefficient}} {{row.contract2Symbol}}<br/>
+        {{row.contract3Coefficient}} {{row.contract3Symbol}} {{row.constantFactor}}
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="direction">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>利差方向</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.direction}}</mat-cell>
+    <ng-container matColumnDef="marketDirection">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>基本面方向</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.marketDirection}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="state">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.state}}</mat-cell>
+    <ng-container matColumnDef="positionDirection">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>持仓方向</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.positionDirection}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="units">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>持仓手数</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.units}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
@@ -40,11 +44,11 @@
   </mat-paginator>
 </div>
 <br/>
+<div class="action-row">
+  <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
+</div>
+<br/>
 <div *ngIf="selectedStrategy">
-  <div class="action-row">
-    <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
-  </div>
-  <br/>
   <app-trading-strategy-detail [selectedStrategy]="selectedStrategy"></app-trading-strategy-detail>
 </div>
 <p>&nbsp;</p>

@@ -20,9 +20,17 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.date}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="executionAction">
+    <ng-container matColumnDef="direction">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.executionAction}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.direction}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="operationType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.operationType}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="operationState">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.operationState}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
@@ -45,6 +53,6 @@
     <button mat-raised-button color="accent" (click)="newExecution()">New Execution</button>&nbsp;
   </div>
   <br/>
-  <app-trading-execution-detail [selectedExecution]="selectedExecution"></app-trading-execution-detail>
+  <app-trading-execution-detail [selectedOperation]="selectedOperation"></app-trading-execution-detail>
 </div>
 <p>&nbsp;</p>
