@@ -8,26 +8,25 @@
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col">
+        <div class="col-3">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true">
+            <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true" [disabled]="selectedOperation.isActive">
           </mat-form-field>
         </div>
-        <div class="col">
+        <div class="col-3">
           <div class="form-group">
-            <label for="direction">方向</label>
-            <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true">
-              <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedOperation.direction==choice" [value]="choice">
-                {{choice}}
-              </mat-radio-button>
-            </mat-radio-group>
+            <mat-form-field>
+              <mat-select [(ngModel)]="selectedOperation.operationType" placeholder="执行动作" [required]="true" [disabled]="selectedOperation.isActive">
+                <mat-option *ngFor="let choice of operationTypeValues" [value]="choice">{{displayLabelForOpType(choice)}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
-        <div class="col">
+        <div class="col-6" *ngIf="selectedOperation.operationType === 'OPEN'">
           <div class="form-group">
-            <label for="operationType">执行动作</label>
-            <mat-radio-group id="operationType" class="radio-group" [(ngModel)]="selectedOperation.operationType" [required]="true">
-              <mat-radio-button class="radio-button" *ngFor="let choice of OperationTypeValues" [checked]="selectedOperation.executionAction==choice" [value]="choice">
+            <label for="direction">方向</label>
+            <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isActive">
+              <mat-radio-button class="radio-button" *ngFor="let choice of directionValues" [checked]="selectedOperation.direction==choice" [value]="choice">
                 {{choice}}
               </mat-radio-button>
             </mat-radio-group>
@@ -37,28 +36,28 @@
       <div class="row">
         <div class="col">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.totalBatches" type="number" placeholder="执行批次" [required]="true">
+            <input matInput [(ngModel)]="selectedOperation.totalBatches" type="number" placeholder="执行批次" [required]="true" [disabled]="selectedOperation.isActive">
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.unitsPerBatch" type="number" placeholder="每批单位" [required]="true">
+            <input matInput [(ngModel)]="selectedOperation.unitsPerBatch" type="number" placeholder="每批单位" [required]="true" [disabled]="selectedOperation.isActive">
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.startTime" type="time" placeholder="开始时间" [required]="true">
+            <input matInput [(ngModel)]="selectedOperation.startTime" type="time" placeholder="开始时间" [required]="true" [disabled]="selectedOperation.isActive">
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.interval" type="number" placeholder="执行间隔（分钟）" [required]="true">
+            <input matInput [(ngModel)]="selectedOperation.interval" type="number" placeholder="执行间隔（分钟）" [required]="true" [disabled]="selectedOperation.isActive">
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="saveExecution()">Save</button>&nbsp;
+      <button mat-raised-button color="primary" (click)="saveExecution()" [disabled]="selectedOperation.isActive">Save</button>&nbsp;
       <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
     </mat-card-actions>
   </mat-card>

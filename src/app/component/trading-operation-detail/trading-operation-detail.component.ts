@@ -14,13 +14,43 @@ export class TradingOperationDetailComponent implements OnInit {
 
   @Input() selectedOperation: TradingOperation;
 
-  DirectionValues = Object.values(Direction).filter(e => typeof(e) == "string");
-  OperationTypeValues = Object.values(OperationType).filter(e => typeof(e) == "string");
+  operationTypeValues: any[];
+  directionValues: any[];
 
   constructor(private tradingOperationService: TradingOperationService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+    this.operationTypeValues = Object.values(OperationType)
+      .filter(e => typeof(e) == "string")
+      .filter(type => {
+        console.info(type);
+        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.positionDirection !== 'NEUTRAL') {
+          return type !== 'TRANSFER'
+        }
+        return true;
+      });
+    this.directionValues = Object.values(Direction)
+      .filter(e => typeof(e) == "string")
+      .filter(direction => {
+        if (direction === 'NEUTRAL') {
+          return false;
+        }
+        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.positionDirection !== 'NEUTRAL') {
+          return direction === this.selectedOperation.tradingStrategy.positionDirection;
+        }
+        return true;
+      });
+  }
+
+  displayLabelForOpType(opType: string): string {
+    if (opType === 'OPEN') {
+      return '建仓';
+    } else if (opType === 'CLOSE') {
+      return '平仓';
+    } else if (opType === 'TRANSFER') {
+      return '移仓';
+    }
   }
 
   saveExecution() {

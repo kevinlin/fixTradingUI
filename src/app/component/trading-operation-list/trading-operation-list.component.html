@@ -25,11 +25,11 @@
       <mat-cell *matCellDef="let row">{{row.direction}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="operationType">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.operationType}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="operationState">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.operationState}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="action">
@@ -49,6 +49,7 @@
 <br/>
 <div *ngIf="selectedStrategy">
   <app-trading-strategy-view [selectedStrategy]="selectedStrategy"></app-trading-strategy-view>
+  <br/>
   <div class="action-row">
     <button mat-raised-button color="accent" (click)="newExecution()">New Execution</button>&nbsp;
   </div>
