@@ -31,21 +31,27 @@ export class StompClientService implements OnDestroy {
 
   public subscribeNotification(): Observable<Message> {
     if (!this.notificationSubscription) {
-      this.notificationSubscription = this.stompService.subscribe('/topic/notification');
+      this.stompService.connectObservable.subscribe(e => {
+        this.notificationSubscription = this.stompService.subscribe('/topic/notification');
+      });
     }
     return this.notificationSubscription;
   }
 
   public subscribeTradingState(): Observable<Message> {
     if (!this.tradingStateSubscription) {
-      this.tradingStateSubscription = this.stompService.subscribe('/topic/tradingState');
+      this.stompService.connectObservable.subscribe(e => {
+        this.tradingStateSubscription = this.stompService.subscribe('/topic/tradingState');
+      });
     }
     return this.tradingStateSubscription;
   }
 
   public subscribeTradingParameters(): Observable<Message> {
     if (!this.tradingParametersSubscription) {
-      this.tradingParametersSubscription = this.stompService.subscribe('/topic/tradingParameters');
+      this.stompService.connectObservable.subscribe(e => {
+        this.tradingParametersSubscription = this.stompService.subscribe('/topic/tradingParameters');
+      });
     }
     return this.tradingParametersSubscription;
   }

@@ -18,12 +18,14 @@ export class BaseComponent implements OnDestroy {
   }
 
   protected baseOnInit() {
-    this.stompClient.subscribeNotification()
-      .pipe(takeUntil(componentDestroyed(this)))
-      .subscribe((message: Message) => {
-        const notification: Notification = JSON.parse(message.body);
-        this.snackBar.open(notification.message, notification.action, { duration: 3000 });
-      });
+    const observable = this.stompClient.subscribeNotification();
+    if (observable) {
+      observable.pipe(takeUntil(componentDestroyed(this)))
+        .subscribe((message: Message) => {
+          const notification: Notification = JSON.parse(message.body);
+          this.snackBar.open(notification.message, notification.action, { duration: 3000 });
+        });
+    }
   }
 
   protected handleHttpError(error) {
