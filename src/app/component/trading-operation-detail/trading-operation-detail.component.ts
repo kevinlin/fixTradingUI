@@ -25,7 +25,7 @@ export class TradingOperationDetailComponent implements OnInit {
       .filter(e => typeof(e) == "string")
       .filter(type => {
         console.info(type);
-        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.positionDirection !== 'NEUTRAL') {
+        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.isInPosition) {
           return type !== 'TRANSFER'
         }
         return true;
@@ -36,7 +36,7 @@ export class TradingOperationDetailComponent implements OnInit {
         if (direction === 'NEUTRAL') {
           return false;
         }
-        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.positionDirection !== 'NEUTRAL') {
+        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.isInPosition) {
           return direction === this.selectedOperation.tradingStrategy.positionDirection;
         }
         return true;

@@ -36,4 +36,8 @@ export class TradingStrategy {
     return this.state === 'ACTIVE';
   }
 
+  public isInPosition(): boolean {
+    return this.positionDirection != Direction.NEUTRAL;
+  }
+
 }
