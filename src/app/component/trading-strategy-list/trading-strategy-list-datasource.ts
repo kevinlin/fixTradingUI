@@ -74,8 +74,8 @@ export class TradingStrategyListDataSource extends DataSource<TradingStrategy> {
           return compare(a.name, b.name, isAsc);
         case 'instruments':
           return compare(a.contract1Symbol, b.contract1Symbol, isAsc);
-        case 'marketDirection':
-          return compare(a.marketDirection, b.marketDirection, isAsc);
+        case 'state':
+          return compare(a.state, b.state, isAsc);
         case 'positionDirection':
           return compare(a.positionDirection, b.positionDirection, isAsc);
         case 'units':

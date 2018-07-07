@@ -18,6 +18,7 @@ export class TradingStrategy {
   constantFactor: number;
 
   // State
+  state: string;
   marketDirection: Direction;
   positionDirection: Direction;
   units: number;
@@ -30,4 +31,9 @@ export class TradingStrategy {
 
   constructor() {
   }
+
+  public isActive(): boolean {
+    return this.state === 'ACTIVE';
+  }
+
 }
