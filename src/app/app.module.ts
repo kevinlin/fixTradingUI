@@ -1,6 +1,6 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +20,6 @@ import { TradingStrategyListComponent } from './component/trading-strategy-list/
 import { TradingStrategyViewComponent } from './component/trading-strategy-view/trading-strategy-view.component';
 import { AppRoutingModule } from './module/app-routing.module';
 import { MaterialModule } from './module/material.module';
-import { GlobalErrorHandler } from './service/global-error-handler';
 
 const stompConfig: StompConfig = {
   // Which server?
@@ -75,10 +74,10 @@ const stompConfig: StompConfig = {
     MaterialModule
   ],
   providers: [
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    },
+    // {
+    //   provide: ErrorHandler,
+    //   useClass: GlobalErrorHandler
+    // },
     StompService,
     {
       provide: StompConfig,
