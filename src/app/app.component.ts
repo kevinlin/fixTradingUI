@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import * as LogRocket from 'logrocket';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,9 @@ export class AppComponent {
   }
 
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
-    LogRocket.init('rsvpaj/fixtrading');
+    if (environment.production) {
+      LogRocket.init('rsvpaj/fixtrading');
+    }
 
     router.events.subscribe(
       event => {
