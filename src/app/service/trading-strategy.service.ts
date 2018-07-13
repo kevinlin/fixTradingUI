@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { TradingStrategy } from '../model/trading-strategy';
 
@@ -29,10 +29,6 @@ export class TradingStrategyService {
     return this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all');
   }
 
-  public findById(id: number): Observable<TradingStrategy> {
-    return this.httpClient.get<TradingStrategy>(this.tradingStrategyUrl + '/' + id);
-  }
-
   public delete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
     return this.httpClient.delete<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id).pipe(
       tap(data => {
@@ -43,9 +39,8 @@ export class TradingStrategyService {
 
   public save(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
     return this.httpClient.post<TradingStrategy>(this.tradingStrategyUrl, tradingStrategy).pipe(
-      tap(data => {
-        this.refreshData();
-      })
+      tap(data => this.refreshData()),
+      map(data => plainToClass(TradingStrategy, data))
     );
   }
 

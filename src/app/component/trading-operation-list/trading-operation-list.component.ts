@@ -50,12 +50,8 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   }
 
   editExecution(toEdit: TradingOperation) {
-    // this.selectedOperation = plainToClass(TradingOperation, toEdit);
     this.selectedOperation = toEdit;
-    console.log('editExecution()->selectedOperation:', this.selectedOperation);
-    // this.selectedStrategy = plainToClass(TradingStrategy, toEdit.tradingStrategy)
     this.selectedStrategy = toEdit.tradingStrategy;
-    console.log('editExecution()->selectedStrategy:', this.selectedStrategy);
   }
 
   deleteExecution(toDelete: TradingOperation) {
