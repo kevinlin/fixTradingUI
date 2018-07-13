@@ -31,7 +31,7 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService,
               private tradingOperationService: TradingOperationService) {
     super(stompClient, snackBar);
-    this.allStrategies = tradingStrategyService.findAll();
+    this.allStrategies = tradingStrategyService.dataSubject;
   }
 
   ngOnInit() {
@@ -50,8 +50,12 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   }
 
   editExecution(toEdit: TradingOperation) {
-    this.selectedStrategy = toEdit.tradingStrategy;
+    // this.selectedOperation = plainToClass(TradingOperation, toEdit);
     this.selectedOperation = toEdit;
+    console.log('editExecution()->selectedOperation:', this.selectedOperation);
+    // this.selectedStrategy = plainToClass(TradingStrategy, toEdit.tradingStrategy)
+    this.selectedStrategy = toEdit.tradingStrategy;
+    console.log('editExecution()->selectedStrategy:', this.selectedStrategy);
   }
 
   deleteExecution(toDelete: TradingOperation) {

@@ -24,6 +24,10 @@ export class TradingOperation {
   contract3Side: string;
   contract3Lots: number;
 
+  constructor() {
+    this.operationState = 'PENDING';
+  }
+
   public isActive(): boolean {
     return this.operationState !== 'PENDING';
   }

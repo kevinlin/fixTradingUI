@@ -30,6 +30,9 @@ export class TradingStrategy {
   contract3Lots: number;
 
   constructor() {
+    this.state = 'INITIALISED';
+    this.marketDirection = Direction.NEUTRAL;
+    this.positionDirection = Direction.NEUTRAL;
   }
 
   public isActive(): boolean {

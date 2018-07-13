@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { plainToClass } from "class-transformer";
+
 import { TradingStrategy } from '../../model/trading-strategy';
 import { StompClientService } from '../../service/stomp-client.service';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
@@ -36,7 +38,7 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
   }
 
   editStrategy(toEdit: TradingStrategy) {
-    this.selectedStrategy = toEdit;
+    this.selectedStrategy = plainToClass(TradingStrategy, toEdit);
   }
 
   deleteStrategy(toDelete: TradingStrategy) {

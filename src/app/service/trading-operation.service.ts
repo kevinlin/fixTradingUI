@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 import { BehaviorSubject, Observable } from 'rxjs/index';
 import { tap } from 'rxjs/operators';
 
@@ -20,7 +21,7 @@ export class TradingOperationService {
 
   private refreshData() {
     this.findAll().subscribe(result => {
-      this.dataSubject.next(result);
+      this.dataSubject.next(result.map(to => plainToClass(TradingOperation, to)));
     });
   }
 

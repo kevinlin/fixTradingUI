@@ -54,6 +54,8 @@
     <button mat-raised-button color="accent" (click)="newExecution()">New Execution</button>&nbsp;
   </div>
   <br/>
-  <app-trading-execution-detail [selectedOperation]="selectedOperation"></app-trading-execution-detail>
+  <div *ngIf="selectedOperation">
+    <app-trading-execution-detail [selectedOperation]="selectedOperation"></app-trading-execution-detail>
+  </div>
 </div>
 <p>&nbsp;</p>
