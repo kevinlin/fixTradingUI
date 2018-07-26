@@ -22,6 +22,7 @@ export class AppComponent {
     { path: '/instruments', label: 'Instruments' },
     { path: '/strategies', label: 'Trading Strategies' },
     { path: '/operations', label: 'Trading Operations' },
+    { path: '/executions', label: 'Trading Executions' },
     // { path: '/parameters', label: 'Trading Parameters' },
     // { path: '/tradingSession', label: 'Trading Session' },
     // { path: '/tradingState', label: 'Trading State' }

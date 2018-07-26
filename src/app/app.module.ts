@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
+import { TradingExecutionComponent } from './component/trading-execution/trading-execution.component';
 import { TradingOperationDetailComponent } from './component/trading-operation-detail/trading-operation-detail.component';
 import { TradingOperationListComponent } from './component/trading-operation-list/trading-operation-list.component';
 import { TradingSessionComponent } from './component/trading-session/trading-session.component';
@@ -62,7 +63,8 @@ const stompConfig: StompConfig = {
     TradingStateComponent,
     TradingStrategyDetailComponent,
     TradingStrategyListComponent,
-    TradingStrategyViewComponent
+    TradingStrategyViewComponent,
+    TradingExecutionComponent
   ],
   imports: [
     LayoutModule,
