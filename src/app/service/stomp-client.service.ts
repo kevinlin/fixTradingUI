@@ -11,6 +11,7 @@ export class StompClientService implements OnDestroy {
 
   private notificationSubscription: Observable<Message>;
   private latestMarketDataSubscription: Observable<Message>;
+  private todayOrdersDataSubscription: Observable<Message>;
   private tradingStateSubscription: Observable<Message>;
   private tradingParametersSubscription: Observable<Message>;
 
@@ -46,6 +47,15 @@ export class StompClientService implements OnDestroy {
       });
     }
     return this.latestMarketDataSubscription;
+  }
+
+  public subscribeTodayOrders(): Observable<Message> {
+    if (!this.todayOrdersDataSubscription) {
+      this.stompService.connectObservable.subscribe(e => {
+        this.todayOrdersDataSubscription = this.stompService.subscribe('/topic/order/today');
+      });
+    }
+    return this.todayOrdersDataSubscription;
   }
 
   public subscribeTradingState(): Observable<Message> {

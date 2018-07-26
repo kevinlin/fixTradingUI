@@ -2,10 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 
+import { TradingOperation } from '../../model/trading-operation';
 import { MarketDataService } from '../../service/market-data.service';
+import { OrderService } from '../../service/order.service';
 import { StompClientService } from '../../service/stomp-client.service';
 import { BaseComponent } from '../base-component';
 import { MarketDataTableDataSource } from './market-data-table-data-source';
+import { OrderTableDataSource } from './order-table-data-source';
 
 @Component({
   selector: 'trading-execution',
@@ -13,20 +16,28 @@ import { MarketDataTableDataSource } from './market-data-table-data-source';
   styleUrls: ['./trading-execution.component.css']
 })
 export class TradingExecutionComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  marketDataTableDataSource: MarketDataTableDataSource;
+  @ViewChild(MatPaginator) marketWatcherPaginator: MatPaginator;
+  @ViewChild(MatSort) marketWatcherSort: MatSort;
+  @ViewChild(MatPaginator) orderBlotterPaginator: MatPaginator;
+  @ViewChild(MatSort) orderBlotterSort: MatSort;
+
+  marketWatcherDataSource: MarketDataTableDataSource;
+  orderBlotterDataSource: OrderTableDataSource;
+  selectedOperation: TradingOperation;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  marketDataTableDisplayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime'];
+  marketWatcherDisplayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime'];
+  orderBlotterDisplayedColumns = ['date', 'strategy', 'clOrdID', 'orderID', 'side', 'price', 'size', 'transactTime'];
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private marketDataService: MarketDataService, private stompClientService: StompClientService) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private marketDataService: MarketDataService, private orderService: OrderService) {
     super(stompClient, snackBar);
     this.marketDataService.refreshAll();
+    this.orderService.refreshTodayOrders();
   }
 
   ngOnInit() {
-    this.marketDataTableDataSource = new MarketDataTableDataSource(this.marketDataService, this.paginator, this.sort);
+    this.marketWatcherDataSource = new MarketDataTableDataSource(this.marketDataService, this.marketWatcherPaginator, this.marketWatcherSort);
+    this.orderBlotterDataSource = new OrderTableDataSource(this.selectedOperation, this.orderService, this.orderBlotterPaginator, this.orderBlotterSort);
   }
 
 }

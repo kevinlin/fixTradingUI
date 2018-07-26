@@ -3,32 +3,36 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { MarketData } from '../../model/market-data';
-import { MarketDataService } from '../../service/market-data.service';
+import { Order } from '../../model/order';
+import { TradingOperation } from '../../model/trading-operation';
+import { OrderService } from '../../service/order.service';
 
 /**
- * Data source for the TradingExecution view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
+ * Data source for the TradingOperationList view. This class should encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class MarketDataTableDataSource extends DataSource<MarketData> {
-  data: MarketData[] = [];
+export class OrderTableDataSource extends DataSource<Order> {
+  data: Order[] = [];
 
-  constructor(private marketDataService: MarketDataService, private paginator: MatPaginator, private sort: MatSort) {
+  constructor(private selectedOperation: TradingOperation, private orderService: OrderService, private paginator: MatPaginator, private sort: MatSort) {
     super();
-    this.marketDataService.latestMarketDataSubject.subscribe(latestMarketData => this.data = latestMarketData);
-    this.marketDataService.refreshAll();
+    this.orderService.todayOrdersSubject.subscribe(newData => {
+      this.data = newData.filter(order => {
+        return !this.selectedOperation || order.tradingOperation.id === this.selectedOperation.id;
+      });
+    });
+    this.orderService.refreshTodayOrders();
   }
 
   /**
    * Connect this data source to the table. The table will only update when the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<MarketData[]> {
+  connect(): Observable<Order[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      this.marketDataService.latestMarketDataSubject,
+      this.orderService.todayOrdersSubject,
       this.paginator.page,
       this.sort.sortChange
     ];
@@ -36,9 +40,11 @@ export class MarketDataTableDataSource extends DataSource<MarketData> {
     // Set the paginators length
     this.paginator.length = this.data.length;
 
-    return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
-    }));
+    return merge(...dataMutations).pipe(
+      map(() => {
+          return this.getPagedData(this.getSortedData([...this.data]));
+        }
+      ));
   }
 
   /**
@@ -50,7 +56,7 @@ export class MarketDataTableDataSource extends DataSource<MarketData> {
   /**
    * Paginate the data (client-side). If you're using server-side pagination, this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: MarketData[]) {
+  private getPagedData(data: Order[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -58,7 +64,7 @@ export class MarketDataTableDataSource extends DataSource<MarketData> {
   /**
    * Sort the data (client-side). If you're using server-side sorting, this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: MarketData[]) {
+  private getSortedData(data: Order[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -66,20 +72,18 @@ export class MarketDataTableDataSource extends DataSource<MarketData> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'symbol':
-          return compare(a.symbol, b.symbol, isAsc);
-        case 'topBidPrice':
-          return compare(+a.bestBid.price, +b.bestBid.price, isAsc);
-        case 'topBidSize':
-          return compare(+a.bestBid.size, +b.bestBid.size, isAsc);
-        case 'topBidTime':
-          return compare(+a.bestBid.timestamp, +b.bestBid.timestamp, isAsc);
-        case 'topAskPrice':
-          return compare(+a.bestAsk.price, +b.bestAsk.price, isAsc);
-        case 'topAskSize':
-          return compare(+a.bestAsk.size, +b.bestAsk.size, isAsc);
-        case 'topAskTime':
-          return compare(+a.bestAsk.timestamp, +b.bestAsk.timestamp, isAsc);
+        case 'clOrdID':
+          return compare(+a.clOrdID, +b.clOrdID, isAsc);
+        case 'date':
+          return compare(a.date, b.date, isAsc);
+        case 'transactTime':
+          return compare(a.transactTime, b.transactTime, isAsc);
+        case 'side':
+          return compare(a.side, b.side, isAsc);
+        case 'price':
+          return compare(a.price, b.price, isAsc);
+        case 'size':
+          return compare(a.size, b.size, isAsc);
         default:
           return 0;
       }
