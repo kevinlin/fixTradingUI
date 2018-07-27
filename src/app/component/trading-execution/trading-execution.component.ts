@@ -27,7 +27,7 @@ export class TradingExecutionComponent extends BaseComponent implements OnInit, 
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   marketWatcherDisplayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime'];
-  orderBlotterDisplayedColumns = ['date', 'strategy', 'clOrdID', 'orderID', 'side', 'price', 'size', 'transactTime'];
+  orderBlotterDisplayedColumns = ['date', 'strategy', 'symbol', 'clOrdID', 'orderID', 'side', 'price', 'size', 'status', 'text', 'transactTime'];
 
   constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private marketDataService: MarketDataService, private orderService: OrderService) {
     super(stompClient, snackBar);

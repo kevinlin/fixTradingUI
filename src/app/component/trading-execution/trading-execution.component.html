@@ -49,6 +49,10 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Strategy</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.tradingOperation?.tradingStrategy?.name}}</mat-cell>
     </ng-container>
+    <ng-container matColumnDef="symbol">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.symbol}}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="clOrdID">
       <mat-header-cell *matHeaderCellDef mat-sort-header>ClOrdID</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.clOrdID}}</mat-cell>
@@ -68,6 +72,14 @@
     <ng-container matColumnDef="size">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.size}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.ordStatus}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="text">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Text</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.text}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="transactTime">
       <mat-header-cell *matHeaderCellDef mat-sort-header>TransactTime</mat-header-cell>
