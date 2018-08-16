@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { Direction } from '../../model/direction.enum';
-import { OperationType } from '../../model/operation-type.enum';
-import { TradingOperation } from '../../model/trading-operation';
-import { TradingOperationService } from '../../service/trading-operation.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
+import {Direction} from '../../model/direction.enum';
+import {OperationType} from '../../model/operation-type.enum';
+import {TradingOperation} from '../../model/trading-operation';
+import {TradingOperationService} from '../../service/trading-operation.service';
 
 @Component({
   selector: 'app-trading-execution-detail',
@@ -33,13 +33,7 @@ export class TradingOperationDetailComponent implements OnInit {
     this.directionValues = Object.values(Direction)
       .filter(e => typeof(e) == "string")
       .filter(direction => {
-        if (direction === 'NEUTRAL') {
-          return false;
-        }
-        if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.isInPosition) {
-          return direction === this.selectedOperation.tradingStrategy.positionDirection;
-        }
-        return true;
+        return direction !== 'NEUTRAL';
       });
   }
 
