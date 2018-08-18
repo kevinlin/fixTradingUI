@@ -2,8 +2,9 @@ import { TradingOperation } from "./trading-operation";
 
 export class TradingExecution {
 
-  constructor() {
-    this.state = 'PENDING';
+  constructor(symbol: string, side: string) {
+    this.symbol = symbol;
+    this.side = side;
   }
 
   id: number;

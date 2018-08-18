@@ -11,60 +11,52 @@ export class ExecutionTableComponent implements OnInit {
   @Input() symbol: string;
   @Input() executions: TradingExecution[];
 
-  columns: any[];
-  options: any;
+  columns = [
+    {
+      title: 'Symbol',
+      data: 'symbol',
+      type: 'text',
+      readOnly: true
+    },
+    {
+      title: 'Side',
+      data: 'side',
+      type: 'dropdown',
+      strict: true,
+      source: ['BID', 'ASK']
+    },
+    {
+      title: 'Time',
+      data: 'time',
+      type: 'time',
+      timeFormat: 'h:mm a',
+      correctFormat: true
+    },
+    {
+      title: 'Lots',
+      data: 'lots',
+      type: 'numeric',
+      format: '0,0'
+    },
+    {
+      title: 'State',
+      data: 'state',
+      type: 'text',
+      readOnly: true
+    }
+  ];
+  options = {
+    height: 488,
+    rowHeaders: false,
+    stretchH: 'none',
+    startRows: 20,
+    columnSorting: false,
+    contextMenu: true,
+    className: 'htCenter htMiddle',
+    readOnly: false
+  };
 
   constructor() {
-    this.columns = [
-      {
-        title: 'Symbol',
-        data: 'symbol',
-        type: 'text',
-        readOnly: true
-      },
-      {
-        title: 'Side',
-        data: 'side',
-        type: 'dropdown',
-        strict: true,
-        source: ['BID', 'ASK']
-      },
-      {
-        title: 'Time',
-        data: 'time',
-        type: 'time',
-        timeFormat: 'h:mm a',
-        correctFormat: true
-      },
-      {
-        title: 'Lots',
-        data: 'lots',
-        type: 'numeric',
-        format: '0,0'
-      },
-      {
-        title: 'ID',
-        data: 'id',
-        type: 'numeric',
-        readOnly: true
-      },
-      {
-        title: 'State',
-        data: 'state',
-        type: 'text',
-        readOnly: true
-      }
-    ];
-    this.options = {
-      height: 260,
-      rowHeaders: false,
-      stretchH: 'none',
-      startRows: 20,
-      columnSorting: false,
-      contextMenu: true,
-      className: 'htCenter htMiddle',
-      readOnly: false
-    };
   }
 
   ngOnInit() {
