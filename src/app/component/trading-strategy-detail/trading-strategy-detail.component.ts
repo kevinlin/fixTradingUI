@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs/index';
-import { Direction } from '../../model/direction.enum';
+import { Observable } from 'rxjs';
+
+import { Direction } from '../../model/enum/direction.enum';
 import { Instrument } from '../../model/instrument';
 import { TradingStrategy } from '../../model/trading-strategy';
 import { InstrumentService } from '../../service/instrument.service';

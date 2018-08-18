@@ -16,13 +16,18 @@
         <div class="col-3">
           <div class="form-group">
             <mat-form-field>
-              <mat-select [(ngModel)]="selectedOperation.operationType" placeholder="执行动作" [required]="true" [disabled]="selectedOperation.isActive()">
+              <mat-select
+                [(ngModel)]="selectedOperation.operationType"
+                [required]="true"
+                [disabled]="selectedOperation.isActive()"
+                (selectionChange)="operationTypeChange($event)"
+                placeholder="执行动作">
                 <mat-option *ngFor="let choice of operationTypeValues" [value]="choice">{{displayLabelForOpType(choice)}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-        <div class="col-6" *ngIf="selectedOperation.operationType == 'OPEN'">
+        <div class="col-6" *ngIf="selectedOperation.operationType">
           <div class="form-group">
             <label for="direction">方向</label>
             <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isActive()">

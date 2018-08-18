@@ -1,4 +1,6 @@
-import { Direction } from './direction.enum';
+import { Direction } from './enum/direction.enum';
+import { OrderSide } from './enum/order-side.enum';
+import { StrategyState } from './enum/strategy-state.enum';
 
 export class TradingStrategy {
   // Strategy details
@@ -18,19 +20,19 @@ export class TradingStrategy {
   constantFactor: number;
 
   // State
-  state: string;
+  state: StrategyState;
   marketDirection: Direction;
   positionDirection: Direction;
   units: number;
-  contract1Side: string;
+  contract1Side: OrderSide;
   contract1Lots: number;
-  contract2Side: string;
+  contract2Side: OrderSide;
   contract2Lots: number;
-  contract3Side: string;
+  contract3Side: OrderSide;
   contract3Lots: number;
 
   constructor() {
-    this.state = 'INITIALISED';
+    this.state = StrategyState.INITIALISED;
     this.marketDirection = Direction.NEUTRAL;
     this.positionDirection = Direction.NEUTRAL;
   }

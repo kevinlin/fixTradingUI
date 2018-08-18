@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatRadioChange, MatSnackBar } from '@angular/material';
+import { MatRadioChange, MatSelectChange, MatSnackBar } from '@angular/material';
 
-import { Direction } from '../../model/direction.enum';
-import { OperationType } from '../../model/operation-type.enum';
+import { Direction } from '../../model/enum/direction.enum';
+import { OperationType } from '../../model/enum/operation-type.enum';
+import { OrderSide } from '../../model/enum/order-side.enum';
 import { TradingExecution } from "../../model/trading-execution";
 import { TradingOperation } from '../../model/trading-operation';
 import { TradingOperationService } from '../../service/trading-operation.service';
@@ -29,7 +30,6 @@ export class TradingOperationDetailComponent implements OnInit {
     this.operationTypeValues = Object.values(OperationType)
       .filter(e => typeof(e) == "string")
       .filter(type => {
-        console.info(type);
         if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.isInPosition) {
           return type !== 'TRANSFER'
         }
@@ -52,25 +52,35 @@ export class TradingOperationDetailComponent implements OnInit {
     }
   }
 
-  isLongPosition(): boolean {
-    return (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
+  operationTypeChange($event: MatSelectChange) {
+    if ($event.value === 'CLOSE') {
+      this.selectedOperation.direction = this.selectedOperation.tradingStrategy.positionDirection === Direction.LONG ? Direction.SHORT : Direction.LONG;
+      console.log(this.selectedOperation.direction);
+    }
   }
 
   directionChange($event: MatRadioChange) {
     this.selectedOperation.direction = $event.value;
 
     const tradingStrategy = this.selectedOperation.tradingStrategy;
-    this.selectedOperation.contract1Side = (tradingStrategy.contract1Coefficient > 0) == this.isLongPosition() ? "BID" : "ASK";
-    this.selectedOperation.contract2Side = (tradingStrategy.contract2Coefficient > 0) == this.isLongPosition() ? "BID" : "ASK";
-    this.selectedOperation.contract3Side = (tradingStrategy.contract3Coefficient > 0) == this.isLongPosition() ? "BID" : "ASK";
+    this.selectedOperation.contract1Side = (tradingStrategy.contract1Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract2Side = (tradingStrategy.contract2Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract3Side = (tradingStrategy.contract3Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.initializeExecutions(tradingStrategy);
+  }
 
+  private isLongPosition(): boolean {
+    return (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
+  }
+
+  private initializeExecutions(tradingStrategy) {
     this.executions1 = [];
     this.executions2 = [];
     this.executions3 = [];
     for (let i = 0; i < 20; i++) {
-      this.executions1.push(new TradingExecution(tradingStrategy.contract1Symbol, this.selectedOperation.contract1Side));
-      this.executions2.push(new TradingExecution(tradingStrategy.contract2Symbol, this.selectedOperation.contract2Side));
-      this.executions3.push(new TradingExecution(tradingStrategy.contract3Symbol, this.selectedOperation.contract3Side));
+      this.executions1.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract1Symbol, this.selectedOperation.contract1Side));
+      this.executions2.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract2Symbol, this.selectedOperation.contract2Side));
+      this.executions3.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract3Symbol, this.selectedOperation.contract3Side));
     }
   }
 
