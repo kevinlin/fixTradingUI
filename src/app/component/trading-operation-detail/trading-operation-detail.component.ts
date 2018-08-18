@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {Direction} from '../../model/direction.enum';
-import {OperationType} from '../../model/operation-type.enum';
-import {TradingOperation} from '../../model/trading-operation';
-import {TradingOperationService} from '../../service/trading-operation.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+
+import { Direction } from '../../model/direction.enum';
+import { OperationType } from '../../model/operation-type.enum';
+import { TradingExecution } from "../../model/trading-execution";
+import { TradingOperation } from '../../model/trading-operation';
+import { TradingOperationService } from '../../service/trading-operation.service';
 
 @Component({
   selector: 'app-trading-execution-detail',
@@ -16,6 +18,7 @@ export class TradingOperationDetailComponent implements OnInit {
 
   operationTypeValues: any[];
   directionValues: any[];
+  data: TradingExecution[];
 
   constructor(private tradingOperationService: TradingOperationService, private snackBar: MatSnackBar) {
   }
@@ -50,7 +53,8 @@ export class TradingOperationDetailComponent implements OnInit {
   saveExecution() {
     this.tradingOperationService.save(this.selectedOperation).subscribe(result => {
       this.selectedOperation = result;
-      this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date, 'saved', { duration: 3000 });
+      this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-'
+        + this.selectedOperation.date, 'saved', { duration: 3000 });
     })
   }
 

@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HotTableModule } from "@handsontable/angular";
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { ExecutionTableComponent } from './component/execution-table/execution-table.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
@@ -64,7 +66,8 @@ const stompConfig: StompConfig = {
     TradingStrategyDetailComponent,
     TradingStrategyListComponent,
     TradingStrategyViewComponent,
-    TradingExecutionComponent
+    TradingExecutionComponent,
+    ExecutionTableComponent
   ],
   imports: [
     LayoutModule,
@@ -72,6 +75,7 @@ const stompConfig: StompConfig = {
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HotTableModule,
     AppRoutingModule,
     MaterialModule
   ],

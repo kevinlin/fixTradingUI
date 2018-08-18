@@ -55,6 +55,26 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract1Symbol"
+            [executions]="data">
+          </app-execution-table>
+        </div>
+        <div class="col-sm-3">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract2Symbol"
+            [executions]="data">
+          </app-execution-table>
+        </div>
+        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract3Symbol">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
+            [executions]="data">
+          </app-execution-table>
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="saveExecution()" [disabled]="selectedOperation.isActive()">Save</button>&nbsp;
