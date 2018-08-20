@@ -1,4 +1,4 @@
-import { Maturity } from './maturity';
+import {Maturity} from './maturity';
 
 export interface Instrument {
   productName: string;
@@ -6,4 +6,6 @@ export interface Instrument {
   currency: string;
   maturity: Maturity;
   symbol: string;
+  maturityDate: string;
+  minPriceIncrement: number;
 }

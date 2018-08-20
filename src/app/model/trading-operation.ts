@@ -1,5 +1,7 @@
-import { Direction } from './direction.enum';
-import { OperationType } from './operation-type.enum';
+import { Direction } from './enum/direction.enum';
+import { OperationState } from './enum/operation-state.enum';
+import { OperationType } from './enum/operation-type.enum';
+import { OrderSide } from './enum/order-side.enum';
 import { TradingStrategy } from './trading-strategy';
 
 export class TradingOperation {
@@ -9,7 +11,7 @@ export class TradingOperation {
   date: Date;
   direction: Direction;
   operationType: OperationType;
-  operationState: string;
+  operationState: OperationState;
 
   // Execution details
   totalBatches: number;
@@ -17,19 +19,19 @@ export class TradingOperation {
   unitsPerBatch: number;
   startTime: Date;
   interval: number;
-  contract1Side: string;
+  contract1Side: OrderSide;
   contract1Lots: number;
-  contract2Side: string;
+  contract2Side: OrderSide;
   contract2Lots: number;
-  contract3Side: string;
+  contract3Side: OrderSide;
   contract3Lots: number;
 
   constructor() {
-    this.operationState = 'PENDING';
+    this.operationState = OperationState.PENDING;
   }
 
   public isActive(): boolean {
-    return this.operationState !== 'PENDING';
+    return this.operationState !== OperationState.PENDING;
   }
 
 }
