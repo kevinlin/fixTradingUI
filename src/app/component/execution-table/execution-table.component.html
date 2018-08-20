@@ -1,4 +1,7 @@
-<h3>{{symbol}}</h3>
+<h3>
+  {{symbol}}
+  <small>Total Lots: {{sumLots()}}</small>
+</h3>
 <hot-table
   [hotId]="symbol"
   [data]="executions"

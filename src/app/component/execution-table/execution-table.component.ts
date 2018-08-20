@@ -62,6 +62,14 @@ export class ExecutionTableComponent implements OnInit {
   ngOnInit() {
   }
 
+  sumLots() {
+    if (!this.executions) {
+      return 0;
+    }
+
+    return this.executions.filter(e => e.lots).map(e => e.lots).reduce((l1, l2) => l1 + l2, 0);
+  }
+
   // Event handler
   onAfterChange = (hot: any, changes: any, source: any) => {
     console.log('onAfterChange()->', changes, hot, source);
