@@ -17,6 +17,15 @@ export class TradingStrategy {
   contract3Symbol: string;
   contract3Coefficient: number;
   contract3LotsPerUnit: number;
+  contract4Symbol: string;          
+  contract4Coefficient: number;
+  contract4LotsPerUnit: number;
+  contract5Symbol: string;
+  contract5Coefficient: number;
+  contract5LotsPerUnit: number;
+  contract6Symbol: string;
+  contract6Coefficient: number;
+  contract6LotsPerUnit: number;
   constantFactor: number;
 
   // State
@@ -30,6 +39,12 @@ export class TradingStrategy {
   contract2Lots: number;
   contract3Side: OrderSide;
   contract3Lots: number;
+  contract4Side: string;
+  contract4Lots: number;
+  contract5Side: string;
+  contract5Lots: number;
+  contract6Side: string;
+  contract6Lots: number;
 
   constructor() {
     this.state = StrategyState.INITIALISED;
