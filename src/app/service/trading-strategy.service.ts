@@ -21,7 +21,8 @@ export class TradingStrategyService {
 
   private refreshData() {
     this.findAll().subscribe(result => {
-      this.dataSubject.next(result.map(ts => plainToClass(TradingStrategy, ts)));
+      result = result.map(ts => plainToClass(TradingStrategy, ts));
+      return this.dataSubject.next(result);
     });
   }
 

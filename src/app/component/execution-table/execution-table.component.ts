@@ -29,7 +29,7 @@ export class ExecutionTableComponent implements OnInit {
       title: 'Time',
       data: 'time',
       type: 'time',
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm:ss',
       correctFormat: true
     },
     {
@@ -60,6 +60,14 @@ export class ExecutionTableComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  sumLots() {
+    if (!this.executions) {
+      return 0;
+    }
+
+    return this.executions.filter(e => e.lots).map(e => e.lots).reduce((l1, l2) => l1 + l2, 0);
   }
 
   // Event handler

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
-import { BehaviorSubject, Observable } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { TradingOperation } from '../model/trading-operation';
@@ -17,7 +17,7 @@ export class TradingOperationService {
     this.refreshData();
   }
 
-  private tradingExecutionUrl = '/api/tradingOperation';
+  private baseUrl = '/api/tradingOperation';
 
   private refreshData() {
     this.findAll().subscribe(result => {
@@ -26,11 +26,11 @@ export class TradingOperationService {
   }
 
   public findAll(): Observable<TradingOperation[]> {
-    return this.httpClient.get<TradingOperation[]>(this.tradingExecutionUrl + '/all');
+    return this.httpClient.get<TradingOperation[]>(this.baseUrl + '/all');
   }
 
   public delete(tradingOperation: TradingOperation): Observable<TradingOperation> {
-    return this.httpClient.delete<TradingOperation>(this.tradingExecutionUrl + '/' + tradingOperation.id).pipe(
+    return this.httpClient.delete<TradingOperation>(this.baseUrl + '/' + tradingOperation.id).pipe(
       tap(data => {
         this.refreshData();
       })
@@ -38,7 +38,7 @@ export class TradingOperationService {
   }
 
   public save(tradingOpearation: TradingOperation): Observable<TradingOperation> {
-    return this.httpClient.post<TradingOperation>(this.tradingExecutionUrl, tradingOpearation).pipe(
+    return this.httpClient.post<TradingOperation>(this.baseUrl, tradingOpearation).pipe(
       tap(data => this.refreshData()),
       map(data => plainToClass(TradingOperation, data))
     );
