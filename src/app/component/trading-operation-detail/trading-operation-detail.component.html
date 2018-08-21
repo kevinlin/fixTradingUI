@@ -69,19 +69,19 @@
         <div class="col-sm-3">
           <app-execution-table
             [symbol]="selectedOperation.tradingStrategy.contract1Symbol"
-            [executions]="executions1">
+            [executions]="selectedOperation.contract1Executions">
           </app-execution-table>
         </div>
         <div class="col-sm-3">
           <app-execution-table
             [symbol]="selectedOperation.tradingStrategy.contract2Symbol"
-            [executions]="executions2">
+            [executions]="selectedOperation.contract2Executions">
           </app-execution-table>
         </div>
         <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract3Symbol">
           <app-execution-table
             [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
-            [executions]="executions3">
+            [executions]="selectedOperation.contract3Executions">
           </app-execution-table>
         </div>
       </div>

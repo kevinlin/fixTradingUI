@@ -1,16 +1,14 @@
 import { OrderSide } from './enum/order-side.enum';
-import { TradingOperation } from "./trading-operation";
 
 export class TradingExecution {
 
-  constructor(tradingOperation: TradingOperation, symbol: string, side: OrderSide) {
-    this.tradingOperation = tradingOperation;
+  constructor(symbol: string, side: OrderSide) {
     this.symbol = symbol;
     this.side = side;
   }
 
   id: number;
-  tradingOperation: TradingOperation;
+  operationId: number;
   symbol: string;
   side: OrderSide;
   time: string;

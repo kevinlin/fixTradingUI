@@ -6,6 +6,7 @@ import { OperationType } from '../../model/enum/operation-type.enum';
 import { OrderSide } from '../../model/enum/order-side.enum';
 import { TradingExecution } from "../../model/trading-execution";
 import { TradingOperation } from '../../model/trading-operation';
+import { TradingExecutionService } from '../../service/trading-execution.service';
 import { TradingOperationService } from '../../service/trading-operation.service';
 
 @Component({
@@ -19,11 +20,8 @@ export class TradingOperationDetailComponent implements OnInit {
 
   operationTypeValues: any[];
   directionValues: any[];
-  executions1: TradingExecution[];
-  executions2: TradingExecution[];
-  executions3: TradingExecution[];
 
-  constructor(private tradingOperationService: TradingOperationService, private snackBar: MatSnackBar) {
+  constructor(private operationService: TradingOperationService, private executionService: TradingExecutionService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -40,6 +38,10 @@ export class TradingOperationDetailComponent implements OnInit {
       .filter(direction => {
         return direction !== 'NEUTRAL';
       });
+
+    this.executionService.findBy(this.selectedOperation).subscribe(executions => {
+      this.updateExecutions(executions);
+    });
   }
 
   displayLabelForOpType(opType: string): string {
@@ -62,37 +64,79 @@ export class TradingOperationDetailComponent implements OnInit {
   directionChange($event: MatRadioChange) {
     this.selectedOperation.direction = $event.value;
 
-    const tradingStrategy = this.selectedOperation.tradingStrategy;
-    this.selectedOperation.contract1Side = (tradingStrategy.contract1Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.selectedOperation.contract2Side = (tradingStrategy.contract2Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.selectedOperation.contract3Side = (tradingStrategy.contract3Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.initializeExecutions(tradingStrategy);
-  }
-
-  private isLongPosition(): boolean {
-    return (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
-  }
-
-  private initializeExecutions(tradingStrategy) {
-    this.executions1 = [];
-    this.executions2 = [];
-    this.executions3 = [];
-    for (let i = 0; i < 20; i++) {
-      this.executions1.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract1Symbol, this.selectedOperation.contract1Side));
-      this.executions2.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract2Symbol, this.selectedOperation.contract2Side));
-      this.executions3.push(new TradingExecution(this.selectedOperation, tradingStrategy.contract3Symbol, this.selectedOperation.contract3Side));
-    }
+    const strategy = this.selectedOperation.tradingStrategy;
+    this.selectedOperation.contract1Side = (strategy.contract1Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract2Side = (strategy.contract2Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract3Side = (strategy.contract3Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
+    this.initializeExecutions();
   }
 
   saveOperation() {
-    this.tradingOperationService.save(this.selectedOperation).subscribe(result => {
+    const executionsToSave = this.selectedOperation.contract1Executions.slice();
+    if (this.selectedOperation.contract2Executions) {
+      executionsToSave.concat(this.selectedOperation.contract2Executions.slice());
+    }
+    if (this.selectedOperation.contract2Executions) {
+      executionsToSave.concat(this.selectedOperation.contract3Executions.slice());
+    }
+
+    this.operationService.save(this.selectedOperation).subscribe(result => {
       this.selectedOperation = result;
-      this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-'
-        + this.selectedOperation.date, 'saved', { duration: 3000 });
+      executionsToSave.forEach(execution => {
+        execution.operationId = result.id
+      });
+      this.executionService.saveAll(executionsToSave).subscribe(result => {
+        this.updateExecutions(result);
+        this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-'
+          + this.selectedOperation.date, 'saved', { duration: 3000 });
+      });
     })
   }
 
   cancelChanges() {
     this.selectedOperation = null;
   }
+
+  private isLongPosition(): boolean {
+    return (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
+  }
+
+  private initializeExecutions() {
+    const strategy = this.selectedOperation.tradingStrategy;
+    this.selectedOperation.contract1Executions = this.fillWithDefault([], strategy.contract1Symbol, this.selectedOperation.contract1Side);
+    this.selectedOperation.contract2Executions = this.fillWithDefault([], strategy.contract2Symbol, this.selectedOperation.contract2Side);
+    this.selectedOperation.contract3Executions = this.fillWithDefault([], strategy.contract3Symbol, this.selectedOperation.contract3Side);
+  }
+
+  private updateExecutions(executions: TradingExecution[]) {
+    const groupedExecutions = this.groupBySymbol(executions);
+    const strategy = this.selectedOperation.tradingStrategy;
+    const compareStartTime = (a, b) => (a.startTime.getTime() - b.startTime.getTime());
+    const contract1Executions = groupedExecutions[strategy.contract1Symbol].sort(compareStartTime);
+    const contract2Executions = groupedExecutions[strategy.contract2Symbol].sort(compareStartTime);
+    const contract3Executions = groupedExecutions[strategy.contract3Symbol].sort(compareStartTime);
+    this.selectedOperation.contract1Executions = this.fillWithDefault(contract1Executions, strategy.contract1Symbol, this.selectedOperation.contract1Side);
+    this.selectedOperation.contract2Executions = this.fillWithDefault(contract2Executions, strategy.contract2Symbol, this.selectedOperation.contract2Side);
+    this.selectedOperation.contract3Executions = this.fillWithDefault(contract3Executions, strategy.contract3Symbol, this.selectedOperation.contract3Side);
+  }
+
+  private fillWithDefault(executions: TradingExecution[], symbol: string, side: OrderSide) {
+    for (let i = executions.length; i < 20; i++) {
+      executions.push(new TradingExecution(symbol, side));
+    }
+
+    return executions;
+  }
+
+  private groupBySymbol(executions: TradingExecution[]) {
+    return executions.reduce(function (groupBy, execution) {
+      const symbol = execution.symbol;
+      if (!groupBy[symbol]) {
+        groupBy[symbol] = [];
+      }
+      groupBy[symbol].push(execution);
+      return groupBy;
+    }, {});
+  }
+
 }

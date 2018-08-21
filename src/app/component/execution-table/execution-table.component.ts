@@ -29,7 +29,7 @@ export class ExecutionTableComponent implements OnInit {
       title: 'Time',
       data: 'time',
       type: 'time',
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm:ss',
       correctFormat: true
     },
     {
