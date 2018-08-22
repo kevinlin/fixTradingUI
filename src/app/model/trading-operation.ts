@@ -12,7 +12,7 @@ export class TradingOperation {
   date: Date;
   direction: Direction;
   operationType: OperationType;
-  operationState: OperationState;
+  state: OperationState;
 
   // Contract execution details
   contract1Side: OrderSide;
@@ -40,11 +40,11 @@ export class TradingOperation {
   contract6Lots: number;
 
   constructor() {
-    this.operationState = OperationState.PENDING;
+    this.state = OperationState.PENDING;
   }
 
   public isActive(): boolean {
-    return this.operationState !== OperationState.PENDING;
+    return this.state !== OperationState.PENDING;
   }
 
 }

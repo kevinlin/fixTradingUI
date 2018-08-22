@@ -26,7 +26,7 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   dataSource: TradingOperationListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'operationState', 'action'];
+  displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'state', 'action'];
 
   constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService,
               private tradingOperationService: TradingOperationService) {
