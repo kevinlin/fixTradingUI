@@ -14,23 +14,30 @@ export class TradingOperation {
   operationType: OperationType;
   operationState: OperationState;
 
-  // Execution details
-  // To delete start >>
-  totalBatches: number;
-  remainingBatches: number;
-  unitsPerBatch: number;
-  startTime: Date;
-  interval: number;
-  // To delete >>end
+  // Contract execution details
   contract1Side: OrderSide;
   contract1Executions: TradingExecution[];
   contract1Lots: number;
+
   contract2Side: OrderSide;
   contract2Executions: TradingExecution[];
   contract2Lots: number;
+
   contract3Side: OrderSide;
   contract3Executions: TradingExecution[];
   contract3Lots: number;
+
+  contract4Side: OrderSide;
+  contract4Executions: TradingExecution[];
+  contract4Lots: number;
+
+  contract5Side: OrderSide;
+  contract5Executions: TradingExecution[];
+  contract5Lots: number;
+
+  contract6Side: OrderSide;
+  contract6Executions: TradingExecution[];
+  contract6Lots: number;
 
   constructor() {
     this.operationState = OperationState.PENDING;

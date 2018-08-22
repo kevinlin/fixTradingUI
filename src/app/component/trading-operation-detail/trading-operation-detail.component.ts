@@ -39,6 +39,7 @@ export class TradingOperationDetailComponent implements OnInit {
         return direction !== 'NEUTRAL';
       });
 
+    // Initialize executions for every contract
     this.executionService.findBy(this.selectedOperation).subscribe(executions => {
       this.updateExecutions(executions);
     });
@@ -65,20 +66,47 @@ export class TradingOperationDetailComponent implements OnInit {
     this.selectedOperation.direction = $event.value;
 
     const strategy = this.selectedOperation.tradingStrategy;
-    this.selectedOperation.contract1Side = (strategy.contract1Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.selectedOperation.contract2Side = (strategy.contract2Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.selectedOperation.contract3Side = (strategy.contract3Coefficient > 0) == this.isLongPosition() ? OrderSide.BID : OrderSide.ASK;
-    this.initializeExecutions();
+    const isLong = (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
+    this.selectedOperation.contract1Side = (strategy.contract1Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract1Executions = this.fillWithDefault([], strategy.contract1Symbol, this.selectedOperation.contract1Side);
+
+    this.selectedOperation.contract2Side = (strategy.contract2Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract2Executions = this.fillWithDefault([], strategy.contract2Symbol, this.selectedOperation.contract2Side);
+
+    if (strategy.contract3Symbol) {
+      this.selectedOperation.contract3Side = (strategy.contract3Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract3Executions = this.fillWithDefault([], strategy.contract3Symbol, this.selectedOperation.contract3Side);
+    }
+    if (strategy.contract4Symbol) {
+      this.selectedOperation.contract4Side = (strategy.contract4Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract4Executions = this.fillWithDefault([], strategy.contract4Symbol, this.selectedOperation.contract4Side);
+    }
+    if (strategy.contract5Symbol) {
+      this.selectedOperation.contract5Side = (strategy.contract5Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract5Executions = this.fillWithDefault([], strategy.contract5Symbol, this.selectedOperation.contract5Side);
+    }
+    if (strategy.contract6Symbol) {
+      this.selectedOperation.contract6Side = (strategy.contract6Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+    }
+    this.selectedOperation.contract6Executions = this.fillWithDefault([], strategy.contract6Symbol, this.selectedOperation.contract6Side);
   }
 
   saveOperation() {
-    const executionsToSave = this.selectedOperation.contract1Executions.slice();
-    if (this.selectedOperation.contract2Executions) {
-      executionsToSave.concat(this.selectedOperation.contract2Executions.slice());
+    let executionsToSave = this.selectedOperation.contract1Executions.slice();
+    executionsToSave = executionsToSave.concat(this.selectedOperation.contract2Executions.slice());
+    if (this.selectedOperation.contract3Executions) {
+      executionsToSave = executionsToSave.concat(this.selectedOperation.contract3Executions.slice());
     }
-    if (this.selectedOperation.contract2Executions) {
-      executionsToSave.concat(this.selectedOperation.contract3Executions.slice());
+    if (this.selectedOperation.contract4Executions) {
+      executionsToSave = executionsToSave.concat(this.selectedOperation.contract4Executions.slice());
     }
+    if (this.selectedOperation.contract5Executions) {
+      executionsToSave = executionsToSave.concat(this.selectedOperation.contract5Executions.slice());
+    }
+    if (this.selectedOperation.contract6Executions) {
+      executionsToSave = executionsToSave.concat(this.selectedOperation.contract6Executions.slice());
+    }
+    executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
 
     this.operationService.save(this.selectedOperation).subscribe(result => {
       this.selectedOperation = result;
@@ -97,30 +125,29 @@ export class TradingOperationDetailComponent implements OnInit {
     this.selectedOperation = null;
   }
 
-  private isLongPosition(): boolean {
-    return (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
-  }
-
-  private initializeExecutions() {
-    const strategy = this.selectedOperation.tradingStrategy;
-    this.selectedOperation.contract1Executions = this.fillWithDefault([], strategy.contract1Symbol, this.selectedOperation.contract1Side);
-    this.selectedOperation.contract2Executions = this.fillWithDefault([], strategy.contract2Symbol, this.selectedOperation.contract2Side);
-    this.selectedOperation.contract3Executions = this.fillWithDefault([], strategy.contract3Symbol, this.selectedOperation.contract3Side);
-  }
-
   private updateExecutions(executions: TradingExecution[]) {
     const groupedExecutions = this.groupBySymbol(executions);
     const strategy = this.selectedOperation.tradingStrategy;
-    const compareStartTime = (a, b) => (a.startTime.getTime() - b.startTime.getTime());
-    const contract1Executions = groupedExecutions[strategy.contract1Symbol].sort(compareStartTime);
-    const contract2Executions = groupedExecutions[strategy.contract2Symbol].sort(compareStartTime);
-    const contract3Executions = groupedExecutions[strategy.contract3Symbol].sort(compareStartTime);
-    this.selectedOperation.contract1Executions = this.fillWithDefault(contract1Executions, strategy.contract1Symbol, this.selectedOperation.contract1Side);
-    this.selectedOperation.contract2Executions = this.fillWithDefault(contract2Executions, strategy.contract2Symbol, this.selectedOperation.contract2Side);
-    this.selectedOperation.contract3Executions = this.fillWithDefault(contract3Executions, strategy.contract3Symbol, this.selectedOperation.contract3Side);
+    this.selectedOperation.contract1Executions = this.fillWithDefault(groupedExecutions[strategy.contract1Symbol], strategy.contract1Symbol, this.selectedOperation.contract1Side);
+    this.selectedOperation.contract2Executions = this.fillWithDefault(groupedExecutions[strategy.contract2Symbol], strategy.contract2Symbol, this.selectedOperation.contract2Side);
+    if (strategy.contract3Symbol) {
+      this.selectedOperation.contract3Executions = this.fillWithDefault(groupedExecutions[strategy.contract3Symbol], strategy.contract3Symbol, this.selectedOperation.contract3Side);
+    }
+    if (strategy.contract4Symbol) {
+      this.selectedOperation.contract4Executions = this.fillWithDefault(groupedExecutions[strategy.contract4Symbol], strategy.contract4Symbol, this.selectedOperation.contract4Side);
+    }
+    if (strategy.contract5Symbol) {
+      this.selectedOperation.contract5Executions = this.fillWithDefault(groupedExecutions[strategy.contract5Symbol], strategy.contract5Symbol, this.selectedOperation.contract5Side);
+    }
+    if (strategy.contract6Symbol) {
+      this.selectedOperation.contract6Executions = this.fillWithDefault(groupedExecutions[strategy.contract6Symbol], strategy.contract6Symbol, this.selectedOperation.contract6Side);
+    }
   }
 
   private fillWithDefault(executions: TradingExecution[], symbol: string, side: OrderSide) {
+    if (!executions) {
+      executions = [];
+    }
     for (let i = executions.length; i < 20; i++) {
       executions.push(new TradingExecution(symbol, side));
     }

@@ -43,28 +43,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.totalBatches" type="number" placeholder="执行批次" [required]="true" [disabled]="selectedOperation.isActive()">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.unitsPerBatch" type="number" placeholder="每批单位" [required]="true" [disabled]="selectedOperation.isActive()">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.startTime" type="time" placeholder="开始时间" [required]="true" [disabled]="selectedOperation.isActive()">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.interval" type="number" placeholder="执行间隔（分钟）" [required]="true" [disabled]="selectedOperation.isActive()">
-          </mat-form-field>
-        </div>
-      </div>
       <div class="row" *ngIf="selectedOperation.operationType">
         <div class="col-sm-3">
           <app-execution-table
@@ -82,6 +60,24 @@
           <app-execution-table
             [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
             [executions]="selectedOperation.contract3Executions">
+          </app-execution-table>
+        </div>
+        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract4Symbol">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract4Symbol"
+            [executions]="selectedOperation.contract4Executions">
+          </app-execution-table>
+        </div>
+        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract5Symbol">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract5Symbol"
+            [executions]="selectedOperation.contract5Executions">
+          </app-execution-table>
+        </div>
+        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract6Symbol">
+          <app-execution-table
+            [symbol]="selectedOperation.tradingStrategy.contract6Symbol"
+            [executions]="selectedOperation.contract6Executions">
           </app-execution-table>
         </div>
       </div>

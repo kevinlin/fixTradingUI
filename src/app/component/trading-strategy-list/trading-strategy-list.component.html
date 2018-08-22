@@ -8,12 +8,16 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>策略名称</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="instruments">
+    <ng-container matColumnDef="contracts">
       <mat-header-cell *matHeaderCellDef mat-sort-header>合约价差公式</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        {{row.contract1Coefficient}} {{row.contract1Symbol}}<br/>
-        {{row.contract2Coefficient}} {{row.contract2Symbol}}<br/>
-        {{row.contract3Coefficient}} {{row.contract3Symbol}} {{row.constantFactor}}
+        {{row.contract1Coefficient}} * {{row.contract1Symbol}}<br/>
+        {{row.contract2Coefficient}} * {{row.contract2Symbol}}<br/>
+        <ng-container *ngIf="row.contract3Coefficient">{{row.contract3Coefficient}} * {{row.contract3Symbol}}<br/></ng-container>
+        <ng-container *ngIf="row.contract4Coefficient">{{row.contract4Coefficient}} * {{row.contract4Symbol}}<br/></ng-container>
+        <ng-container *ngIf="row.contract5Coefficient">{{row.contract5Coefficient}} * {{row.contract5Symbol}}<br/></ng-container>
+        <ng-container *ngIf="row.contract6Coefficient">{{row.contract6Coefficient}} * {{row.contract6Symbol}}<br/></ng-container>
+        {{row.constantFactor}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="state">
@@ -24,9 +28,9 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>持仓方向</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.positionDirection}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="units">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>持仓手数</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.units}}</mat-cell>
+    <ng-container matColumnDef="marketDirection">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>基本面方向</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.marketDirection}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
