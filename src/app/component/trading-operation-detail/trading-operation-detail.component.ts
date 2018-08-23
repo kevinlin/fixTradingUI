@@ -40,9 +40,11 @@ export class TradingOperationDetailComponent implements OnInit {
       });
 
     // Initialize executions for every contract
-    this.executionService.findBy(this.selectedOperation).subscribe(executions => {
-      this.updateExecutions(executions);
-    });
+    if (this.selectedOperation.id) {
+      this.executionService.findBy(this.selectedOperation).subscribe(executions => {
+        this.updateExecutions(executions);
+      });
+    }
   }
 
   displayLabelForOpType(opType: string): string {
