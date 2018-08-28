@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { Observable } from 'rxjs/internal/Observable';
 import { TradingOperation } from '../../model/trading-operation';
 
@@ -28,9 +28,9 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'state', 'action'];
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService,
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService,
               private tradingOperationService: TradingOperationService) {
-    super(stompClient, snackBar);
+    super(stompClient, snackBar, dialog);
     this.allStrategies = tradingStrategyService.dataSubject;
   }
 

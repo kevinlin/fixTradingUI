@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Message } from '@stomp/stompjs';
 import { componentDestroyed } from 'ng2-rx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
@@ -28,9 +28,9 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
   shortSize: number;
   longSize: number;
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingSessionService: TradingSessionService,
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingSessionService: TradingSessionService,
               private tradingStateService: TradingStateService, private parametersService: ParametersService) {
-    super(stompClient, snackBar);
+    super(stompClient, snackBar, dialog);
   }
 
   ngOnInit() {

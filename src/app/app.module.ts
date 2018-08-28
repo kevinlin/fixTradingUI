@@ -9,6 +9,7 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { AlertDialogComponent } from './component/alert-dialog/alert-dialog.component';
 import { ExecutionTableComponent } from './component/execution-table/execution-table.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
@@ -54,6 +55,16 @@ const stompConfig: StompConfig = {
 };
 
 @NgModule({
+  imports: [
+    LayoutModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HotTableModule,
+    AppRoutingModule,
+    MaterialModule
+  ],
   declarations: [
     AppComponent,
     InstrumentsComponent,
@@ -67,17 +78,11 @@ const stompConfig: StompConfig = {
     TradingStrategyListComponent,
     TradingStrategyViewComponent,
     TradingExecutionComponent,
-    ExecutionTableComponent
+    ExecutionTableComponent,
+    AlertDialogComponent
   ],
-  imports: [
-    LayoutModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HotTableModule,
-    AppRoutingModule,
-    MaterialModule
+  entryComponents: [
+    AlertDialogComponent
   ],
   providers: [
     // {

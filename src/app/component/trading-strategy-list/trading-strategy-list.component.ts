@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { plainToClass } from "class-transformer";
 
 import { TradingStrategy } from '../../model/trading-strategy';
@@ -24,8 +24,8 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
 
   selectedStrategy: TradingStrategy;
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private tradingStrategyService: TradingStrategyService) {
-    super(stompClient, snackBar);
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService) {
+    super(stompClient, snackBar, dialog);
   }
 
   ngOnInit() {

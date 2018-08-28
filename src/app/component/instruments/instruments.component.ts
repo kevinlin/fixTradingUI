@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Instrument } from '../../model/instrument';
 import { InstrumentService } from '../../service/instrument.service';
@@ -14,8 +14,8 @@ import { BaseComponent } from '../base-component';
 })
 export class InstrumentsComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private instrumentService: InstrumentService) {
-    super(stompClient, snackBar);
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private instrumentService: InstrumentService) {
+    super(stompClient, snackBar, dialog);
   }
 
   public shfeInstruments: Observable<Instrument[]>;

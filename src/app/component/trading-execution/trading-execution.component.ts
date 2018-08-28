@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 
 import { TradingOperation } from '../../model/trading-operation';
 import { MarketDataService } from '../../service/market-data.service';
@@ -29,8 +29,8 @@ export class TradingExecutionComponent extends BaseComponent implements OnInit, 
   marketWatcherDisplayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime'];
   orderBlotterDisplayedColumns = ['date', 'strategy', 'symbol', 'clOrdID', 'orderID', 'side', 'price', 'size', 'status', 'text', 'transactTime'];
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private marketDataService: MarketDataService, private orderService: OrderService) {
-    super(stompClient, snackBar);
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private marketDataService: MarketDataService, private orderService: OrderService) {
+    super(stompClient, snackBar, dialog);
     this.marketDataService.refreshAll();
     this.orderService.refreshTodayOrders();
   }

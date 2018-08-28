@@ -1,29 +1,43 @@
 import { OnDestroy } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Message } from '@stomp/stompjs';
 import { componentDestroyed } from 'ng2-rx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 
 import { Notification } from '../model/notification';
 import { StompClientService } from '../service/stomp-client.service';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 export class BaseComponent implements OnDestroy {
 
   public loading: boolean;
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar) {
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog) {
   }
 
   ngOnDestroy(): void {
   }
 
   protected baseOnInit() {
-    const observable = this.stompClient.subscribeNotification();
-    if (observable) {
-      observable.pipe(takeUntil(componentDestroyed(this)))
+    const notifiObservable = this.stompClient.subscribeNotification();
+    if (notifiObservable) {
+      notifiObservable.pipe(takeUntil(componentDestroyed(this)))
         .subscribe((message: Message) => {
           const notification: Notification = JSON.parse(message.body);
           this.snackBar.open(notification.message, notification.action, { duration: 3000 });
+        });
+    }
+    const alertObservable = this.stompClient.subscribeAlert();
+    if (alertObservable) {
+      alertObservable.pipe(takeUntil(componentDestroyed(this)))
+        .subscribe((message: Message) => {
+          const notification: Notification = JSON.parse(message.body);
+          const dialogRef = this.dialog.open(AlertDialogComponent, {
+            data: notification
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog is closed with result: ${result}`);
+          });
         });
     }
   }

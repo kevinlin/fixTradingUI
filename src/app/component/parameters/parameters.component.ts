@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Message } from '@stomp/stompjs';
 import { componentDestroyed } from 'ng2-rx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
@@ -17,8 +17,8 @@ import { BaseComponent } from '../base-component';
 })
 export class ParametersComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, private parametersService: ParametersService) {
-    super(stompClient, snackBar);
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private parametersService: ParametersService) {
+    super(stompClient, snackBar, dialog);
   }
 
   tradingParameters: TradingParameters;

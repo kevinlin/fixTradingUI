@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { Instrument } from '../../model/instrument';
@@ -17,8 +17,8 @@ import { BaseComponent } from '../base-component';
 })
 export class TradingSessionComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(stompClient: StompClientService, snackBar: MatSnackBar, private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
-    super(stompClient, snackBar);
+  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
+    super(stompClient, snackBar, dialog);
   }
 
   allInstruments: Observable<Instrument[]>;
@@ -30,16 +30,16 @@ export class TradingSessionComponent extends BaseComponent implements OnInit, On
     this.loading = true;
     this.allInstruments = this.instrumentService.getAllInstruments();
     this.tradingSession = <TradingSession> {
-      lhsInstrument: {symbol: null},
-      rhsInstrument: {symbol: null}
+      lhsInstrument: { symbol: null },
+      rhsInstrument: { symbol: null }
     };
     this.tradingSessionService.getTradingSession().subscribe(session => {
       console.log('Current session: ');
       console.log(session);
       if (session == null) {
         session = <TradingSession> {
-          lhsInstrument: {symbol: null},
-          rhsInstrument: {symbol: null},
+          lhsInstrument: { symbol: null },
+          rhsInstrument: { symbol: null },
           date: this.dateToYMD(new Date())
         };
       } else if (session.sessionState === 'STOP') {
@@ -82,7 +82,7 @@ export class TradingSessionComponent extends BaseComponent implements OnInit, On
   private onTradingSessionChange(session: TradingSession) {
     console.log(session);
     this.tradingSession = session;
-    this.snackBar.open('Trading Session', session.sessionState, {duration: 3000});
+    this.snackBar.open('Trading Session', session.sessionState, { duration: 3000 });
   }
 
 }

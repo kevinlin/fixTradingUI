@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 export class StompClientService implements OnDestroy {
 
   private notificationSubscription: Observable<Message>;
+  private alertSubscription: Observable<Message>;
   private latestMarketDataSubscription: Observable<Message>;
   private todayOrdersDataSubscription: Observable<Message>;
   private tradingStateSubscription: Observable<Message>;
@@ -38,6 +39,15 @@ export class StompClientService implements OnDestroy {
       });
     }
     return this.notificationSubscription;
+  }
+
+  public subscribeAlert(): Observable<Message> {
+    if (!this.alertSubscription) {
+      this.stompService.connectObservable.subscribe(e => {
+        this.alertSubscription = this.stompService.subscribe('/topic/alert');
+      });
+    }
+    return this.alertSubscription;
   }
 
   public subscribeLatestMarketData(): Observable<Message> {
