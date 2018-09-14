@@ -84,6 +84,8 @@ export class OrderTableDataSource extends DataSource<Order> {
           return compare(a.price, b.price, isAsc);
         case 'size':
           return compare(a.size, b.size, isAsc);
+        case 'status':
+          return compare(a.ordStatus, b.ordStatus, isAsc);
         default:
           return 0;
       }
