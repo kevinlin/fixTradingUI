@@ -1,90 +1,88 @@
-<div *ngIf="selectedOperation">
-  <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar>
-        <mat-icon class="md-48">playlist_play</mat-icon>
+<mat-card *ngIf="selectedOperation" class="mat-elevation-z8">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="md-48">playlist_play</mat-icon>
+    </div>
+    <mat-card-title><h3>{{selectedOperation.tradingStrategy?.name}} ({{selectedOperation.id}})</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true" [disabled]="selectedOperation.isActive()">
+        </mat-form-field>
       </div>
-      <mat-card-title><h3>{{selectedOperation.tradingStrategy?.name}} ({{selectedOperation.id}})</h3></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col-3">
+      <div class="col-3">
+        <div class="form-group">
           <mat-form-field>
-            <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true" [disabled]="selectedOperation.isActive()">
+            <mat-select
+              [(ngModel)]="selectedOperation.operationType"
+              [required]="true"
+              [disabled]="selectedOperation.isActive()"
+              (selectionChange)="operationTypeChange($event)"
+              placeholder="执行动作">
+              <mat-option *ngFor="let choice of operationTypeValues" [value]="choice">{{displayLabelForOpType(choice)}}</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-3">
-          <div class="form-group">
-            <mat-form-field>
-              <mat-select
-                [(ngModel)]="selectedOperation.operationType"
-                [required]="true"
-                [disabled]="selectedOperation.isActive()"
-                (selectionChange)="operationTypeChange($event)"
-                placeholder="执行动作">
-                <mat-option *ngFor="let choice of operationTypeValues" [value]="choice">{{displayLabelForOpType(choice)}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-6" *ngIf="selectedOperation.operationType">
-          <div class="form-group">
-            <label for="direction">方向</label>
-            <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isActive()">
-              <mat-radio-button
-                *ngFor="let choice of directionValues"
-                [value]="choice"
-                [checked]="selectedOperation.direction === choice"
-                (change)="directionChange($event)"
-                class="radio-button">
-                {{choice}}
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
+      </div>
+      <div class="col-6" *ngIf="selectedOperation.operationType">
+        <div class="form-group">
+          <label for="direction">方向</label>
+          <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isActive()">
+            <mat-radio-button
+              *ngFor="let choice of directionValues"
+              [value]="choice"
+              [checked]="selectedOperation.direction === choice"
+              (change)="directionChange($event)"
+              class="radio-button">
+              {{choice}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
-      <div class="row" *ngIf="selectedOperation.operationType">
-        <div class="col-sm-3">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract1Symbol"
-            [executions]="selectedOperation.contract1Executions">
-          </app-execution-table>
-        </div>
-        <div class="col-sm-3">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract2Symbol"
-            [executions]="selectedOperation.contract2Executions">
-          </app-execution-table>
-        </div>
-        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract3Symbol">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
-            [executions]="selectedOperation.contract3Executions">
-          </app-execution-table>
-        </div>
-        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract4Symbol">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract4Symbol"
-            [executions]="selectedOperation.contract4Executions">
-          </app-execution-table>
-        </div>
-        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract5Symbol">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract5Symbol"
-            [executions]="selectedOperation.contract5Executions">
-          </app-execution-table>
-        </div>
-        <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract6Symbol">
-          <app-execution-table
-            [symbol]="selectedOperation.tradingStrategy.contract6Symbol"
-            [executions]="selectedOperation.contract6Executions">
-          </app-execution-table>
-        </div>
+    </div>
+    <div class="row" *ngIf="selectedOperation.operationType">
+      <div class="col-sm-3">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract1Symbol"
+          [executions]="selectedOperation.contract1Executions">
+        </app-execution-table>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="saveOperation()" [disabled]="selectedOperation.isActive()">Save</button>&nbsp;
-      <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+      <div class="col-sm-3">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract2Symbol"
+          [executions]="selectedOperation.contract2Executions">
+        </app-execution-table>
+      </div>
+      <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract3Symbol">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
+          [executions]="selectedOperation.contract3Executions">
+        </app-execution-table>
+      </div>
+      <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract4Symbol">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract4Symbol"
+          [executions]="selectedOperation.contract4Executions">
+        </app-execution-table>
+      </div>
+      <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract5Symbol">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract5Symbol"
+          [executions]="selectedOperation.contract5Executions">
+        </app-execution-table>
+      </div>
+      <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract6Symbol">
+        <app-execution-table
+          [symbol]="selectedOperation.tradingStrategy.contract6Symbol"
+          [executions]="selectedOperation.contract6Executions">
+        </app-execution-table>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveOperation()" [disabled]="selectedOperation.isActive()">Save</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

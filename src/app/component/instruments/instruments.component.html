@@ -1,29 +1,37 @@
-<p>&nbsp;</p>
+<br/>
 <div class="row">
   <div class="col">
-    <mat-card>
-      <h3>SHFE Instruments</h3>
-      <mat-radio-group class="example-radio-group" [(ngModel)]="selectedShfeInstrument">
-        <div *ngFor="let instrument of shfeInstruments | async">
-          <mat-radio-button class="example-radio-button" [value]="instrument">
-            {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
-          </mat-radio-button>
-        </div>
-      </mat-radio-group>
-      <div class="example-selected-value">Your selected Instrument: {{selectedShfeInstrument | json}}</div>
+    <mat-card class="mat-elevation-z8">
+      <mat-card-header>
+        <h3>SHFE Instruments</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-radio-group class="example-radio-group" [(ngModel)]="selectedShfeInstrument">
+          <div *ngFor="let instrument of shfeInstruments | async">
+            <mat-radio-button class="example-radio-button" [value]="instrument">
+              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+        <div class="example-selected-value">Your selected Instrument: {{selectedShfeInstrument | json}}</div>
+      </mat-card-content>
     </mat-card>
   </div>
   <div class="col">
-    <mat-card>
-      <h3>DCE Instruments</h3>
-      <mat-radio-group class="example-radio-group" [(ngModel)]="selectedDceInstrument">
-        <div *ngFor="let instrument of dceInstruments | async">
-          <mat-radio-button class="example-radio-button" [value]="instrument">
-            {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
-          </mat-radio-button>
-        </div>
-      </mat-radio-group>
-      <div class="example-selected-value">Your selected Instrument: {{selectedDceInstrument | json}}</div>
+    <mat-card class="mat-elevation-z8">
+      <mat-card-header>
+        <h3>DCE Instruments</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-radio-group class="example-radio-group" [(ngModel)]="selectedDceInstrument">
+          <div *ngFor="let instrument of dceInstruments | async">
+            <mat-radio-button class="example-radio-button" [value]="instrument">
+              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+        <div class="example-selected-value">Your selected Instrument: {{selectedDceInstrument | json}}</div>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
