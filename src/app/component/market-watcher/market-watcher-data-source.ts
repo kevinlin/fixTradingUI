@@ -7,11 +7,9 @@ import { MarketData } from '../../model/market-data';
 import { MarketDataService } from '../../service/market-data.service';
 
 /**
- * Data source for the TradingExecution view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
- * (including sorting, pagination, and filtering).
+ * Data source for the MarketWatcher view. This class should encapsulate all logic for fetching and manipulating the displayed data (including sorting, pagination, and filtering).
  */
-export class MarketDataTableDataSource extends DataSource<MarketData> {
+export class MarketWatcherDataSource extends DataSource<MarketData> {
   data: MarketData[] = [];
 
   constructor(private marketDataService: MarketDataService, private paginator: MatPaginator, private sort: MatSort) {

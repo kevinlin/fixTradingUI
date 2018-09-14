@@ -8,10 +8,10 @@ import { TradingOperation } from '../../model/trading-operation';
 import { OrderService } from '../../service/order.service';
 
 /**
- * Data source for the TradingOperationList view. This class should encapsulate all logic for fetching and manipulating the displayed data
+ * Data source for the OrderBlotter view. This class should encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class OrderTableDataSource extends DataSource<Order> {
+export class OrderBlotterDataSource extends DataSource<Order> {
   data: Order[] = [];
 
   constructor(private selectedOperation: TradingOperation, private orderService: OrderService, private paginator: MatPaginator, private sort: MatSort) {
@@ -72,12 +72,16 @@ export class OrderTableDataSource extends DataSource<Order> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'clOrdID':
-          return compare(+a.clOrdID, +b.clOrdID, isAsc);
         case 'date':
           return compare(a.date, b.date, isAsc);
-        case 'transactTime':
-          return compare(a.transactTime, b.transactTime, isAsc);
+        case 'strategy':
+          return compare(a.tradingOperation.tradingStrategy.name, b.tradingOperation.tradingStrategy.name, isAsc);
+        case 'symbol':
+          return compare(a.symbol, b.symbol, isAsc);
+        case 'clOrdID':
+          return compare(+a.clOrdID, +b.clOrdID, isAsc);
+        case 'orderID':
+          return compare(+a.orderID, +b.orderID, isAsc);
         case 'side':
           return compare(a.side, b.side, isAsc);
         case 'price':
@@ -86,6 +90,10 @@ export class OrderTableDataSource extends DataSource<Order> {
           return compare(a.size, b.size, isAsc);
         case 'status':
           return compare(a.ordStatus, b.ordStatus, isAsc);
+        case 'text':
+          return compare(a.text, b.text, isAsc);
+        case 'transactTime':
+          return compare(a.transactTime, b.transactTime, isAsc);
         default:
           return 0;
       }

@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AlertDialogComponent } from './component/alert-dialog/alert-dialog.component';
 import { ExecutionTableComponent } from './component/execution-table/execution-table.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
+import { MarketWatcherComponent } from './component/market-watcher/market-watcher.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
 import { TradingExecutionComponent } from './component/trading-execution/trading-execution.component';
@@ -66,20 +67,21 @@ const stompConfig: StompConfig = {
     MaterialModule
   ],
   declarations: [
+    AlertDialogComponent,
     AppComponent,
+    ExecutionTableComponent,
     InstrumentsComponent,
+    MarketWatcherComponent,
     ParametersComponent,
     SideNavComponent,
-    TradingOperationListComponent,
+    TradingExecutionComponent,
     TradingOperationDetailComponent,
+    TradingOperationListComponent,
     TradingSessionComponent,
     TradingStateComponent,
     TradingStrategyDetailComponent,
     TradingStrategyListComponent,
-    TradingStrategyViewComponent,
-    TradingExecutionComponent,
-    ExecutionTableComponent,
-    AlertDialogComponent
+    TradingStrategyViewComponent
   ],
   entryComponents: [
     AlertDialogComponent

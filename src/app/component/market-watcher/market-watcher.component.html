@@ -1,0 +1,43 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <h3>市场最新行情</h3>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+      <ng-container matColumnDef="symbol">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.symbol}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topBidPrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Best Bid Price</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestBid?.price}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topBidSize">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestBid?.size}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topBidTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestBid?.timestamp | date:'HH:mm:ss.SSS'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topAskPrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Best Ask Price</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestAsk?.price}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topAskSize">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestAsk?.size}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="topAskTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bestAsk?.timestamp | date:'HH:mm:ss.SSS'}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
