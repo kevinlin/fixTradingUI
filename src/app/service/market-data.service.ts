@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Message } from '@stomp/stompjs';
-import { BehaviorSubject, Observable } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { MarketData } from '../model/market-data';
 import { StompClientService } from './stomp-client.service';
@@ -34,4 +35,21 @@ export class MarketDataService {
       this.latestMarketDataSubject.next(result);
     });
   }
+
+  public subscribe(symbol: String) {
+    return this.httpClient.get<MarketData[]>(this.marketDataUrl + '/subscription/' + symbol).pipe(
+      tap(() => {
+        this.refreshAll();
+      })
+    );
+  }
+
+  public unsubscribe(symbol: String) {
+    return this.httpClient.delete<MarketData[]>(this.marketDataUrl + '/subscription/' + symbol).pipe(
+      tap(() => {
+        this.refreshAll();
+      })
+    );
+  }
+
 }

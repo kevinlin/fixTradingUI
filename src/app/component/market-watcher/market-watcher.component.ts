@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { MarketData } from '../../model/market-data';
 import { MarketDataService } from '../../service/market-data.service';
 import { MarketWatcherDataSource } from './market-watcher-data-source';
 
@@ -15,14 +16,21 @@ export class MarketWatcherComponent implements OnInit {
   dataSource: MarketWatcherDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime'];
+  displayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime', 'unsubscribe'];
 
-  constructor(private marketDataService: MarketDataService) {
+  constructor(private marketDataService: MarketDataService, private snackBar: MatSnackBar) {
     this.marketDataService.refreshAll();
   }
 
   ngOnInit() {
     this.dataSource = new MarketWatcherDataSource(this.marketDataService, this.paginator, this.sort);
   }
+
+  unsubscribe(marketData: MarketData) {
+    this.marketDataService.unsubscribe(marketData.symbol).subscribe(result => {
+      this.snackBar.open('Market Data for: \'' + marketData.symbol + '\'', 'unsubscribed', { duration: 3000 });
+    });
+  }
+
 
 }

@@ -32,6 +32,12 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestAsk?.timestamp | date:'HH:mm:ss.SSS'}}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="unsubscribe">
+        <mat-header-cell *matHeaderCellDef>Unsubscribe</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-raised-button color="warn" (click)="unsubscribe(row)">Unsubscribe</button>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
