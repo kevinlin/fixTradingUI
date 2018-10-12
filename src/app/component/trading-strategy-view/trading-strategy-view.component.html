@@ -33,54 +33,30 @@
     <div class="row">
       <div class="col">
         <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract1LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract1Symbol}} 单位手数（{{selectedStrategy.contract1Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
-        <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract1Lots" type="number" placeholder="{{selectedStrategy.contract1Symbol}} {{selectedStrategy.contract1Side}} 手数" [disabled]="true">
         </mat-form-field>
       </div>
       <div class="col">
-        <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract2LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract2Symbol}} 单位手数（{{selectedStrategy.contract2Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
         <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract2Lots" type="number" placeholder="{{selectedStrategy.contract2Symbol}} {{selectedStrategy.contract2Side}} 手数" [disabled]="true">
         </mat-form-field>
       </div>
       <div class="col" *ngIf="selectedStrategy.contract3Symbol">
         <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract3LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract3Symbol}} 单位手数（{{selectedStrategy.contract3Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
-        <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract3Lots" type="number" placeholder="{{selectedStrategy.contract3Symbol}} {{selectedStrategy.contract3Side}} 手数" [disabled]="true">
         </mat-form-field>
       </div>
       <div class="col" *ngIf="selectedStrategy.contract4Symbol">
-        <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract4LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract4Symbol}} 单位手数（{{selectedStrategy.contract4Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
         <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract4Lots" type="number" placeholder="{{selectedStrategy.contract4Symbol}} {{selectedStrategy.contract4Side}} 手数" [disabled]="true">
         </mat-form-field>
       </div>
       <div class="col" *ngIf="selectedStrategy.contract5Symbol">
         <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract5LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract5Symbol}} 单位手数（{{selectedStrategy.contract5Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
-        <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract5Lots" type="number" placeholder="{{selectedStrategy.contract5Symbol}} {{selectedStrategy.contract5Side}} 手数" [disabled]="true">
         </mat-form-field>
       </div>
       <div class="col" *ngIf="selectedStrategy.contract6Symbol">
-        <mat-form-field>
-          <input matInput [(ngModel)]="selectedStrategy.contract6LotsPerUnit" type="number" placeholder="{{selectedStrategy.contract6Symbol}} 单位手数（{{selectedStrategy.contract6Coefficient}}）"
-                 [disabled]="true">
-        </mat-form-field>
         <mat-form-field>
           <input matInput [(ngModel)]="selectedStrategy.contract6Lots" type="number" placeholder="{{selectedStrategy.contract6Symbol}} {{selectedStrategy.contract6Side}} 手数" [disabled]="true">
         </mat-form-field>
