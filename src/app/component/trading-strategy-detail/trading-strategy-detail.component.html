@@ -25,7 +25,7 @@
       <div class="col">
         <div class="form-group">
           <label for="marketDirection">基本面方向</label>
-          <mat-radio-group id="marketDirection" class="radio-group" [(ngModel)]="selectedStrategy.marketDirection" [required]="true" [disabled]="selectedStrategy.isActive()">
+          <mat-radio-group id="marketDirection" class="radio-group" [(ngModel)]="selectedStrategy.marketDirection" [required]="true">
             <mat-radio-button class="radio-button" *ngFor="let choice of DirectionValues" [checked]="selectedStrategy.marketDirection==choice" [value]="choice">
               {{choice}}
             </mat-radio-button>
@@ -49,6 +49,7 @@
       <div class="col">
         <mat-form-field>
           <mat-select [(ngModel)]="selectedStrategy.contract2Symbol" placeholder="合约2" [required]="true" [disabled]="selectedStrategy.isActive()">
+            <mat-option [value]="null">None</mat-option>
             <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
               {{instrument.symbol}} {{instrument.productName}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
             </mat-option>
@@ -61,6 +62,7 @@
       <div class="col">
         <mat-form-field>
           <mat-select [(ngModel)]="selectedStrategy.contract3Symbol" placeholder="合约3" [required]="false" [disabled]="selectedStrategy.isActive()">
+            <mat-option [value]="null">None</mat-option>
             <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
               {{instrument.symbol}} {{instrument.productName}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
             </mat-option>
@@ -73,6 +75,7 @@
        <div class="col">
         <mat-form-field>
           <mat-select [(ngModel)]="selectedStrategy.contract4Symbol" placeholder="合约4" [required]="false" [disabled]="selectedStrategy.isActive()">
+            <mat-option [value]="null">None</mat-option>
             <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
               {{instrument.symbol}} {{instrument.productName}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
             </mat-option>
@@ -85,6 +88,7 @@
 	  <div class="col">
         <mat-form-field>
           <mat-select [(ngModel)]="selectedStrategy.contract5Symbol" placeholder="合约5" [required]="false" [disabled]="selectedStrategy.isActive()">
+            <mat-option [value]="null">None</mat-option>
             <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
               {{instrument.symbol}} {{instrument.productName}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
             </mat-option>
@@ -97,6 +101,7 @@
 	  <div class="col">
         <mat-form-field>
           <mat-select [(ngModel)]="selectedStrategy.contract6Symbol" placeholder="合约6" [required]="false" [disabled]="selectedStrategy.isActive()">
+            <mat-option [value]="null">None</mat-option>
             <mat-option *ngFor="let instrument of allInstruments | async" [value]="instrument.symbol">
               {{instrument.symbol}} {{instrument.productName}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
             </mat-option>
@@ -114,7 +119,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="saveStrategy()" [disabled]="selectedStrategy.isActive()">Save</button>&nbsp;
+    <button mat-raised-button color="primary" (click)="saveStrategy()">Save</button>&nbsp;
     <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
   </mat-card-actions>
 </mat-card>

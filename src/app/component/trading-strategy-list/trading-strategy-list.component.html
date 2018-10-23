@@ -38,7 +38,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
           <button mat-raised-button color="primary" (click)="editStrategy(row)">Edit</button>&nbsp;
-          <button mat-raised-button color="warn" (click)="deleteStrategy(row)">Delete</button>
+          <button mat-raised-button color="warn" [disabled]="row.isActive()" (click)="deleteStrategy(row)">Delete</button>
         </mat-cell>
       </ng-container>
 
