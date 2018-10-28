@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HotTableModule } from "@handsontable/angular";
+import { HotTableModule } from '@handsontable/angular';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 import { environment } from '../environments/environment';
@@ -25,6 +25,7 @@ import { TradingStrategyListComponent } from './component/trading-strategy-list/
 import { TradingStrategyViewComponent } from './component/trading-strategy-view/trading-strategy-view.component';
 import { AppRoutingModule } from './module/app-routing.module';
 import { MaterialModule } from './module/material.module';
+import { ToastModule } from './toast/toast-module';
 
 const stompConfig: StompConfig = {
   // Which server?
@@ -64,7 +65,8 @@ const stompConfig: StompConfig = {
     BrowserAnimationsModule,
     HotTableModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ToastModule.forRoot()
   ],
   declarations: [
     AlertDialogComponent,
