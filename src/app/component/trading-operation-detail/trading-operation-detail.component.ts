@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatRadioChange, MatSelectChange, MatSnackBar } from '@angular/material';
+import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
+import { MatRadioChange, MatSelectChange } from '@angular/material';
 
+import { AppComponent } from '../../app.component';
 import { Direction } from '../../model/enum/direction.enum';
 import { OperationType } from '../../model/enum/operation-type.enum';
 import { OrderSide } from '../../model/enum/order-side.enum';
@@ -8,6 +9,7 @@ import { TradingExecution } from "../../model/trading-execution";
 import { TradingOperation } from '../../model/trading-operation';
 import { TradingExecutionService } from '../../service/trading-execution.service';
 import { TradingOperationService } from '../../service/trading-operation.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 
 @Component({
   selector: 'app-trading-execution-detail',
@@ -21,7 +23,8 @@ export class TradingOperationDetailComponent implements OnInit {
   operationTypeValues: any[];
   directionValues: any[];
 
-  constructor(private operationService: TradingOperationService, private executionService: TradingExecutionService, private snackBar: MatSnackBar) {
+  constructor(private operationService: TradingOperationService, private executionService: TradingExecutionService, private toastr: ToastsManager, private appRef: ApplicationRef) {
+    this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);
   }
 
   ngOnInit() {
@@ -117,8 +120,8 @@ export class TradingOperationDetailComponent implements OnInit {
       });
       this.executionService.saveAll(executionsToSave).subscribe(result => {
         this.updateExecutions(result);
-        this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-'
-          + this.selectedOperation.date, 'saved', { duration: 3000 });
+        // this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date, 'saved', { duration: 3000 });
+        this.toastr.success('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date + ' saved.');
       });
     })
   }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Message } from '@stomp/stompjs';
 import { componentDestroyed } from 'ng2-rx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { ParametersService } from '../../service/parameters.service';
 import { StompClientService } from '../../service/stomp-client.service';
 import { TradingSessionService } from '../../service/trading-session.service';
 import { TradingStateService } from '../../service/trading-state.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 import { BaseComponent } from '../base-component';
 
 
@@ -28,9 +29,9 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
   shortSize: number;
   longSize: number;
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingSessionService: TradingSessionService,
-              private tradingStateService: TradingStateService, private parametersService: ParametersService) {
-    super(stompClient, snackBar, dialog);
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
+              private tradingSessionService: TradingSessionService, private tradingStateService: TradingStateService, private parametersService: ParametersService) {
+    super(stompClient, toastr, appRef, dialog);
   }
 
   ngOnInit() {
@@ -56,13 +57,15 @@ export class TradingStateComponent extends BaseComponent implements OnInit, OnDe
           .subscribe((message: Message) => {
             const state = JSON.parse(message.body);
             this.onTradingStateChange(state);
-            this.snackBar.open('Trading State', 'changed', { duration: 3000 });
+            // this.snackBar.open('Trading State', 'changed', { duration: 3000 });
+            this.toastr.info('Trading State changed.');
           });
         this.stompClient.subscribeTradingParameters()
           .pipe(takeUntil(componentDestroyed(this)))
           .subscribe((message: Message) => {
             this.tradingParameters = JSON.parse(message.body);
-            this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
+            // this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
+            this.toastr.info('Trading Parameters changed.');
           });
       } else {
         this.loading = false;

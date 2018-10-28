@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { Instrument } from '../../model/instrument';
@@ -8,6 +8,7 @@ import { TradingSession } from '../../model/trading-session';
 import { InstrumentService } from '../../service/instrument.service';
 import { StompClientService } from '../../service/stomp-client.service';
 import { TradingSessionService } from '../../service/trading-session.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 import { BaseComponent } from '../base-component';
 
 @Component({
@@ -17,8 +18,9 @@ import { BaseComponent } from '../base-component';
 })
 export class TradingSessionComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
-    super(stompClient, snackBar, dialog);
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
+              private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
+    super(stompClient, toastr, appRef, dialog);
   }
 
   allInstruments: Observable<Instrument[]>;
@@ -82,7 +84,8 @@ export class TradingSessionComponent extends BaseComponent implements OnInit, On
   private onTradingSessionChange(session: TradingSession) {
     console.log(session);
     this.tradingSession = session;
-    this.snackBar.open('Trading Session', session.sessionState, { duration: 3000 });
+    // this.snackBar.open('Trading Session', session.sessionState, { duration: 3000 });
+    this.toastr.info('Trading Session ' + session.sessionState);
   }
 
 }

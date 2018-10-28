@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { plainToClass } from "class-transformer";
 
 import { TradingStrategy } from '../../model/trading-strategy';
 import { StompClientService } from '../../service/stomp-client.service';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 import { BaseComponent } from '../base-component';
 import { TradingStrategyListDataSource } from './trading-strategy-list-datasource';
 
@@ -24,8 +25,9 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
 
   selectedStrategy: TradingStrategy;
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService) {
-    super(stompClient, snackBar, dialog);
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
+              private tradingStrategyService: TradingStrategyService) {
+    super(stompClient, toastr, appRef, dialog);
   }
 
   ngOnInit() {
@@ -47,7 +49,8 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
     }
 
     this.tradingStrategyService.delete(toDelete).subscribe(result => {
-      this.snackBar.open('Trading Strategy: \'' + toDelete.name + '\'', 'deleted', { duration: 3000 });
+      // this.snackBar.open('Trading Strategy: \'' + toDelete.name + '\'', 'deleted', { duration: 3000 });
+      this.toastr.success('Trading Strategy: \'' + toDelete.name + '\' deleted.')
     });
   }
 

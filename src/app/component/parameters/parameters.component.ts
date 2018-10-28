@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Message } from '@stomp/stompjs';
 import { componentDestroyed } from 'ng2-rx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TradingParameters } from '../../model/trading-parameters';
 import { ParametersService } from '../../service/parameters.service';
 import { StompClientService } from '../../service/stomp-client.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 import { BaseComponent } from '../base-component';
 
 @Component({
@@ -17,8 +18,9 @@ import { BaseComponent } from '../base-component';
 })
 export class ParametersComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private parametersService: ParametersService) {
-    super(stompClient, snackBar, dialog);
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
+              private parametersService: ParametersService) {
+    super(stompClient, toastr, appRef, dialog);
   }
 
   tradingParameters: TradingParameters;
@@ -37,7 +39,8 @@ export class ParametersComponent extends BaseComponent implements OnInit, OnDest
         const parameters = JSON.parse(message.body);
         console.log(parameters);
         this.tradingParameters = parameters;
-        this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
+        // this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
+        this.toastr.info('Trading Parameters changed.');
       });
   }
 
@@ -50,7 +53,8 @@ export class ParametersComponent extends BaseComponent implements OnInit, OnDest
     this.parametersService.updateParameters(this.tradingParameters).subscribe(
       parameters => {
         this.tradingParameters = parameters;
-        this.snackBar.open('Trading Parameters', 'successful saved', { duration: 3000 });
+        // this.snackBar.open('Trading Parameters', 'successful saved', { duration: 3000 });
+        this.toastr.success('Trading Parameters saved.');
       }
     );
   }

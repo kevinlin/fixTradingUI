@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs/internal/Observable';
 import { TradingOperation } from '../../model/trading-operation';
 
@@ -7,6 +7,7 @@ import { TradingStrategy } from '../../model/trading-strategy';
 import { StompClientService } from '../../service/stomp-client.service';
 import { TradingOperationService } from '../../service/trading-operation.service';
 import { TradingStrategyService } from '../../service/trading-strategy.service';
+import { ToastsManager } from '../../toast/toasts-manager.service';
 import { BaseComponent } from '../base-component';
 import { TradingOperationListDataSource } from './trading-operation-list-data-source';
 
@@ -28,9 +29,9 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'state', 'action'];
 
-  constructor(protected stompClient: StompClientService, protected snackBar: MatSnackBar, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService,
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService,
               private tradingOperationService: TradingOperationService) {
-    super(stompClient, snackBar, dialog);
+    super(stompClient, toastr, appRef, dialog);
     this.allStrategies = tradingStrategyService.dataSubject;
   }
 
@@ -60,7 +61,8 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
     }
 
     this.tradingOperationService.delete(toDelete).subscribe(result => {
-      this.snackBar.open('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date, 'deleted', { duration: 3000 });
+      // this.snackBar.open('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date, 'deleted', { duration: 3000 });
+      this.toastr.success('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date + ' deleted.');
     });
   }
 

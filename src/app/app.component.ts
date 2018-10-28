@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import * as LogRocket from 'logrocket';
 import { Observable } from 'rxjs';
@@ -33,7 +33,7 @@ export class AppComponent {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public viewRef: ViewContainerRef) {
     if (environment.production) {
       LogRocket.init('rsvpaj/fixtrading');
     }
