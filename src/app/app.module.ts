@@ -1,7 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotTableModule } from '@handsontable/angular';
@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AlertDialogComponent } from './component/alert-dialog/alert-dialog.component';
 import { ExecutionTableComponent } from './component/execution-table/execution-table.component';
 import { InstrumentsComponent } from './component/instruments/instruments.component';
+import { LoginComponent } from './component/login/login.component';
 import { MarketWatcherComponent } from './component/market-watcher/market-watcher.component';
 import { ParametersComponent } from './component/parameters/parameters.component';
 import { SideNavComponent } from './component/side-nav/side-nav.component';
@@ -61,6 +62,7 @@ const stompConfig: StompConfig = {
     LayoutModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HotTableModule,
@@ -73,6 +75,7 @@ const stompConfig: StompConfig = {
     AppComponent,
     ExecutionTableComponent,
     InstrumentsComponent,
+    LoginComponent,
     MarketWatcherComponent,
     ParametersComponent,
     SideNavComponent,

@@ -5,6 +5,7 @@ import * as LogRocket from 'logrocket';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
+import { User } from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +27,10 @@ export class AppComponent {
     // { path: '/parameters', label: 'Trading Parameters' },
     // { path: '/tradingSession', label: 'Trading Session' },
     // { path: '/tradingState', label: 'Trading State' }
+    { path: '/login', label: 'Logout' }
   ];
   title: string;
+  currentUser: User;
 
   private static capitalize(string): string {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -38,11 +41,14 @@ export class AppComponent {
       LogRocket.init('rsvpaj/fixtrading');
     }
 
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
           // console.log(event);
           this.title = AppComponent.capitalize(event.url.slice(1));
+          this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         }
       }
     );
