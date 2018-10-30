@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --prod --aot --base-href /fixTrading/",
+    "build": "ng build --prod --aot --optimization --baseHref=/fixTrading/ --progress",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
