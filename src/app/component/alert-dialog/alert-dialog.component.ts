@@ -17,7 +17,7 @@ export class AlertDialogComponent implements OnInit {
 
   ngOnInit() {
     this.audio = new Audio();
-    this.audio.src = "../../../assets/sounds/ElevatorDing.mp3";
+    this.audio.src = "../../assets/sounds/ElevatorDing.mp3";
     this.audio.load();
     const intervalID = setInterval(() => this.audio.play(), 3000);
 
