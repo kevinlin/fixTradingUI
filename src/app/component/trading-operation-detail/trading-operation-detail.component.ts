@@ -5,7 +5,7 @@ import { AppComponent } from '../../app.component';
 import { Direction } from '../../model/enum/direction.enum';
 import { OperationType } from '../../model/enum/operation-type.enum';
 import { OrderSide } from '../../model/enum/order-side.enum';
-import { TradingExecution } from "../../model/trading-execution";
+import { TradingExecution } from '../../model/trading-execution';
 import { TradingOperation } from '../../model/trading-operation';
 import { TradingExecutionService } from '../../service/trading-execution.service';
 import { TradingOperationService } from '../../service/trading-operation.service';
@@ -29,15 +29,15 @@ export class TradingOperationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.operationTypeValues = Object.values(OperationType)
-      .filter(e => typeof(e) == "string")
+      .filter(e => typeof(e) === 'string')
       .filter(type => {
         if (this.selectedOperation.tradingStrategy && this.selectedOperation.tradingStrategy.isInPosition) {
-          return type !== 'TRANSFER'
+          return type !== 'TRANSFER';
         }
         return true;
       });
     this.directionValues = Object.values(Direction)
-      .filter(e => typeof(e) == "string")
+      .filter(e => typeof(e) === 'string')
       .filter(direction => {
         return direction !== 'NEUTRAL';
       });
@@ -55,13 +55,15 @@ export class TradingOperationDetailComponent implements OnInit {
       return '建仓';
     } else if (opType === 'CLOSE') {
       return '平仓';
+    } else if (opType === 'CLOSE_TODAY') {
+      return '今平';
     } else if (opType === 'TRANSFER') {
       return '移仓';
     }
   }
 
   operationTypeChange($event: MatSelectChange) {
-    if ($event.value === 'CLOSE') {
+    if ($event.value === 'CLOSE' || $event.value === 'CLOSE_TODAY') {
       this.selectedOperation.direction = this.selectedOperation.tradingStrategy.positionDirection === Direction.LONG ? Direction.SHORT : Direction.LONG;
       console.log(this.selectedOperation.direction);
     }
@@ -113,13 +115,13 @@ export class TradingOperationDetailComponent implements OnInit {
     }
     executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
 
-    this.operationService.save(this.selectedOperation).subscribe(result => {
-      this.selectedOperation = result;
+    this.operationService.save(this.selectedOperation).subscribe(savedOperation => {
+      this.selectedOperation = savedOperation;
       executionsToSave.forEach(execution => {
-        execution.operationId = result.id
+        execution.operationId = savedOperation.id;
       });
-      this.executionService.saveAll(executionsToSave).subscribe(result => {
-        this.updateExecutions(result);
+      this.executionService.saveAll(executionsToSave).subscribe(savedExecutions => {
+        this.updateExecutions(savedExecutions);
         // this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date, 'saved', { duration: 3000 });
         this.toastr.success('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date + ' saved.');
       });
