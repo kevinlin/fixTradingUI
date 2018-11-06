@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import * as LogRocket from 'logrocket';
 import { Observable, of, throwError } from 'rxjs';
+import { environment } from '../environments/environment';
 import { User } from '../model/user';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +20,10 @@ export class AuthenticationService {
       user.password = password;
       user.firstName = username;
       localStorage.setItem('currentUser', JSON.stringify(user));
+
+      if (environment.production) {
+        LogRocket.identify(username);
+      }
 
       return of(user);
     }
