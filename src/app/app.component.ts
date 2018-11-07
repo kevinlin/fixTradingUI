@@ -43,7 +43,7 @@ export class AppComponent {
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (this.currentUser && environment.production) {
-      LogRocket.identify(username);
+      LogRocket.identify(this.currentUser.username);
     }
 
     router.events.subscribe(
