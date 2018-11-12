@@ -46,37 +46,43 @@
       <div class="col-sm-3">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract1Symbol"
-          [executions]="selectedOperation.contract1Executions">
+          [executions]="selectedOperation.contract1Executions"
+          [lots]="selectedOperation.tradingStrategy.contract1Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract2Symbol"
-          [executions]="selectedOperation.contract2Executions">
+          [executions]="selectedOperation.contract2Executions"
+          [lots]="selectedOperation.tradingStrategy.contract2Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract3Symbol">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract3Symbol"
-          [executions]="selectedOperation.contract3Executions">
+          [executions]="selectedOperation.contract3Executions"
+          [lots]="selectedOperation.tradingStrategy.contract3Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract4Symbol">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract4Symbol"
-          [executions]="selectedOperation.contract4Executions">
+          [executions]="selectedOperation.contract4Executions"
+          [lots]="selectedOperation.tradingStrategy.contract4Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract5Symbol">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract5Symbol"
-          [executions]="selectedOperation.contract5Executions">
+          [executions]="selectedOperation.contract5Executions"
+          [lots]="selectedOperation.tradingStrategy.contract5Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="selectedOperation.tradingStrategy.contract6Symbol">
         <app-execution-table
           [symbol]="selectedOperation.tradingStrategy.contract6Symbol"
-          [executions]="selectedOperation.contract6Executions">
+          [executions]="selectedOperation.contract6Executions"
+          [lots]="selectedOperation.tradingStrategy.contract6Lots">
         </app-execution-table>
       </div>
     </div>

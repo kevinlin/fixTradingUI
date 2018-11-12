@@ -65,7 +65,6 @@ export class TradingOperationDetailComponent implements OnInit {
   operationTypeChange($event: MatSelectChange) {
     if ($event.value === 'CLOSE' || $event.value === 'CLOSE_TODAY') {
       this.selectedOperation.direction = this.selectedOperation.tradingStrategy.positionDirection === Direction.LONG ? Direction.SHORT : Direction.LONG;
-      console.log(this.selectedOperation.direction);
     }
   }
 
