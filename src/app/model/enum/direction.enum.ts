@@ -1,3 +1,3 @@
 export enum Direction {
-  NEUTRAL = "NEUTRAL", LONG = "LONG", SHORT = "SHORT",
+  NEUTRAL = 'NEUTRAL', LONG = 'LONG', SHORT = 'SHORT',
 }

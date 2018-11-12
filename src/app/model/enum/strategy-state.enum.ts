@@ -1,3 +1,3 @@
 export enum StrategyState {
-  INITIALISED = "INITIALISED", ACTIVE = "ACTIVE",
+  INITIALISED = 'INITIALISED', ACTIVE = 'ACTIVE',
 }

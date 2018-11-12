@@ -1,3 +1,3 @@
 export enum OrderSide {
-  BID = "BID", ASK = "ASK",
+  BID = 'BID', ASK = 'ASK',
 }
