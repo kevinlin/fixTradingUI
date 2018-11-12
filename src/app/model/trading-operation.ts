@@ -43,7 +43,7 @@ export class TradingOperation {
     this.state = OperationState.PENDING;
   }
 
-  public isPending(): boolean {
+  public isNotPending(): boolean {
     return this.state !== OperationState.PENDING;
   }
 
