@@ -1,5 +1,5 @@
-import { Direction } from './enum/direction.enum';
-import { StrategyState } from './enum/strategy-state.enum';
+import {Direction} from './enum/direction.enum';
+import {StrategyState} from './enum/strategy-state.enum';
 
 export class TradingStrategy {
   // Strategy details
@@ -49,7 +49,7 @@ export class TradingStrategy {
   }
 
   public isInPosition(): boolean {
-    return this.positionDirection != Direction.NEUTRAL;
+    return this.positionDirection !== Direction.NEUTRAL;
   }
 
 }
