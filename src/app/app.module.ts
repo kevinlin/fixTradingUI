@@ -1,32 +1,31 @@
-import { LayoutModule } from '@angular/cdk/layout';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HotTableModule } from '@handsontable/angular';
-import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import {LayoutModule} from '@angular/cdk/layout';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HotTableModule} from '@handsontable/angular';
+import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { AlertDialogComponent } from './component/alert-dialog/alert-dialog.component';
-import { ExecutionTableComponent } from './component/execution-table/execution-table.component';
-import { InstrumentsComponent } from './component/instruments/instruments.component';
-import { LoginComponent } from './component/login/login.component';
-import { MarketWatcherComponent } from './component/market-watcher/market-watcher.component';
-import { ParametersComponent } from './component/parameters/parameters.component';
-import { SideNavComponent } from './component/side-nav/side-nav.component';
-import { TradingExecutionComponent } from './component/trading-execution/trading-execution.component';
-import { TradingOperationDetailComponent } from './component/trading-operation-detail/trading-operation-detail.component';
-import { TradingOperationListComponent } from './component/trading-operation-list/trading-operation-list.component';
-import { TradingSessionComponent } from './component/trading-session/trading-session.component';
-import { TradingStateComponent } from './component/trading-state/trading-state.component';
-import { TradingStrategyDetailComponent } from './component/trading-strategy-detail/trading-strategy-detail.component';
-import { TradingStrategyListComponent } from './component/trading-strategy-list/trading-strategy-list.component';
-import { TradingStrategyViewComponent } from './component/trading-strategy-view/trading-strategy-view.component';
-import { AppRoutingModule } from './module/app-routing.module';
-import { MaterialModule } from './module/material.module';
-import { ToastModule } from './toast/toast-module';
+import {environment} from '../environments/environment';
+import {AppComponent} from './app.component';
+import {AlertDialogComponent} from './component/alert-dialog/alert-dialog.component';
+import {ExecutionTableComponent} from './component/execution-table/execution-table.component';
+import {InstrumentsComponent} from './component/instruments/instruments.component';
+import {LoginComponent} from './component/login/login.component';
+import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
+import {ParametersComponent} from './component/parameters/parameters.component';
+import {TradingExecutionComponent} from './component/trading-execution/trading-execution.component';
+import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
+import {TradingOperationListComponent} from './component/trading-operation-list/trading-operation-list.component';
+import {TradingSessionComponent} from './component/trading-session/trading-session.component';
+import {TradingStateComponent} from './component/trading-state/trading-state.component';
+import {TradingStrategyDetailComponent} from './component/trading-strategy-detail/trading-strategy-detail.component';
+import {TradingStrategyListComponent} from './component/trading-strategy-list/trading-strategy-list.component';
+import {TradingStrategyViewComponent} from './component/trading-strategy-view/trading-strategy-view.component';
+import {AppRoutingModule} from './module/app-routing.module';
+import {MaterialModule} from './module/material.module';
+import {ToastModule} from './toast/toast-module';
 
 const stompConfig: StompConfig = {
   // Which server?
@@ -78,7 +77,6 @@ const stompConfig: StompConfig = {
     LoginComponent,
     MarketWatcherComponent,
     ParametersComponent,
-    SideNavComponent,
     TradingExecutionComponent,
     TradingOperationDetailComponent,
     TradingOperationListComponent,
