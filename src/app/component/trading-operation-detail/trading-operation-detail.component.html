@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-3">
         <mat-form-field>
-          <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true" [disabled]="selectedOperation.isActive()">
+          <input matInput [(ngModel)]="selectedOperation.date" type="date" placeholder="日期" [required]="true" [disabled]="selectedOperation.isPending()">
         </mat-form-field>
       </div>
       <div class="col-3">
@@ -18,7 +18,7 @@
             <mat-select
               [(ngModel)]="selectedOperation.operationType"
               [required]="true"
-              [disabled]="selectedOperation.isActive()"
+              [disabled]="selectedOperation.isPending()"
               (selectionChange)="operationTypeChange($event)"
               placeholder="执行动作">
               <mat-option *ngFor="let choice of operationTypeValues" [value]="choice">{{displayLabelForOpType(choice)}}</mat-option>
@@ -29,7 +29,7 @@
       <div class="col-6" *ngIf="selectedOperation.operationType">
         <div class="form-group">
           <label for="direction">方向</label>
-          <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isActive()">
+          <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isPending()">
             <mat-radio-button
               *ngFor="let choice of directionValues"
               [value]="choice"
@@ -82,7 +82,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="saveOperation()" [disabled]="selectedOperation.isActive()">Save</button>&nbsp;
+    <button mat-raised-button color="primary" (click)="saveOperation()" [disabled]="selectedOperation.isPending()">Save</button>&nbsp;
     <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
   </mat-card-actions>
 </mat-card>

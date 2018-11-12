@@ -1,9 +1,9 @@
-import { Direction } from './enum/direction.enum';
-import { OperationState } from './enum/operation-state.enum';
-import { OperationType } from './enum/operation-type.enum';
-import { OrderSide } from './enum/order-side.enum';
-import { TradingExecution } from './trading-execution';
-import { TradingStrategy } from './trading-strategy';
+import {Direction} from './enum/direction.enum';
+import {OperationState} from './enum/operation-state.enum';
+import {OperationType} from './enum/operation-type.enum';
+import {OrderSide} from './enum/order-side.enum';
+import {TradingExecution} from './trading-execution';
+import {TradingStrategy} from './trading-strategy';
 
 export class TradingOperation {
   // Operation details
@@ -43,7 +43,7 @@ export class TradingOperation {
     this.state = OperationState.PENDING;
   }
 
-  public isActive(): boolean {
+  public isPending(): boolean {
     return this.state !== OperationState.PENDING;
   }
 
