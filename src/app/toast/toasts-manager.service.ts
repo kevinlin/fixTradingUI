@@ -1,4 +1,4 @@
-import {ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, NgZone, ReflectiveInjector, ViewContainerRef} from '@angular/core';
+import {ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, NgZone, ViewContainerRef} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
 import {Toast} from './toast';
@@ -45,19 +45,14 @@ export class ToastsManager {
           }
         }
 
-        // get options providers
-        const providers = ReflectiveInjector.resolve([
-          { provide: ToastOptions, useValue: this.options }
-        ]);
-
         // create and load ToastContainerComponent
         const toastFactory = this.componentFactoryResolver.resolveComponentFactory(
           ToastContainerComponent
         );
-        const childInjector = ReflectiveInjector.fromResolvedProviders(
-          providers,
-          this._rootViewContainerRef.parentInjector
-        );
+        const childInjector = Injector.create({
+          providers: [{ provide: ToastOptions, useValue: this.options }],
+          parent: this._rootViewContainerRef.parentInjector
+        });
         this.container = this._rootViewContainerRef.createComponent(
           toastFactory,
           this._rootViewContainerRef.length,
