@@ -125,7 +125,7 @@ export class TradingOperationDetailComponent implements OnInit {
         // this.snackBar.open('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date, 'saved', { duration: 3000 });
         this.toastr.success('Trading Operation: \'' + this.selectedOperation.tradingStrategy.name + '\'' + '-' + this.selectedOperation.date + ' saved.');
       });
-    })
+    });
   }
 
   cancelChanges() {

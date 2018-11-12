@@ -43,8 +43,20 @@ export class TradingOperation {
     this.state = OperationState.PENDING;
   }
 
+  public isPending(): boolean {
+    return this.state === OperationState.PENDING;
+  }
+
   public isNotPending(): boolean {
     return this.state !== OperationState.PENDING;
+  }
+
+  public isSuspended(): boolean {
+    return this.state === OperationState.SUSPENDED;
+  }
+
+  public isActive(): boolean {
+    return this.state === OperationState.PENDING || this.state === OperationState.IN_PROGRESS;
   }
 
 }

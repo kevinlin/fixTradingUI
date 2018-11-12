@@ -1,18 +1,18 @@
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
-import { Observable } from 'rxjs/internal/Observable';
-import { TradingOperation } from '../../model/trading-operation';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {Observable} from 'rxjs/internal/Observable';
+import {TradingOperation} from '../../model/trading-operation';
 
-import { TradingStrategy } from '../../model/trading-strategy';
-import { StompClientService } from '../../service/stomp-client.service';
-import { TradingOperationService } from '../../service/trading-operation.service';
-import { TradingStrategyService } from '../../service/trading-strategy.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { BaseComponent } from '../base-component';
-import { TradingOperationListDataSource } from './trading-operation-list-data-source';
+import {TradingStrategy} from '../../model/trading-strategy';
+import {StompClientService} from '../../service/stomp-client.service';
+import {TradingOperationService} from '../../service/trading-operation.service';
+import {TradingStrategyService} from '../../service/trading-strategy.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {BaseComponent} from '../base-component';
+import {TradingOperationListDataSource} from './trading-operation-list-data-source';
 
 @Component({
-  selector: 'trading-execution-list',
+  selector: 'app-trading-execution-list',
   templateUrl: './trading-operation-list.component.html',
   styleUrls: ['./trading-operation-list.component.css']
 })
@@ -29,19 +29,19 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'state', 'action'];
 
-  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private tradingStrategyService: TradingStrategyService,
-              private tradingOperationService: TradingOperationService) {
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
+              private strategyService: TradingStrategyService, private operationService: TradingOperationService) {
     super(stompClient, toastr, appRef, dialog);
-    this.allStrategies = tradingStrategyService.dataSubject;
+    this.allStrategies = strategyService.dataSubject;
   }
 
   ngOnInit() {
     this.baseOnInit();
-    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.tradingOperationService, this.paginator, this.sort);
+    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.operationService, this.paginator, this.sort);
   }
 
   selectedStrategyChanged() {
-    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.tradingOperationService, this.paginator, this.sort);
+    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.operationService, this.paginator, this.sort);
     this.selectedOperation = null;
   }
 
@@ -50,19 +50,31 @@ export class TradingOperationListComponent extends BaseComponent implements OnIn
     this.selectedOperation.tradingStrategy = this.selectedStrategy;
   }
 
-  editExecution(toEdit: TradingOperation) {
+  edit(toEdit: TradingOperation) {
     this.selectedOperation = toEdit;
     this.selectedStrategy = toEdit.tradingStrategy;
   }
 
-  deleteExecution(toDelete: TradingOperation) {
+  delete(toDelete: TradingOperation) {
     if (this.selectedOperation === toDelete) {
       this.selectedOperation = null;
     }
 
-    this.tradingOperationService.delete(toDelete).subscribe(result => {
+    this.operationService.delete(toDelete).subscribe(result => {
       // this.snackBar.open('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date, 'deleted', { duration: 3000 });
-      this.toastr.success('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date + ' deleted.');
+      this.toastr.success('Trading Operation: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date + ' deleted.');
+    });
+  }
+
+  suspend(toSuspend: TradingOperation) {
+    this.operationService.suspend(toSuspend).subscribe(result => {
+      // this.toastr.success('Trading Operation: \'' + toSuspend.tradingStrategy.name + '\'' + '-' + toSuspend.date + ' suspended.');
+    });
+  }
+
+  resume(toResume: TradingOperation) {
+    this.operationService.resume(toResume).subscribe(result => {
+      // this.toastr.success('Trading Operation: \'' + toResume.tradingStrategy.name + '\'' + '-' + toResume.date + ' resumed.');
     });
   }
 
