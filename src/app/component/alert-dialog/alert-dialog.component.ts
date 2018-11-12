@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-import { Notification } from '../../model/notification';
+import {Notification} from '../../model/notification';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -17,7 +17,7 @@ export class AlertDialogComponent implements OnInit {
 
   ngOnInit() {
     this.audio = new Audio();
-    this.audio.src = "/fixTrading/assets/sounds/ElevatorDing.mp3";
+    this.audio.src = '/fixTrading/assets/sounds/ElevatorDing.mp3';
     this.audio.load();
     const intervalID = setInterval(() => this.audio.play(), 3000);
 

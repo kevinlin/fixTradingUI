@@ -1,13 +1,13 @@
-import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {ApplicationRef, Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 
-import { AppComponent } from '../../app.component';
-import { Direction } from '../../model/enum/direction.enum';
-import { Instrument } from '../../model/instrument';
-import { TradingStrategy } from '../../model/trading-strategy';
-import { InstrumentService } from '../../service/instrument.service';
-import { TradingStrategyService } from '../../service/trading-strategy.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
+import {AppComponent} from '../../app.component';
+import {Direction} from '../../model/enum/direction.enum';
+import {Instrument} from '../../model/instrument';
+import {TradingStrategy} from '../../model/trading-strategy';
+import {InstrumentService} from '../../service/instrument.service';
+import {TradingStrategyService} from '../../service/trading-strategy.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
 
 @Component({
   selector: 'app-trading-strategy-detail',
@@ -19,7 +19,7 @@ export class TradingStrategyDetailComponent implements OnInit {
   @Input() selectedStrategy: TradingStrategy;
 
   allInstruments: Observable<Instrument[]>;
-  DirectionValues = Object.values(Direction).filter(e => typeof(e) == "string");
+  DirectionValues = Object.values(Direction).filter(e => typeof(e) === 'string');
 
   constructor(private instrumentService: InstrumentService, private tradingStrategyService: TradingStrategyService, private toastr: ToastsManager, private appRef: ApplicationRef) {
     this.allInstruments = this.instrumentService.getAllInstruments();
@@ -34,7 +34,7 @@ export class TradingStrategyDetailComponent implements OnInit {
       this.selectedStrategy = result;
       // this.snackBar.open('Trading Strategy: \'' + this.selectedStrategy.name + '\'', 'saved', { duration: 3000 });
       this.toastr.success('Trading Strategy: \'' + this.selectedStrategy.name + '\' saved');
-    })
+    });
   }
 
   cancelChanges() {

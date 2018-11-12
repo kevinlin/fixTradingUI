@@ -1,13 +1,13 @@
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
-import { plainToClass } from "class-transformer";
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {plainToClass} from 'class-transformer';
 
-import { TradingStrategy } from '../../model/trading-strategy';
-import { StompClientService } from '../../service/stomp-client.service';
-import { TradingStrategyService } from '../../service/trading-strategy.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { BaseComponent } from '../base-component';
-import { TradingStrategyListDataSource } from './trading-strategy-list-datasource';
+import {TradingStrategy} from '../../model/trading-strategy';
+import {StompClientService} from '../../service/stomp-client.service';
+import {TradingStrategyService} from '../../service/trading-strategy.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {BaseComponent} from '../base-component';
+import {TradingStrategyListDataSource} from './trading-strategy-list-datasource';
 
 @Component({
   selector: 'trading-strategy-list',
@@ -50,7 +50,7 @@ export class TradingStrategyListComponent extends BaseComponent implements OnIni
 
     this.tradingStrategyService.delete(toDelete).subscribe(result => {
       // this.snackBar.open('Trading Strategy: \'' + toDelete.name + '\'', 'deleted', { duration: 3000 });
-      this.toastr.success('Trading Strategy: \'' + toDelete.name + '\' deleted.')
+      this.toastr.success('Trading Strategy: \'' + toDelete.name + '\' deleted.');
     });
   }
 

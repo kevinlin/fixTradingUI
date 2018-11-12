@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TradingExecution } from '../../model/trading-execution';
+import {Component, Input, OnInit} from '@angular/core';
+import {TradingExecution} from '../../model/trading-execution';
 
 @Component({
   selector: 'app-execution-table',
@@ -79,6 +79,6 @@ export class ExecutionTableComponent implements OnInit {
         console.log('onAfterChange()->execution changed: ', orderChanged);
       });
     }
-  };
+  }
 
 }
