@@ -1,15 +1,15 @@
-import { ApplicationRef, Component, Input, OnInit } from '@angular/core';
-import { MatRadioChange, MatSelectChange } from '@angular/material';
+import {ApplicationRef, Component, Input, OnInit} from '@angular/core';
+import {MatRadioChange, MatSelectChange} from '@angular/material';
 
-import { AppComponent } from '../../app.component';
-import { Direction } from '../../model/enum/direction.enum';
-import { OperationType } from '../../model/enum/operation-type.enum';
-import { OrderSide } from '../../model/enum/order-side.enum';
-import { TradingExecution } from '../../model/trading-execution';
-import { TradingOperation } from '../../model/trading-operation';
-import { TradingExecutionService } from '../../service/trading-execution.service';
-import { TradingOperationService } from '../../service/trading-operation.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
+import {AppComponent} from '../../app.component';
+import {Direction} from '../../model/enum/direction.enum';
+import {OperationType} from '../../model/enum/operation-type.enum';
+import {OrderSide} from '../../model/enum/order-side.enum';
+import {TradingExecution} from '../../model/trading-execution';
+import {TradingOperation} from '../../model/trading-operation';
+import {TradingExecutionService} from '../../service/trading-execution.service';
+import {TradingOperationService} from '../../service/trading-operation.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
 
 @Component({
   selector: 'app-trading-execution-detail',
@@ -73,27 +73,27 @@ export class TradingOperationDetailComponent implements OnInit {
     this.selectedOperation.direction = $event.value;
 
     const strategy = this.selectedOperation.tradingStrategy;
-    const isLong = (this.selectedOperation.direction == Direction.LONG) == (this.selectedOperation.operationType == OperationType.OPEN);
-    this.selectedOperation.contract1Side = (strategy.contract1Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+    const isLong = (this.selectedOperation.direction === Direction.LONG) === (this.selectedOperation.operationType === OperationType.OPEN);
+    this.selectedOperation.contract1Side = (strategy.contract1Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
     this.selectedOperation.contract1Executions = this.fillWithDefault([], strategy.contract1Symbol, this.selectedOperation.contract1Side);
 
-    this.selectedOperation.contract2Side = (strategy.contract2Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+    this.selectedOperation.contract2Side = (strategy.contract2Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
     this.selectedOperation.contract2Executions = this.fillWithDefault([], strategy.contract2Symbol, this.selectedOperation.contract2Side);
 
     if (strategy.contract3Symbol) {
-      this.selectedOperation.contract3Side = (strategy.contract3Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract3Side = (strategy.contract3Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
       this.selectedOperation.contract3Executions = this.fillWithDefault([], strategy.contract3Symbol, this.selectedOperation.contract3Side);
     }
     if (strategy.contract4Symbol) {
-      this.selectedOperation.contract4Side = (strategy.contract4Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract4Side = (strategy.contract4Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
       this.selectedOperation.contract4Executions = this.fillWithDefault([], strategy.contract4Symbol, this.selectedOperation.contract4Side);
     }
     if (strategy.contract5Symbol) {
-      this.selectedOperation.contract5Side = (strategy.contract5Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract5Side = (strategy.contract5Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
       this.selectedOperation.contract5Executions = this.fillWithDefault([], strategy.contract5Symbol, this.selectedOperation.contract5Side);
     }
     if (strategy.contract6Symbol) {
-      this.selectedOperation.contract6Side = (strategy.contract6Coefficient > 0) == isLong ? OrderSide.BID : OrderSide.ASK;
+      this.selectedOperation.contract6Side = (strategy.contract6Coefficient > 0) === isLong ? OrderSide.BID : OrderSide.ASK;
     }
     this.selectedOperation.contract6Executions = this.fillWithDefault([], strategy.contract6Symbol, this.selectedOperation.contract6Side);
   }
