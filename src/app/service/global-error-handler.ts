@@ -1,5 +1,5 @@
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {ErrorHandler, Injectable, Injector} from '@angular/core';
+import {ErrorHandler, Injectable, InjectionToken, Injector} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 
 @Injectable()
@@ -8,13 +8,13 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   handleError(error) {
-    const snackBar = this.injector.get<MatSnackBar>(MatSnackBar);
-    const location = this.injector.get<LocationStrategy>(LocationStrategy);
+    const snackBar = this.injector.get<MatSnackBar>(new InjectionToken<string>('MatSnackBar'));
+    const location = this.injector.get<LocationStrategy>(new InjectionToken<string>('LocationStrategy'));
 
     const message = error.message ? error.message : error.toString();
     const url = location instanceof PathLocationStrategy ? location.path() : '';
-    console.log({message, url});
-    snackBar.open(url, message, {duration: 3000});
+    console.log({ message, url });
+    snackBar.open(url, message, { duration: 3000 });
 
     throw error;
   }
