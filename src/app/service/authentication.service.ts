@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as LogRocket from 'logrocket';
-import { Observable, of, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { User } from '../model/user';
+import {Observable, of, throwError} from 'rxjs';
+import {environment} from '../../environments/environment';
+import {User} from '../model/user';
 
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<User> {
-    if (password == "sanhua") {
+    if (password === 'sanhua') {
       const user = new User();
       user.username = username;
       user.password = password;

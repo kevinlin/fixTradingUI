@@ -1,9 +1,9 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, NgZone, ReflectiveInjector, ViewContainerRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, NgZone, ReflectiveInjector, ViewContainerRef} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
 
-import { Toast } from './toast';
-import { ToastContainerComponent } from './toast-container/toast-container.component';
-import { ToastOptions } from './toast-options';
+import {Toast} from './toast';
+import {ToastContainerComponent} from './toast-container/toast-container.component';
+import {ToastOptions} from './toast-options';
 
 @Injectable()
 export class ToastsManager {
@@ -145,28 +145,28 @@ export class ToastsManager {
   }
 
   error(message: string, title?: string, options?: any): Promise<Toast> {
-    title = (title ? title : "Error") + ' (' + (new Date()).toLocaleTimeString() + ')';
+    title = (title ? title : 'Error') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
     const toast = new Toast('error', message, title, data);
     return this.show(toast, options);
   }
 
   info(message: string, title?: string, options?: any): Promise<Toast> {
-    title = (title ? title : "Notification") + ' (' + (new Date()).toLocaleTimeString() + ')';
+    title = (title ? title : 'Notification') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
     const toast = new Toast('info', message, title, data);
     return this.show(toast, options);
   }
 
   success(message: string, title?: string, options?: any): Promise<Toast> {
-    title = (title ? title : "Success") + ' (' + (new Date()).toLocaleTimeString() + ')';
+    title = (title ? title : 'Success') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
     const toast = new Toast('success', message, title, data);
     return this.show(toast, options);
   }
 
   warning(message: string, title?: string, options?: any): Promise<Toast> {
-    title = (title ? title : "Warning") + ' (' + (new Date()).toLocaleTimeString() + ')';
+    title = (title ? title : 'Warning') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
     const toast = new Toast('warning', message, title, data);
     return this.show(toast, options);
