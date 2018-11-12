@@ -1,16 +1,16 @@
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 
-import { TradingOperation } from '../../model/trading-operation';
-import { OrderService } from '../../service/order.service';
-import { StompClientService } from '../../service/stomp-client.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { BaseComponent } from '../base-component';
-import { OrderBlotterDataSource } from './order-blotter-data-source';
+import {TradingOperation} from '../../model/trading-operation';
+import {OrderService} from '../../service/order.service';
+import {StompClientService} from '../../service/stomp-client.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {BaseComponent} from '../base-component';
+import {OrderBlotterDataSource} from './order-blotter-data-source';
 
 @Component({
-  selector: 'trading-execution',
+  selector: 'app-trading-execution',
   templateUrl: './trading-execution.component.html',
   styleUrls: ['./trading-execution.component.css']
 })

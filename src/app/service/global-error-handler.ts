@@ -8,8 +8,8 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   handleError(error) {
-    const snackBar = this.injector.get(MatSnackBar);
-    const location = this.injector.get(LocationStrategy);
+    const snackBar = this.injector.get<MatSnackBar>();
+    const location = this.injector.get<LocationStrategy>();
 
     const message = error.message ? error.message : error.toString();
     const url = location instanceof PathLocationStrategy ? location.path() : '';

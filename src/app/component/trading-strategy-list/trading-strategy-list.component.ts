@@ -10,7 +10,7 @@ import {BaseComponent} from '../base-component';
 import {TradingStrategyListDataSource} from './trading-strategy-list-datasource';
 
 @Component({
-  selector: 'trading-strategy-list',
+  selector: 'app-trading-strategy-list',
   templateUrl: './trading-strategy-list.component.html',
   styleUrls: ['./trading-strategy-list.component.css']
 })

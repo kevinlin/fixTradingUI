@@ -1,26 +1,26 @@
-import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectorRef, Component, NgZone, OnDestroy, } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
+import {ChangeDetectorRef, Component, NgZone, OnDestroy} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable, Subject} from 'rxjs';
+import {first} from 'rxjs/operators';
 
-import { Toast } from '../toast';
-import { ToastOptions } from '../toast-options';
+import {Toast} from '../toast';
+import {ToastOptions} from '../toast-options';
 
 @Component({
-  selector: 'toast-container',
+  selector: 'app-toast-container',
   templateUrl: './toast-container.component.html',
   styleUrls: ['./toast-container.component.css'],
   animations: [
     trigger('inOut', [
       state(
         'flyRight, flyLeft',
-        style({ opacity: 1, transform: 'translateX(0)' })
+        style({opacity: 1, transform: 'translateX(0)'})
       ),
-      state('fade', style({ opacity: 1 })),
+      state('fade', style({opacity: 1})),
       state(
         'slideDown, slideUp',
-        style({ opacity: 1, transform: 'translateY(0)' })
+        style({opacity: 1, transform: 'translateY(0)'})
       ),
       transition('void => flyRight', [
         style({
