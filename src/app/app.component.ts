@@ -1,11 +1,11 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, ViewContainerRef } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component, ViewContainerRef} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import * as LogRocket from 'logrocket';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-import { User } from './model/user';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from '../environments/environment';
+import {User} from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,7 @@ export class AppComponent {
     { path: '/strategies', label: 'Trading Strategies' },
     { path: '/operations', label: 'Trading Operations' },
     { path: '/executions', label: 'Trading Executions' },
+    { path: '/orderBlotter', label: 'Order Blotter' },
     // { path: '/parameters', label: 'Trading Parameters' },
     // { path: '/tradingSession', label: 'Trading Session' },
     // { path: '/tradingState', label: 'Trading State' }

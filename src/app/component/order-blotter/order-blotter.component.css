@@ -1,0 +1,11 @@
+.full-width-table {
+  width: 100%;
+}
+
+.mat-column-clOrdID, .mat-column-transactTime {
+  flex: 2;
+}
+
+.mat-column-text {
+  flex: 4;
+}

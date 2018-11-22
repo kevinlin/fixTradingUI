@@ -14,6 +14,7 @@ import {ExecutionTableComponent} from './component/execution-table/execution-tab
 import {InstrumentsComponent} from './component/instruments/instruments.component';
 import {LoginComponent} from './component/login/login.component';
 import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
+import {OrderBlotterComponent} from './component/order-blotter/order-blotter.component';
 import {ParametersComponent} from './component/parameters/parameters.component';
 import {TradingExecutionComponent} from './component/trading-execution/trading-execution.component';
 import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
@@ -76,6 +77,7 @@ const stompConfig: StompConfig = {
     InstrumentsComponent,
     LoginComponent,
     MarketWatcherComponent,
+    OrderBlotterComponent,
     ParametersComponent,
     TradingExecutionComponent,
     TradingOperationDetailComponent,

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Message } from '@stomp/stompjs';
-import { BehaviorSubject, Observable } from 'rxjs/index';
-import { Order } from '../model/order';
-import { StompClientService } from './stomp-client.service';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Message} from '@stomp/stompjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Order} from '../model/order';
+import {StompClientService} from './stomp-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { StompClientService } from './stomp-client.service';
 export class OrderService {
 
   public todayOrdersSubject = new BehaviorSubject<Order[]>([]);
+  public historyOrderSubject = new BehaviorSubject<Order[]>([]);
 
   private orderUrl = '/api/order';
 
@@ -31,6 +32,13 @@ export class OrderService {
     this.getTodayOrders().subscribe(result => {
       console.log(result);
       this.todayOrdersSubject.next(result);
+    });
+  }
+
+  public queryOrdersByDate(date: Date): void {
+    this.httpClient.get<Order[]>(this.orderUrl + '/' + date).subscribe(orders => {
+      console.log(orders);
+      this.historyOrderSubject.next(orders);
     });
   }
 

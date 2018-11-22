@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {InstrumentsComponent} from '../component/instruments/instruments.component';
 import {LoginComponent} from '../component/login/login.component';
+import {OrderBlotterComponent} from '../component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../component/parameters/parameters.component';
 import {TradingExecutionComponent} from '../component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from '../component/trading-operation-list/trading-operation-list.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
+  { path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
   { path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
   { path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },
   { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
