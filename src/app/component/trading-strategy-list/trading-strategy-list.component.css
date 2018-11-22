@@ -1,3 +1,15 @@
+.mat-column-id {
+  flex: 0.5;
+}
+
+.mat-column-contracts {
+  flex: 4;
+}
+
+.mat-column-action {
+  flex: 2;
+}
+
 .action-row {
   display: flex;
   align-items: center;

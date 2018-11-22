@@ -2,6 +2,10 @@
   flex: 2;
 }
 
+.mat-column-date, .mat-column-status {
+  flex: 1.5;
+}
+
 .mat-column-text {
   flex: 4;
 }

@@ -1,8 +1,12 @@
-.action-row {
-  display: flex;
-  align-items: center;
+.mat-column-id {
+  flex: 0.5;
 }
 
 .mat-column-action {
-  flex: 0 0 250px;
+  flex: 2;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
 }
