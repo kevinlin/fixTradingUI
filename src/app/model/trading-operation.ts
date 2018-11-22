@@ -59,4 +59,8 @@ export class TradingOperation {
     return this.state === OperationState.PENDING || this.state === OperationState.IN_PROGRESS;
   }
 
+  public isCompletd(): boolean {
+    return this.state === OperationState.COMPLETED;
+  }
+
 }

@@ -39,9 +39,9 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
+          <button *ngIf="!row.isCompletd()" mat-raised-button color="primary" (click)="edit(row)">Edit</button>&nbsp;
           <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="suspend(row)">Suspend</button>
           <button *ngIf="row.isSuspended()" mat-raised-button color="primary" (click)="resume(row)">Resume</button>&nbsp;
-          <button *ngIf="row.isActive()" mat-raised-button color="primary" (click)="edit(row)">Edit</button>&nbsp;
           <button *ngIf="row.isPending()" mat-raised-button color="warn" (click)="delete(row)">Delete</button>
         </mat-cell>
       </ng-container>
@@ -50,7 +50,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
   </mat-card-content>
 </mat-card>
 <br/>
