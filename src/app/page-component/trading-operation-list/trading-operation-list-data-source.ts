@@ -1,11 +1,11 @@
-import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatSort } from '@angular/material';
-import { merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {DataSource} from '@angular/cdk/collections';
+import {MatPaginator, MatSort} from '@angular/material';
+import {merge, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { TradingOperation } from '../../model/trading-operation';
-import { TradingStrategy } from '../../model/trading-strategy';
-import { TradingOperationService } from '../../service/trading-operation.service';
+import {TradingOperation} from '../../model/trading-operation';
+import {TradingStrategy} from '../../model/trading-strategy';
+import {TradingOperationService} from '../../service/trading-operation.service';
 
 /**
  * Data source for the TradingOperationList view. This class should encapsulate all logic for fetching and manipulating the displayed data

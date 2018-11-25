@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-
-import {InstrumentsComponent} from '../component/instruments/instruments.component';
 import {LoginComponent} from '../component/login/login.component';
-import {ParametersComponent} from '../component/parameters/parameters.component';
-import {TradingOperationListComponent} from '../component/trading-operation-list/trading-operation-list.component';
-import {TradingSessionComponent} from '../component/trading-session/trading-session.component';
-import {TradingStateComponent} from '../component/trading-state/trading-state.component';
-import {TradingStrategyListComponent} from '../component/trading-strategy-list/trading-strategy-list.component';
 import {AuthGuard} from '../guard/auth.guard';
+
+import {InstrumentsComponent} from '../page-component/instruments/instruments.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
+import {ParametersComponent} from '../page-component/parameters/parameters.component';
 import {TradingExecutionComponent} from '../page-component/trading-execution/trading-execution.component';
+import {TradingOperationListComponent} from '../page-component/trading-operation-list/trading-operation-list.component';
+import {TradingSessionComponent} from '../page-component/trading-session/trading-session.component';
+import {TradingStateComponent} from '../page-component/trading-state/trading-state.component';
+import {TradingStrategyListComponent} from '../page-component/trading-strategy-list/trading-strategy-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/instruments' },

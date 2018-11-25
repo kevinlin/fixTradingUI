@@ -8,7 +8,7 @@ import {StompClientService} from '../../service/stomp-client.service';
 import {TradingOperationService} from '../../service/trading-operation.service';
 import {TradingStrategyService} from '../../service/trading-strategy.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
-import {BaseComponent} from '../base-component';
+import {BasePageComponent} from '../base-page-component';
 import {TradingOperationListDataSource} from './trading-operation-list-data-source';
 
 @Component({
@@ -16,7 +16,7 @@ import {TradingOperationListDataSource} from './trading-operation-list-data-sour
   templateUrl: './trading-operation-list.component.html',
   styleUrls: ['./trading-operation-list.component.css']
 })
-export class TradingOperationListComponent extends BaseComponent implements OnInit {
+export class TradingOperationListComponent extends BasePageComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

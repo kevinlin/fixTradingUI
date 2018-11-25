@@ -35,11 +35,11 @@ export class OrderService {
     });
   }
 
-  public queryOrdersByDate(date: Date): void {
-    this.httpClient.get<Order[]>(this.orderUrl + '/' + date).subscribe(orders => {
-      console.log(orders);
-      this.historyOrderSubject.next(orders);
-    });
+  public queryOrdersByDate(date: Date): Observable<Order[]> {
+    const observable = this.httpClient.get<Order[]>(this.orderUrl + '/' + date);
+    observable.subscribe(orders => this.historyOrderSubject.next(orders));
+
+    return observable;
   }
 
 }

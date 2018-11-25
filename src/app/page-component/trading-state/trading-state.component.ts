@@ -1,18 +1,18 @@
-import { ApplicationRef, Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog } from '@angular/material';
-import { Message } from '@stomp/stompjs';
-import { componentDestroyed } from 'ng2-rx-componentdestroyed';
-import { takeUntil } from 'rxjs/operators';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {MatDialog} from '@angular/material';
+import {Message} from '@stomp/stompjs';
+import {componentDestroyed} from 'ng2-rx-componentdestroyed';
+import {takeUntil} from 'rxjs/operators';
 
-import { TradingParameters } from '../../model/trading-parameters';
-import { TradingState } from '../../model/trading-state';
-import { ParametersService } from '../../service/parameters.service';
-import { StompClientService } from '../../service/stomp-client.service';
-import { TradingSessionService } from '../../service/trading-session.service';
-import { TradingStateService } from '../../service/trading-state.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { BaseComponent } from '../base-component';
+import {TradingParameters} from '../../model/trading-parameters';
+import {TradingState} from '../../model/trading-state';
+import {ParametersService} from '../../service/parameters.service';
+import {StompClientService} from '../../service/stomp-client.service';
+import {TradingSessionService} from '../../service/trading-session.service';
+import {TradingStateService} from '../../service/trading-state.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {BasePageComponent} from '../base-page-component';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { BaseComponent } from '../base-component';
   templateUrl: './trading-state.component.html',
   styleUrls: ['./trading-state.component.css']
 })
-export class TradingStateComponent extends BaseComponent implements OnInit, OnDestroy {
+export class TradingStateComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   tradingState: TradingState;
   tradingParameters: TradingParameters;

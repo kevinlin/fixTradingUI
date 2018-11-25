@@ -1,10 +1,10 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
-import {BaseComponent} from '../../component/base-component';
-
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
+
+import {BasePageComponent} from '../base-page-component';
 import {BaseOrderBlotterDatasource} from './base-order-blotter-datasource';
 
 class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
@@ -18,7 +18,7 @@ class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
   templateUrl: './order-blotter.component.html',
   styleUrls: ['./order-blotter.component.css'],
 })
-export class OrderBlotterComponent extends BaseComponent implements OnInit {
+export class OrderBlotterComponent extends BasePageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource: OrderBlotterDataSource;
@@ -27,17 +27,20 @@ export class OrderBlotterComponent extends BaseComponent implements OnInit {
   displayedColumns = ['date', 'strategy', 'symbol', 'clOrdID', 'orderID', 'side', 'price', 'size', 'status', 'transactTime', 'text'];
 
   queryDate: Date;
+  isLoading = false;
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private orderServcie: OrderService) {
     super(stompClient, toastr, appRef, dialog);
   }
 
   ngOnInit() {
+    this.baseOnInit();
     this.dataSource = new OrderBlotterDataSource(this.orderServcie, this.paginator, this.sort);
   }
 
   public queryOrders() {
-    this.orderServcie.queryOrdersByDate(this.queryDate);
+    this.isLoading = true;
+    this.orderServcie.queryOrdersByDate(this.queryDate).subscribe(orders => this.isLoading = false);
   }
 
 }

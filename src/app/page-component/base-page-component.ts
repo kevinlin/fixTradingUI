@@ -5,12 +5,12 @@ import {componentDestroyed} from 'ng2-rx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';
 
 import {AppComponent} from '../app.component';
+import {AlertDialogComponent} from '../component/alert-dialog/alert-dialog.component';
 import {Notification} from '../model/notification';
 import {StompClientService} from '../service/stomp-client.service';
 import {ToastsManager} from '../toast/toasts-manager.service';
-import {AlertDialogComponent} from './alert-dialog/alert-dialog.component';
 
-export class BaseComponent implements OnDestroy {
+export class BasePageComponent implements OnDestroy {
 
   public loading: boolean;
 

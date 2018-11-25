@@ -1,22 +1,22 @@
-import { ApplicationRef, Component, OnInit } from '@angular/core';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog } from '@angular/material';
-import { Message } from '@stomp/stompjs';
-import { componentDestroyed } from 'ng2-rx-componentdestroyed';
-import { takeUntil } from 'rxjs/operators';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {MatDialog} from '@angular/material';
+import {Message} from '@stomp/stompjs';
+import {componentDestroyed} from 'ng2-rx-componentdestroyed';
+import {takeUntil} from 'rxjs/operators';
 
-import { TradingParameters } from '../../model/trading-parameters';
-import { ParametersService } from '../../service/parameters.service';
-import { StompClientService } from '../../service/stomp-client.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { BaseComponent } from '../base-component';
+import {TradingParameters} from '../../model/trading-parameters';
+import {ParametersService} from '../../service/parameters.service';
+import {StompClientService} from '../../service/stomp-client.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {BasePageComponent} from '../base-page-component';
 
 @Component({
   selector: 'app-parameters',
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })
-export class ParametersComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ParametersComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private parametersService: ParametersService) {

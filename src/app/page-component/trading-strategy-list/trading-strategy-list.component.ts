@@ -6,7 +6,7 @@ import {TradingStrategy} from '../../model/trading-strategy';
 import {StompClientService} from '../../service/stomp-client.service';
 import {TradingStrategyService} from '../../service/trading-strategy.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
-import {BaseComponent} from '../base-component';
+import {BasePageComponent} from '../base-page-component';
 import {TradingStrategyListDataSource} from './trading-strategy-list-datasource';
 
 @Component({
@@ -14,7 +14,7 @@ import {TradingStrategyListDataSource} from './trading-strategy-list-datasource'
   templateUrl: './trading-strategy-list.component.html',
   styleUrls: ['./trading-strategy-list.component.css']
 })
-export class TradingStrategyListComponent extends BaseComponent implements OnInit {
+export class TradingStrategyListComponent extends BasePageComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
