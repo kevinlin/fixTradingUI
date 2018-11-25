@@ -4,22 +4,24 @@ import {merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {Order} from '../../model/order';
-import {OrderService} from '../../service/order.service';
-
 
 /**
  * Data source for the OrderBlotter view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class OrderBlotterDataSource extends DataSource<Order> {
+export class BaseOrderBlotterDatasource extends DataSource<Order> {
   data: Order[] = [];
 
-  constructor(private orderService: OrderService, private paginator: MatPaginator, private sort: MatSort) {
+  constructor(protected dataSubject: Observable<Order[]>, protected paginator: MatPaginator, protected sort: MatSort) {
     super();
-    this.orderService.historyOrderSubject.subscribe(newData => {
-      this.data = newData;
+    this.dataSubject.subscribe(orders => {
+      this.data = orders.filter(this.orderFilter);
     });
+  }
+
+  orderFilter(order: Order): boolean {
+    return true;
   }
 
   /**
@@ -31,7 +33,7 @@ export class OrderBlotterDataSource extends DataSource<Order> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      this.orderService.historyOrderSubject,
+      this.dataSubject,
       this.paginator.page,
       this.sort.sortChange
     ];
