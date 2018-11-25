@@ -2,12 +2,23 @@ import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 
+import {BaseComponent} from '../../component/base-component';
+import {Order} from '../../model/order';
 import {TradingOperation} from '../../model/trading-operation';
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
-import {BaseComponent} from '../base-component';
-import {OrderBlotterDataSource} from './order-blotter-data-source';
+import {BaseOrderBlotterDatasource} from '../order-blotter/base-order-blotter-datasource';
+
+class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
+  constructor(private selectedOperation: TradingOperation, private orderService: OrderService, protected paginator: MatPaginator, protected sort: MatSort) {
+    super(orderService.todayOrdersSubject, paginator, sort);
+  }
+
+  orderFilter(order: Order): boolean {
+    return !this.selectedOperation || order.tradingOperation.id === this.selectedOperation.id;
+  }
+}
 
 @Component({
   selector: 'app-trading-execution',

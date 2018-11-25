@@ -1,14 +1,13 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {BaseComponent} from '../../component/base-component';
 
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
-import {BaseComponent} from '../base-component';
 import {BaseOrderBlotterDatasource} from './base-order-blotter-datasource';
 
 class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
-
   constructor(private orderService: OrderService, protected paginator: MatPaginator, protected sort: MatSort) {
     super(orderService.historyOrderSubject, paginator, sort);
   }

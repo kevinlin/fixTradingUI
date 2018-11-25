@@ -1,6 +1,6 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
 
-import { TradingExecutionComponent } from './trading-execution.component';
+import {TradingExecutionComponent} from './trading-execution.component';
 
 describe('TradingExecutionComponent', () => {
   let component: TradingExecutionComponent;

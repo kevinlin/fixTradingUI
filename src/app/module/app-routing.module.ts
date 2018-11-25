@@ -3,14 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {InstrumentsComponent} from '../component/instruments/instruments.component';
 import {LoginComponent} from '../component/login/login.component';
-import {OrderBlotterComponent} from '../component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../component/parameters/parameters.component';
-import {TradingExecutionComponent} from '../component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from '../component/trading-operation-list/trading-operation-list.component';
 import {TradingSessionComponent} from '../component/trading-session/trading-session.component';
 import {TradingStateComponent} from '../component/trading-state/trading-state.component';
 import {TradingStrategyListComponent} from '../component/trading-strategy-list/trading-strategy-list.component';
 import {AuthGuard} from '../guard/auth.guard';
+import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
+import {TradingExecutionComponent} from '../page-component/trading-execution/trading-execution.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/instruments' },

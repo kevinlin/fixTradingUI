@@ -14,9 +14,7 @@ import {ExecutionTableComponent} from './component/execution-table/execution-tab
 import {InstrumentsComponent} from './component/instruments/instruments.component';
 import {LoginComponent} from './component/login/login.component';
 import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
-import {OrderBlotterComponent} from './component/order-blotter/order-blotter.component';
 import {ParametersComponent} from './component/parameters/parameters.component';
-import {TradingExecutionComponent} from './component/trading-execution/trading-execution.component';
 import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
 import {TradingOperationListComponent} from './component/trading-operation-list/trading-operation-list.component';
 import {TradingSessionComponent} from './component/trading-session/trading-session.component';
@@ -26,6 +24,8 @@ import {TradingStrategyListComponent} from './component/trading-strategy-list/tr
 import {TradingStrategyViewComponent} from './component/trading-strategy-view/trading-strategy-view.component';
 import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
+import {OrderBlotterComponent} from './page-component/order-blotter/order-blotter.component';
+import {TradingExecutionComponent} from './page-component/trading-execution/trading-execution.component';
 import {ToastModule} from './toast/toast-module';
 
 const stompConfig: StompConfig = {
