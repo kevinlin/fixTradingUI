@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 import {LoginComponent} from '../component/login/login.component';
 import {AuthGuard} from '../guard/auth.guard';
-
 import {InstrumentsComponent} from '../page-component/instruments/instruments.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../page-component/parameters/parameters.component';
@@ -14,15 +14,15 @@ import {TradingStrategyListComponent} from '../page-component/trading-strategy-l
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/instruments' },
+  { path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] },
   { path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
+  { path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },
   { path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
+  { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
+  { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
   { path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
   { path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },
-  { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
-  { path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },
-  { path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
