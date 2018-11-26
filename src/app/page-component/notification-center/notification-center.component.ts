@@ -11,7 +11,7 @@ import {BasePageComponent} from '../base-page-component';
   styleUrls: ['./notification-center.component.css']
 })
 export class NotificationCenterComponent extends BasePageComponent implements OnInit {
-  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog) {
+  constructor(protected stompClient: StompClientService, public toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog) {
     super(stompClient, toastr, appRef, dialog);
   }
 
