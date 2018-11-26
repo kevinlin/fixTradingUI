@@ -19,6 +19,7 @@ import {TradingStrategyViewComponent} from './component/trading-strategy-view/tr
 import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
 import {InstrumentsComponent} from './page-component/instruments/instruments.component';
+import {NotificationCenterComponent} from './page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from './page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from './page-component/parameters/parameters.component';
 import {TradingExecutionComponent} from './page-component/trading-execution/trading-execution.component';
@@ -77,6 +78,7 @@ const stompConfig: StompConfig = {
     InstrumentsComponent,
     LoginComponent,
     MarketWatcherComponent,
+    NotificationCenterComponent,
     OrderBlotterComponent,
     ParametersComponent,
     TradingExecutionComponent,

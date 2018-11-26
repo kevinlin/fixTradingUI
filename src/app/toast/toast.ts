@@ -9,13 +9,14 @@ export class Toast {
     showCloseButton: false,
   };
   timeoutId: any;
+  timestamp: Date;
 
   constructor(public type: string,
               public message: string,
               public title?: string,
-              public data?: Object
-  ) {
-
+              public data?: Object) {
+    this.timestamp = new Date();
   }
+
 }
 

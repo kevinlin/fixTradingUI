@@ -1,0 +1,30 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <h3>通知中心</h3>
+  </mat-card-header>
+  <mat-card-content>
+    <table class="table table-hover ">
+      <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Message</th>
+        <th>Data</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let toast of toastr.notificationsSubject | async" class="{{getToastStyle(toast.type)}}">
+        <td>{{toast.timestamp  | date:'yyyyMMdd HH:mm:ss.SSS'}}</td>
+        <td>{{toast.type}}</td>
+        <td>{{toast.title}}</td>
+        <td>{{toast.message}}</td>
+        <td>{{toast.data | json}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="warn" (click)="toastr.clearSavedNotifications()">Clear Notifications</button>
+  </mat-card-actions>
+</mat-card>

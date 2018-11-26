@@ -1,5 +1,5 @@
 import {ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, NgZone, ViewContainerRef} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 import {Toast} from './toast';
 import {ToastContainerComponent} from './toast-container/toast-container.component';
@@ -7,11 +7,15 @@ import {ToastOptions} from './toast-options';
 
 @Injectable()
 export class ToastsManager {
+  public static KEY = 'ToastsManager.notifications';
+
   container: ComponentRef<any>;
 
   private index = 0;
   private toastClicked: Subject<Toast> = new Subject<Toast>();
   private _rootViewContainerRef: ViewContainerRef;
+  public notifications: Toast[];
+  public notificationsSubject = new BehaviorSubject<Toast[]>([]);
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -19,6 +23,18 @@ export class ToastsManager {
     private appRef: ApplicationRef,
     private options: ToastOptions
   ) {
+    const saved = localStorage.getItem(ToastsManager.KEY);
+    if (saved) {
+      this.notifications = JSON.parse(saved);
+      this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+    } else {
+      this.notifications = [];
+    }
+  }
+
+  clearSavedNotifications() {
+    localStorage.removeItem(ToastsManager.KEY);
+    this.notificationsSubject.next([]);
   }
 
   setRootViewContainerRef(vRef: ViewContainerRef) {
@@ -30,6 +46,10 @@ export class ToastsManager {
   }
 
   show(toast: Toast, options?: Object): Promise<Toast> {
+    this.notifications.push(toast);
+    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
+    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+
     return new Promise((resolve, reject) => {
       if (!this.container) {
         // get app root view component ref

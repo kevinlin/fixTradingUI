@@ -25,6 +25,7 @@ export class AppComponent {
     { path: '/operations', label: 'Trading Operations' },
     { path: '/executions', label: 'Trading Executions' },
     { path: '/orderBlotter', label: 'Order Blotter' },
+    { path: '/notificationCenter', label: 'Notification Center' },
     // { path: '/parameters', label: 'Trading Parameters' },
     // { path: '/tradingSession', label: 'Trading Session' },
     // { path: '/tradingState', label: 'Trading State' }
