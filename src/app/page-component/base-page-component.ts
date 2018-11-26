@@ -1,7 +1,7 @@
 import {ApplicationRef, OnDestroy} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Message} from '@stomp/stompjs';
-import {componentDestroyed} from 'ng2-rx-componentdestroyed';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';
 
 import {AppComponent} from '../app.component';
@@ -11,7 +11,6 @@ import {StompClientService} from '../service/stomp-client.service';
 import {ToastsManager} from '../toast/toasts-manager.service';
 
 export class BasePageComponent implements OnDestroy {
-
   public loading: boolean;
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog) {

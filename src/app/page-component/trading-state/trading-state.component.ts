@@ -2,7 +2,7 @@ import {ApplicationRef, Component, OnInit} from '@angular/core';
 import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
 import {MatDialog} from '@angular/material';
 import {Message} from '@stomp/stompjs';
-import {componentDestroyed} from 'ng2-rx-componentdestroyed';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';
 
 import {TradingParameters} from '../../model/trading-parameters';
@@ -13,7 +13,6 @@ import {TradingSessionService} from '../../service/trading-session.service';
 import {TradingStateService} from '../../service/trading-state.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
 import {BasePageComponent} from '../base-page-component';
-
 
 @Component({
   selector: 'app-trading-state',
