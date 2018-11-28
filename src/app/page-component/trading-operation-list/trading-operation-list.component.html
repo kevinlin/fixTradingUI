@@ -38,7 +38,7 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button *ngIf="!row.isCompletd()" mat-raised-button color="primary" (click)="edit(row)">Edit</button>&nbsp;
+          <button *ngIf="!row.isCompleted()" mat-raised-button color="primary" (click)="edit(row)">Edit</button>&nbsp;
           <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="suspend(row)">Suspend</button>
           <button *ngIf="row.isSuspended()" mat-raised-button color="primary" (click)="resume(row)">Resume</button>&nbsp;
           <button *ngIf="row.isPending()" mat-raised-button color="warn" (click)="delete(row)">Delete</button>
