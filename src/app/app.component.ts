@@ -20,16 +20,16 @@ export class AppComponent {
     );
 
   navLinks = [
-    { path: '/instruments', label: 'Instruments' },
-    { path: '/strategies', label: 'Trading Strategies' },
-    { path: '/operations', label: 'Trading Operations' },
-    { path: '/executions', label: 'Trading Executions' },
-    { path: '/orderBlotter', label: 'Order Blotter' },
-    { path: '/notificationCenter', label: 'Notification Center' },
-    // { path: '/parameters', label: 'Trading Parameters' },
-    // { path: '/tradingSession', label: 'Trading Session' },
-    // { path: '/tradingState', label: 'Trading State' }
-    { path: '/login', label: 'Logout' }
+    { path: '/instruments', label: '合约' },
+    { path: '/strategies', label: '策略' },
+    { path: '/operations', label: '操作' },
+    { path: '/executions', label: '执行' },
+    { path: '/orderBlotter', label: '历史纪录' },
+    { path: '/notificationCenter', label: '消息中心' },
+    // { path: '/parameters', label: '参数' },
+    // { path: '/tradingSession', label: '交易时段' },
+    // { path: '/tradingState', label: '交易状态' }
+    { path: '/login', label: '登出' }
   ];
   title: string;
   currentUser: User;

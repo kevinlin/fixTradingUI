@@ -14,33 +14,33 @@ export class ExecutionTableComponent implements OnInit {
 
   columns = [
     {
-      title: 'Symbol',
+      title: '合约',
       data: 'symbol',
       type: 'text',
       readOnly: true
     },
     {
-      title: 'Side',
+      title: '方向',
       data: 'side',
       type: 'dropdown',
       strict: true,
       source: ['BID', 'ASK']
     },
     {
-      title: 'Time',
+      title: '时间',
       data: 'time',
       type: 'time',
       timeFormat: 'HH:mm:ss',
       correctFormat: true
     },
     {
-      title: 'Lots',
+      title: '手数',
       data: 'lots',
       type: 'numeric',
       format: '0,0'
     },
     {
-      title: 'State',
+      title: '状态',
       data: 'state',
       type: 'text',
       readOnly: true

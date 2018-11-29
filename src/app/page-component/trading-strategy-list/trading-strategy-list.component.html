@@ -36,8 +36,8 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button mat-raised-button color="primary" (click)="editStrategy(row)">Edit</button>&nbsp;
-          <button mat-raised-button color="warn" [disabled]="row.isActive()" (click)="deleteStrategy(row)">Delete</button>
+          <button mat-raised-button color="primary" (click)="editStrategy(row)">编辑</button>&nbsp;
+          <button mat-raised-button color="warn" [disabled]="row.isActive()" (click)="deleteStrategy(row)">删除</button>
         </mat-cell>
       </ng-container>
 
@@ -51,7 +51,7 @@
 </mat-card>
 <br/>
 <div class="action-row">
-  <button mat-raised-button color="accent" (click)="newStrategy()">New Strategy</button>&nbsp;
+  <button mat-raised-button color="accent" (click)="newStrategy()">新建交易策略</button>&nbsp;
 </div>
 <br/>
 <div *ngIf="selectedStrategy">
