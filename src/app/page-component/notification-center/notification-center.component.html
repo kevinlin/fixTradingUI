@@ -6,11 +6,11 @@
     <table class="table table-hover ">
       <thead>
       <tr>
-        <th>Timestamp</th>
-        <th>Type</th>
-        <th>Title</th>
-        <th>Message</th>
-        <th>Data</th>
+        <th>时间戳</th>
+        <th>类别</th>
+        <th>操作</th>
+        <th>详细信息</th>
+        <th>数据</th>
       </tr>
       </thead>
       <tbody>
@@ -25,6 +25,6 @@
     </table>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="warn" (click)="toastr.clearSavedNotifications()">Clear Notifications</button>
+    <button mat-raised-button color="warn" (click)="toastr.clearSavedNotifications()">清空</button>
   </mat-card-actions>
 </mat-card>

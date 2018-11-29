@@ -14,17 +14,17 @@ import {TradingStateComponent} from '../page-component/trading-state/trading-sta
 import {TradingStrategyListComponent} from '../page-component/trading-strategy-list/trading-strategy-list.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/instruments' },
-  { path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] },
-  { path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'notificationCenter', component: NotificationCenterComponent, canActivate: [AuthGuard] },
-  { path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },
-  { path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
-  { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
-  { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
-  { path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
-  { path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },
+{ path: '', pathMatch: 'full', redirectTo: '/instruments' },
+{ path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] },
+{ path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
+{ path: 'login', component: LoginComponent },
+{ path: 'notificationCenter', component: NotificationCenterComponent, canActivate: [AuthGuard] },
+{ path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },
+{ path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
+{ path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
+{ path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
+{ path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
+{ path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

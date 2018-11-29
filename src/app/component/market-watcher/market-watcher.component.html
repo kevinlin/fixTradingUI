@@ -5,37 +5,37 @@
   <mat-card-content>
     <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
       <ng-container matColumnDef="symbol">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>合约</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.symbol}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topBidPrice">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Best Bid Price</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>最高买价</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestBid?.price}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topBidSize">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>手数</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestBid?.size}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topBidTime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>时间</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestBid?.timestamp | date:'HH:mm:ss.SSS'}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topAskPrice">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Best Ask Price</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>最低卖价</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestAsk?.price}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topAskSize">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>手数</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestAsk?.size}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="topAskTime">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Time</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>时间</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.bestAsk?.timestamp | date:'HH:mm:ss.SSS'}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="unsubscribe">
-        <mat-header-cell *matHeaderCellDef>Unsubscribe</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>操作</mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button mat-raised-button color="warn" (click)="unsubscribe(row)">Unsubscribe</button>
+          <button mat-raised-button color="warn" (click)="unsubscribe(row)">取消</button>
         </mat-cell>
       </ng-container>
 
