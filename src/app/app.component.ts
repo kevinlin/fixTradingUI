@@ -20,13 +20,13 @@ export class AppComponent {
     );
 
   navLinks = [
-    { path: '/instruments', label: '合约' },
-    { path: '/strategies', label: '策略' },
-    { path: '/operations', label: '操作' },
-    { path: '/executions', label: '执行' },
+    { path: '/instruments', label: '可交易合约' },
+    { path: '/strategies', label: '交易策略' },
+    { path: '/operations', label: '交易操作' },
+    { path: '/executions', label: '交易执行' },
     { path: '/orderBlotter', label: '历史纪录' },
     { path: '/notificationCenter', label: '消息中心' },
-    // { path: '/parameters', label: '参数' },
+    // { path: '/parameters', label: '交易参数' },
     // { path: '/tradingSession', label: '交易时段' },
     // { path: '/tradingState', label: '交易状态' }
     { path: '/login', label: '登出' }
