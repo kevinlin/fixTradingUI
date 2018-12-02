@@ -26,7 +26,19 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="col-6" *ngIf="selectedOperation.operationType">
+      <div class="col-3">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="selectedOperation.overPriceLevel"
+              [required]="true"
+              placeholder="超价">
+              <mat-option *ngFor="let choice of overPriceLevelValues" [value]="choice">{{choice}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-3" *ngIf="selectedOperation.operationType">
         <div class="form-group">
           <label for="direction">方向</label>
           <mat-radio-group id="direction" class="radio-group" [(ngModel)]="selectedOperation.direction" [required]="true" [disabled]="selectedOperation.isNotPending()">

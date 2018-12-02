@@ -22,6 +22,7 @@ export class TradingOperationDetailComponent implements OnInit {
 
   operationTypeValues: any[];
   directionValues: any[];
+  overPriceLevelValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(private operationService: TradingOperationService, private executionService: TradingExecutionService, private toastr: ToastsManager, private appRef: ApplicationRef) {
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);

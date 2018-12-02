@@ -13,6 +13,7 @@ export class TradingOperation {
   direction: Direction;
   operationType: OperationType;
   state: OperationState;
+  overPriceLevel: number;
 
   // Contract execution details
   contract1Side: OrderSide;
@@ -41,6 +42,7 @@ export class TradingOperation {
 
   constructor() {
     this.state = OperationState.PENDING;
+    this.overPriceLevel = 0;
   }
 
   public isPending(): boolean {
