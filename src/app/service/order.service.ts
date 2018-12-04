@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Message} from '@stomp/stompjs';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {shareReplay} from 'rxjs/operators';
 import {Order} from '../model/order';
 import {StompClientService} from './stomp-client.service';
 
@@ -25,18 +26,17 @@ export class OrderService {
   }
 
   public getTodayOrders(): Observable<Order[]> {
-    return this.httpClient.get<Order[]>(this.orderUrl + '/today');
+    return this.httpClient.get<Order[]>(this.orderUrl + '/today').pipe(shareReplay(1));
   }
 
   public refreshTodayOrders() {
     this.getTodayOrders().subscribe(result => {
-      console.log(result);
       this.todayOrdersSubject.next(result);
     });
   }
 
   public queryOrdersByDate(date: Date): Observable<Order[]> {
-    const observable = this.httpClient.get<Order[]>(this.orderUrl + '/' + date);
+    const observable = this.httpClient.get<Order[]>(this.orderUrl + '/' + date).pipe(shareReplay());
     observable.subscribe(orders => this.historyOrderSubject.next(orders));
 
     return observable;
