@@ -11,6 +11,8 @@
         <th>操作</th>
         <th>详细信息</th>
         <th>数据</th>
+        <th>不被清除</th>
+        <th>删除</th>
       </tr>
       </thead>
       <tbody>
@@ -20,6 +22,8 @@
         <td>{{toast.title}}</td>
         <td>{{toast.message}}</td>
         <td>{{toast.data | json}}</td>
+        <td><button mat-raised-button (click)="toast.pinned=!toast.pinned">{{toast.pinned}}</button></td>
+        <td><button mat-raised-button (click)="toastr.deleteSingleToast(toast)">删除</button></td>
       </tr>
       </tbody>
     </table>

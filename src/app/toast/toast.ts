@@ -10,6 +10,7 @@ export class Toast {
   };
   timeoutId: any;
   timestamp: Date;
+  pinned = false;
 
   constructor(public type: string,
               public message: string,

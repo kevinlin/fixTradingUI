@@ -16,6 +16,7 @@ export class ToastsManager {
   private _rootViewContainerRef: ViewContainerRef;
   public notifications: Toast[];
   public notificationsSubject = new BehaviorSubject<Toast[]>([]);
+  private flag: number;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -32,9 +33,29 @@ export class ToastsManager {
     }
   }
 
+  deleteSingleToast(toast: Toast){
+    this.flag = -1;
+    for (var i=0; i<this.notifications.length;i++){
+      if (toast.timestamp == this.notifications[i].timestamp){
+         this.flag = i;
+         break;
+      }
+    }
+    if (this.flag > -1){
+      this.notifications.splice(this.flag,1);
+    }
+    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
+  }
+
   clearSavedNotifications() {
-    localStorage.removeItem(ToastsManager.KEY);
-    this.notificationsSubject.next([]);
+    for (var i=this.notifications.length-1;i>=0;i--){
+      if (this.notifications[i].pinned == false){
+        this.notifications.splice(i,1);
+      }
+    }
+    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
   }
 
   setRootViewContainerRef(vRef: ViewContainerRef) {
