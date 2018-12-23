@@ -10,7 +10,7 @@
         <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="contracts">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>合约价差公式</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>价差公式</mat-header-cell>
         <mat-cell *matCellDef="let row">
           {{row.contract1Coefficient}} * {{row.contract1Symbol}}&nbsp;
           {{row.contract2Coefficient}} * {{row.contract2Symbol}}&nbsp;
@@ -20,6 +20,14 @@
           <ng-container *ngIf="row.contract6Coefficient">{{row.contract6Coefficient}} * {{row.contract6Symbol}}&nbsp;</ng-container>
           {{row.constantFactor}}
         </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="longLivePrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>多价差</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.longLivePrice}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="shortLivePrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>空价差</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.shortLivePrice}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>

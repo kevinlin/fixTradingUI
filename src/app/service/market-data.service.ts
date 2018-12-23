@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Message } from '@stomp/stompjs';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Message} from '@stomp/stompjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {shareReplay, tap} from 'rxjs/operators';
 
-import { MarketData } from '../model/market-data';
-import { StompClientService } from './stomp-client.service';
+import {MarketData} from '../model/market-data';
+import {StompClientService} from './stomp-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,18 +20,18 @@ export class MarketDataService {
     stompClientService.subscribeLatestMarketData()
       .subscribe((message: Message) => {
         const latestMarketData = JSON.parse(message.body);
-        console.log(latestMarketData);
+        console.log('MarketDataService.latestMarketData:', latestMarketData);
         this.latestMarketDataSubject.next(latestMarketData);
       });
   }
 
   public getAll(): Observable<MarketData[]> {
-    return this.httpClient.get<MarketData[]>(this.marketDataUrl + '/all');
+    return this.httpClient.get<MarketData[]>(this.marketDataUrl + '/all').pipe(shareReplay(1));
   }
 
   public refreshAll() {
     this.getAll().subscribe(result => {
-      console.log(result);
+      console.log('MarketDataService.refreshAll()->', result);
       this.latestMarketDataSubject.next(result);
     });
   }

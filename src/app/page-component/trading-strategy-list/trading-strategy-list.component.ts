@@ -21,7 +21,7 @@ export class TradingStrategyListComponent extends BasePageComponent implements O
 
   public dataSource: TradingStrategyListDataSource;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'contracts', 'state', 'positionDirection', 'marketDirection', 'action'];
+  displayedColumns = ['id', 'name', 'contracts', 'longLivePrice', 'shortLivePrice', 'state', 'positionDirection', 'marketDirection', 'action'];
 
   selectedStrategy: TradingStrategy;
 
