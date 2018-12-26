@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class ToastOptions {
@@ -8,7 +8,7 @@ export class ToastOptions {
   animate = 'fade';
 
   // override-able properties
-  dismiss = 'click'; // 'auto' | 'click' | 'controlled'
+  dismiss = 'auto'; // 'auto' | 'click' | 'controlled'
   toastLife = 5000;
   enableHTML = false;
   titleClass = 'toast-title';

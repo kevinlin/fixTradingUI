@@ -176,7 +176,11 @@ export class ToastsManager {
   error(message: string, title?: string, options?: any): Promise<Toast> {
     title = (title ? title : 'Error') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
+    if (!options) {
+      options = { dismiss: 'click' };
+    }
     const toast = new Toast('error', message, title, data);
+    toast.pinned = true;
     return this.show(toast, options);
   }
 
