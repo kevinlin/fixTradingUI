@@ -44,18 +44,19 @@ export class TradingStrategyService {
 
     if (mdMap.has(symbol1) && mdMap.has(symbol2) && (symbol3 !== null === mdMap.has(symbol3))
       && (symbol4 !== null === mdMap.has(symbol4)) && (symbol5 !== null === mdMap.has(symbol5)) && (symbol6 !== null === mdMap.has(symbol6))) {
-      const symbol1Bid = mdMap.get(symbol1).bestBid.price;
-      const symbol1Ask = mdMap.get(symbol1).bestAsk.price;
-      const symbol2Bid = mdMap.get(symbol2).bestBid.price;
-      const symbol2Ask = mdMap.get(symbol2).bestAsk.price;
-      const symbol3Bid = symbol3 ? mdMap.get(symbol3).bestBid.price : 0;
-      const symbol3Ask = symbol3 ? mdMap.get(symbol3).bestAsk.price : 0;
-      const symbol4Bid = symbol4 ? mdMap.get(symbol4).bestBid.price : 0;
-      const symbol4Ask = symbol4 ? mdMap.get(symbol4).bestAsk.price : 0;
-      const symbol5Bid = symbol5 ? mdMap.get(symbol5).bestBid.price : 0;
-      const symbol5Ask = symbol5 ? mdMap.get(symbol5).bestAsk.price : 0;
-      const symbol6Bid = symbol6 ? mdMap.get(symbol6).bestBid.price : 0;
-      const symbol6Ask = symbol6 ? mdMap.get(symbol6).bestAsk.price : 0;
+      // Bid/Ask price use the opposite side
+      const symbol1Ask = mdMap.get(symbol1).bestBid.price;
+      const symbol1Bid = mdMap.get(symbol1).bestAsk.price;
+      const symbol2Ask = mdMap.get(symbol2).bestBid.price;
+      const symbol2Bid = mdMap.get(symbol2).bestAsk.price;
+      const symbol3Ask = symbol3 ? mdMap.get(symbol3).bestBid.price : 0;
+      const symbol3Bid = symbol3 ? mdMap.get(symbol3).bestAsk.price : 0;
+      const symbol4Ask = symbol4 ? mdMap.get(symbol4).bestBid.price : 0;
+      const symbol4Bid = symbol4 ? mdMap.get(symbol4).bestAsk.price : 0;
+      const symbol5Ask = symbol5 ? mdMap.get(symbol5).bestBid.price : 0;
+      const symbol5Bid = symbol5 ? mdMap.get(symbol5).bestAsk.price : 0;
+      const symbol6Ask = symbol6 ? mdMap.get(symbol6).bestBid.price : 0;
+      const symbol6Bid = symbol6 ? mdMap.get(symbol6).bestAsk.price : 0;
 
       strategy.longLivePrice = symbol1Bid * strategy.contract1Coefficient
         + ((strategy.contract2Coefficient > 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
