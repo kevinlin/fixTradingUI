@@ -6,6 +6,10 @@
   flex: 4;
 }
 
+.mat-column-position {
+  flex: 2;
+}
+
 .mat-column-action {
   flex: 2;
 }
