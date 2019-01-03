@@ -16,7 +16,6 @@ export class ToastsManager {
   private _rootViewContainerRef: ViewContainerRef;
   public notifications: Toast[];
   public notificationsSubject = new BehaviorSubject<Toast[]>([]);
-  private flag: number;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -33,25 +32,19 @@ export class ToastsManager {
     }
   }
 
-  deleteSingleToast(toast: Toast){
-    this.flag = -1;
-    for (var i=0; i<this.notifications.length;i++){
-      if (toast.timestamp == this.notifications[i].timestamp){
-         this.flag = i;
-         break;
-      }
+  deleteSingleToast(toast: Toast) {
+    const index = this.notifications.findIndex(t => t.timestamp === toast.timestamp);
+    if (index > -1) {
+      this.notifications.splice(index, 1);
+      this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+      localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
     }
-    if (this.flag > -1){
-      this.notifications.splice(this.flag,1);
-    }
-    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
-    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
   }
 
   clearSavedNotifications() {
-    for (var i=this.notifications.length-1;i>=0;i--){
-      if (this.notifications[i].pinned == false){
-        this.notifications.splice(i,1);
+    for (let i = this.notifications.length - 1; i >= 0; i--) {
+      if (!this.notifications[i].pinned) {
+        this.notifications.splice(i, 1);
       }
     }
     this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
@@ -183,7 +176,11 @@ export class ToastsManager {
   error(message: string, title?: string, options?: any): Promise<Toast> {
     title = (title ? title : 'Error') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
+    if (!options) {
+      options = { dismiss: 'click' };
+    }
     const toast = new Toast('error', message, title, data);
+    toast.pinned = true;
     return this.show(toast, options);
   }
 

@@ -10,7 +10,7 @@
         <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="contracts">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>合约价差公式</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>价差公式</mat-header-cell>
         <mat-cell *matCellDef="let row">
           {{row.contract1Coefficient}} * {{row.contract1Symbol}}&nbsp;
           {{row.contract2Coefficient}} * {{row.contract2Symbol}}&nbsp;
@@ -21,6 +21,14 @@
           {{row.constantFactor}}
         </mat-cell>
       </ng-container>
+      <ng-container matColumnDef="longLivePrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>多价差</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.longLivePrice | number:'1.0-1'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="shortLivePrice">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>空价差</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.shortLivePrice | number:'1.0-1'}}</mat-cell>
+      </ng-container>
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.state}}</mat-cell>
@@ -28,6 +36,17 @@
       <ng-container matColumnDef="positionDirection">
         <mat-header-cell *matHeaderCellDef mat-sort-header>持仓方向</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.positionDirection}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>仓位</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngIf="row.contract1Lots">{{row.contract1Symbol}}={{row.contract1Lots}} </ng-container>
+          <ng-container *ngIf="row.contract2Lots">{{row.contract2Symbol}}={{row.contract2Lots}} </ng-container>
+          <ng-container *ngIf="row.contract3Lots">{{row.contract3Symbol}}={{row.contract3Lots}}&nbsp;</ng-container>
+          <ng-container *ngIf="row.contract4Lots">{{row.contract4Symbol}}={{row.contract4Lots}}&nbsp;</ng-container>
+          <ng-container *ngIf="row.contract5Lots">{{row.contract5Symbol}}={{row.contract5Lots}}&nbsp;</ng-container>
+          <ng-container *ngIf="row.contract6Lots">{{row.contract6Symbol}}={{row.contract6Lots}}&nbsp;</ng-container>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="marketDirection">
         <mat-header-cell *matHeaderCellDef mat-sort-header>基本面方向</mat-header-cell>

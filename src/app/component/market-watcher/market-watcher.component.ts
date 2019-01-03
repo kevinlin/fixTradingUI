@@ -1,10 +1,10 @@
-import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import { AppComponent } from '../../app.component';
-import { MarketData } from '../../model/market-data';
-import { MarketDataService } from '../../service/market-data.service';
-import { ToastsManager } from '../../toast/toasts-manager.service';
-import { MarketWatcherDataSource } from './market-watcher-data-source';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator, MatSort} from '@angular/material';
+import {AppComponent} from '../../app.component';
+import {MarketData} from '../../model/market-data';
+import {MarketDataService} from '../../service/market-data.service';
+import {ToastsManager} from '../../toast/toasts-manager.service';
+import {MarketWatcherDataSource} from './market-watcher-data-source';
 
 @Component({
   selector: 'app-market-watcher',
@@ -21,7 +21,6 @@ export class MarketWatcherComponent implements OnInit {
   displayedColumns = ['symbol', 'topBidTime', 'topBidSize', 'topBidPrice', 'topAskPrice', 'topAskSize', 'topAskTime', 'unsubscribe'];
 
   constructor(private marketDataService: MarketDataService, private toastr: ToastsManager, private appRef: ApplicationRef) {
-    this.marketDataService.refreshAll();
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);
   }
 

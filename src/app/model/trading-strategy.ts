@@ -38,6 +38,10 @@ export class TradingStrategy {
   marketDirection: Direction;
   positionDirection: Direction;
 
+  // Live Price
+  longLivePrice: number;
+  shortLivePrice: number;
+
   constructor() {
     this.state = StrategyState.INITIALISED;
     this.marketDirection = Direction.NEUTRAL;
