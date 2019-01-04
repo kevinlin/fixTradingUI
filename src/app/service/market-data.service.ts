@@ -26,7 +26,7 @@ export class MarketDataService {
   }
 
   public getAll(): Observable<MarketData[]> {
-    return this.httpClient.get<MarketData[]>(this.marketDataUrl + '/all').pipe(shareReplay(1));
+    return this.httpClient.get<MarketData[]>(this.marketDataUrl + '/todayAll').pipe(shareReplay(1));
   }
 
   public refreshAll() {
