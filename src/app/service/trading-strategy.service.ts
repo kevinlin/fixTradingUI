@@ -58,20 +58,26 @@ export class TradingStrategyService {
       const symbol6Ask = symbol6 ? mdMap.get(symbol6).bestBid.price : 0;
       const symbol6Bid = symbol6 ? mdMap.get(symbol6).bestAsk.price : 0;
 
-      strategy.longLivePrice = symbol1Bid * strategy.contract1Coefficient
+      const newLongPriceLevel = symbol1Bid * strategy.contract1Coefficient
         + ((strategy.contract2Coefficient > 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
         + ((strategy.contract3Coefficient > 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
         + ((strategy.contract4Coefficient > 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
         + ((strategy.contract5Coefficient > 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
         + ((strategy.contract6Coefficient > 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
         + strategy.constantFactor;
-      strategy.shortLivePrice = symbol1Ask * strategy.contract1Coefficient
+      const newShortPriceLevel = symbol1Ask * strategy.contract1Coefficient
         + ((strategy.contract2Coefficient < 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
         + ((strategy.contract3Coefficient < 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
         + ((strategy.contract4Coefficient < 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
         + ((strategy.contract5Coefficient < 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
         + ((strategy.contract6Coefficient < 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
         + strategy.constantFactor;
+
+      if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
+        strategy.longPriceLevel = newLongPriceLevel;
+        strategy.shortPriceLevel = newShortPriceLevel;
+        strategy.timestamp = new Date();
+      }
     }
   }
 

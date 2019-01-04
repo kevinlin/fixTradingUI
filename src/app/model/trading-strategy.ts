@@ -38,9 +38,10 @@ export class TradingStrategy {
   marketDirection: Direction;
   positionDirection: Direction;
 
-  // Live Price
-  longLivePrice: number;
-  shortLivePrice: number;
+  // Live Price Level
+  longPriceLevel: number;
+  shortPriceLevel: number;
+  timestamp: Date;
 
   constructor() {
     this.state = StrategyState.INITIALISED;

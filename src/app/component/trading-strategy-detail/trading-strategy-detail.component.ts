@@ -1,4 +1,5 @@
 import {ApplicationRef, Component, Input, OnInit} from '@angular/core';
+import {HotTableRegisterer} from '@handsontable-pro/angular';
 import {Observable} from 'rxjs';
 
 import {AppComponent} from '../../app.component';
@@ -19,18 +20,87 @@ export class TradingStrategyDetailComponent implements OnInit {
   @Input() selectedStrategy: TradingStrategy;
 
   allInstruments: Observable<Instrument[]>;
-  DirectionValues = Object.values(Direction).filter(e => typeof(e) === 'string');
+  DirectionValues = Object.values(Direction).filter(e => typeof (e) === 'string');
 
-  constructor(private instrumentService: InstrumentService, private tradingStrategyService: TradingStrategyService, private toastr: ToastsManager, private appRef: ApplicationRef) {
+  recordHistory = false;
+  historyPriceLevels = [];
+  hotId = 'historyPriceLevels';
+  columns = [
+    {
+      title: '策略名',
+      data: 'name',
+      type: 'text',
+      readOnly: true
+    },
+    {
+      title: '时间',
+      data: 'timestamp',
+      type: 'time',
+      timeFormat: 'HH:mm:ss',
+      correctFormat: true
+    },
+    {
+      title: '做多价差',
+      data: 'longPriceLevel',
+      type: 'numeric',
+      format: '0,0'
+    },
+    {
+      title: '做空价差',
+      data: 'shortPriceLevel',
+      type: 'numeric',
+      format: '0,0'
+    }
+  ];
+  options = {
+    height: 250,
+    rowHeaders: false,
+    stretchH: 'all',
+    startRows: 10,
+    columnSorting: false,
+    contextMenu: true,
+    className: 'htCenter htMiddle',
+    observeChanges: true,
+    readOnly: false
+  };
+
+  constructor(private appRef: ApplicationRef,
+              private hotRegisterer: HotTableRegisterer,
+              private instrumentService: InstrumentService,
+              private strategyService: TradingStrategyService,
+              private toastr: ToastsManager) {
     this.allInstruments = this.instrumentService.getAllInstruments();
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);
   }
 
   ngOnInit() {
+    this.strategyService.dataSubject.subscribe(strategies => {
+      if (this.recordHistory) {
+        const latestStrategy = strategies.find(stg => stg.name === this.selectedStrategy.name);
+        if (latestStrategy && latestStrategy.timestamp !== this.selectedStrategy.timestamp) {
+          this.historyPriceLevels.push({
+            name: latestStrategy.name,
+            timestamp: latestStrategy.timestamp,
+            longPriceLevel: latestStrategy.longPriceLevel,
+            shortPriceLevel: latestStrategy.shortPriceLevel
+          });
+        }
+      }
+    });
+  }
+
+  exportCSV() {
+    this.hotRegisterer
+      .getInstance(this.hotId)
+      .getPlugin('exportFile')
+      .downloadFile('csv', {
+        columnHeaders: true,
+        filename: 'historyPriceLevels_[YYYY][MM][DD]'
+      });
   }
 
   saveStrategy() {
-    this.tradingStrategyService.save(this.selectedStrategy).subscribe(result => {
+    this.strategyService.save(this.selectedStrategy).subscribe(result => {
       this.selectedStrategy = result;
       // this.snackBar.open('Trading Strategy: \'' + this.selectedStrategy.name + '\'', 'saved', { duration: 3000 });
       this.toastr.success('Trading Strategy: \'' + this.selectedStrategy.name + '\' saved');
