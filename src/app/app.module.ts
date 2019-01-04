@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HotTableModule} from '@handsontable/angular';
+import {HotTableModule} from '@handsontable-pro/angular';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 
 import {environment} from '../environments/environment';
@@ -68,8 +68,9 @@ const stompConfig: StompConfig = {
     BrowserAnimationsModule,
     HotTableModule,
     AppRoutingModule,
+    HotTableModule.forRoot(),
     MaterialModule,
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
   ],
   declarations: [
     AlertDialogComponent,
