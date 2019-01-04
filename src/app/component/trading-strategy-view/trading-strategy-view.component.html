@@ -62,5 +62,22 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.longPriceLevel" type="number" placeholder="做多价差" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.shortPriceLevel" type="number" placeholder="做空价差" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.timestamp" type="datetime-local" placeholder="时间戳" [disabled]="true">
+        </mat-form-field>
+      </div>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>

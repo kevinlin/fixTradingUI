@@ -135,6 +135,43 @@
         </mat-form-field>
       </div>
     </div>
+    <div class="row">
+      <div class="col-2">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.longPriceLevel" type="number" placeholder="做多价差" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.shortPriceLevel" type="number" placeholder="做空价差" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedStrategy.timestamp" type="datetime-local" placeholder="时间戳" [disabled]="true">
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-checkbox [(ngModel)]="recordHistory">记录历史价差</mat-checkbox>
+      </div>
+      <div class="col-4" *ngIf="recordHistory">
+        <button mat-raised-button color="primary" (click)="exportCSV()">Export as CSV</button>
+        <hot-table
+          [hotId]="hotId"
+          [data]="historyPriceLevels"
+          [columns]="columns"
+          [height]="options.height"
+          [rowHeaders]="options.rowHeaders"
+          [startRows]="options.startRows"
+          [stretchH]="options.stretchH"
+          [columnSorting]="options.columnSorting"
+          [contextMenu]="options.contextMenu"
+          [className]="options.className"
+          [readOnly]="options.readOnly"
+        >
+        </hot-table>
+      </div>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="saveStrategy()">保存</button>&nbsp;
