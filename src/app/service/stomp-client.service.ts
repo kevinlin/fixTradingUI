@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {StompService, StompState} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 import {NEVER, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +25,12 @@ export class StompClientService implements OnDestroy {
 
     this.stompService.initAndConnect();
     this.stompService.connectObservable.subscribe(value => {
-      this.notificationObservable = this.stompService.subscribe('/topic/notification');
-      this.alertObservable = this.stompService.subscribe('/topic/alert');
-      this.latestMarketDataObservable = this.stompService.subscribe('/topic/marketData/all');
-      this.todayOrdersDataObservable = this.stompService.subscribe('/topic/order/today');
-      this.tradingStateObservable = this.stompService.subscribe('/topic/tradingState');
-      this.tradingParametersObservable = this.stompService.subscribe('/topic/tradingParameters');
+      this.notificationObservable = this.stompService.subscribe('/topic/notification').pipe(shareReplay(1));
+      this.alertObservable = this.stompService.subscribe('/topic/alert').pipe(shareReplay(1));
+      this.latestMarketDataObservable = this.stompService.subscribe('/topic/marketData/all').pipe(shareReplay(1));
+      this.todayOrdersDataObservable = this.stompService.subscribe('/topic/order/today').pipe(shareReplay(1));
+      this.tradingStateObservable = this.stompService.subscribe('/topic/tradingState').pipe(shareReplay(1));
+      this.tradingParametersObservable = this.stompService.subscribe('/topic/tradingParameters').pipe(shareReplay(1));
     });
   }
 
