@@ -38,21 +38,24 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     {
       title: '时间',
       data: 'timestamp',
-      type: 'time',
-      timeFormat: 'HH:mm:ss',
-      correctFormat: true
+      type: 'date',
+      dateFormat: 'HH:mm:ss Z',
+      correctFormat: true,
+      readOnly: true
     },
     {
       title: '做多价差',
       data: 'longPriceLevel',
       type: 'numeric',
-      format: '0,0'
+      format: '0,0',
+      readOnly: true
     },
     {
       title: '做空价差',
       data: 'shortPriceLevel',
       type: 'numeric',
-      format: '0,0'
+      format: '0,0',
+      readOnly: true
     }
   ];
   options = {
