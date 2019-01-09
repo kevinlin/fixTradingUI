@@ -42,8 +42,8 @@ export class TradingStrategy {
   longPriceLevel: number;
   shortPriceLevel: number;
   timestamp: Date;
-  longPriceLevelColor: number;
-  shortPriceLevelColor: number;
+  longPriceLevelTrend = 0;
+  shortPriceLevelTrend = 0;
 
   constructor() {
     this.state = StrategyState.INITIALISED;
