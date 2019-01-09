@@ -23,11 +23,11 @@
       </ng-container>
       <ng-container matColumnDef="longPriceLevel">
         <mat-header-cell *matHeaderCellDef mat-sort-header>多价差</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.longPriceLevel | number:'1.0-1'}}</mat-cell>
+        <mat-cell *matCellDef="let row" [ngClass]="{'font-red':row.longPriceLevelColor==1,'font-green':row.longPriceLevelColor==2}">{{row.longPriceLevel | number:'1.0-1'}} {{row.longPriceLevelColor}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="shortPriceLevel">
         <mat-header-cell *matHeaderCellDef mat-sort-header>空价差</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.shortPriceLevel | number:'1.0-1'}}</mat-cell>
+        <mat-cell *matCellDef="let row" ng-class="{true:'font-red',false:'font-green'}[row.shortPriceLevelColor==1]">{{row.shortPriceLevel | number:'1.0-1'}} {{row.shortPriceLevelColor}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>
