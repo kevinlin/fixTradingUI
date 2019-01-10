@@ -33,7 +33,7 @@ export class ParametersComponent extends BasePageComponent implements OnInit, On
     this.parametersService.getParameters().subscribe(parameters => {
       this.tradingParameters = parameters;
     });
-    this.stompClient.subscribeTradingParameters()
+    this.stompClient.tradingParametersObservable
       .pipe(takeUntil(componentDestroyed(this)))
       .subscribe((message: Message) => {
         const parameters = JSON.parse(message.body);

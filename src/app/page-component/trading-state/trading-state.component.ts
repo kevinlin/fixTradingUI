@@ -48,10 +48,7 @@ export class TradingStateComponent extends BasePageComponent implements OnInit, 
           this.tradingParameters = parameters;
         });
 
-        // setInterval(() => {
-        //   this.loadTradingState();
-        // }, 5000);
-        this.stompClient.subscribeTradingState()
+        this.stompClient.tradingStateObservable
           .pipe(takeUntil(componentDestroyed(this)))
           .subscribe((message: Message) => {
             const state = JSON.parse(message.body);
@@ -59,7 +56,7 @@ export class TradingStateComponent extends BasePageComponent implements OnInit, 
             // this.snackBar.open('Trading State', 'changed', { duration: 3000 });
             this.toastr.info('Trading State changed.');
           });
-        this.stompClient.subscribeTradingParameters()
+        this.stompClient.tradingParametersObservable
           .pipe(takeUntil(componentDestroyed(this)))
           .subscribe((message: Message) => {
             this.tradingParameters = JSON.parse(message.body);

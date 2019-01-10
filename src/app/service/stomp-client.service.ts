@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {StompService, StompState} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
-import {NEVER, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -9,12 +9,12 @@ import {map} from 'rxjs/operators';
 })
 export class StompClientService implements OnDestroy {
 
-  private notificationObservable: Observable<Message>;
-  private alertObservable: Observable<Message>;
-  private latestMarketDataObservable: Observable<Message>;
-  private todayOrdersDataObservable: Observable<Message>;
-  private tradingStateObservable: Observable<Message>;
-  private tradingParametersObservable: Observable<Message>;
+  public notificationObservable: Observable<Message>;
+  public alertObservable: Observable<Message>;
+  public latestMarketDataObservable: Observable<Message>;
+  public todayOrdersDataObservable: Observable<Message>;
+  public tradingStateObservable: Observable<Message>;
+  public tradingParametersObservable: Observable<Message>;
 
   constructor(private stompService: StompService) {
     this.stompService.state
@@ -24,48 +24,18 @@ export class StompClientService implements OnDestroy {
       });
 
     this.stompService.initAndConnect();
-    this.stompService.connectObservable.subscribe(value => {
-      this.notificationObservable = this.stompService.subscribe('/topic/notification');
-      this.alertObservable = this.stompService.subscribe('/topic/alert');
-      this.latestMarketDataObservable = this.stompService.subscribe('/topic/marketData/all');
-      this.todayOrdersDataObservable = this.stompService.subscribe('/topic/order/today');
-      this.tradingStateObservable = this.stompService.subscribe('/topic/tradingState');
-      this.tradingParametersObservable = this.stompService.subscribe('/topic/tradingParameters');
-    });
+    this.notificationObservable = this.stompService.subscribe('/topic/notification');
+    this.alertObservable = this.stompService.subscribe('/topic/alert');
+    this.latestMarketDataObservable = this.stompService.subscribe('/topic/marketData/all');
+    this.todayOrdersDataObservable = this.stompService.subscribe('/topic/order/today');
+    this.tradingStateObservable = this.stompService.subscribe('/topic/tradingState');
+    this.tradingParametersObservable = this.stompService.subscribe('/topic/tradingParameters');
   }
 
   ngOnDestroy() {
     if (this.stompService.connected()) {
       this.stompService.disconnect();
     }
-  }
-
-  public subscribeNotification(): Observable<Message> {
-    return this.stompService.connected() ? this.notificationObservable : NEVER;
-  }
-
-  public subscribeAlert(): Observable<Message> {
-    return this.stompService.connected() ? this.alertObservable : NEVER;
-  }
-
-  public subscribeLatestMarketData(): Observable<Message> {
-    return this.stompService.connected() ? this.latestMarketDataObservable : NEVER;
-  }
-
-  public subscribeTodayOrders(): Observable<Message> {
-    return this.stompService.connected() ? this.todayOrdersDataObservable : NEVER;
-  }
-
-  public subscribeTradingState(): Observable<Message> {
-    return this.stompService.connected() ? this.tradingStateObservable : NEVER;
-  }
-
-  public subscribeTradingParameters(): Observable<Message> {
-    return this.stompService.connected() ? this.tradingParametersObservable : NEVER;
-  }
-
-  public send(topic: string, data: any) {
-    this.stompService.publish(topic, JSON.stringify(data));
   }
 
 }
