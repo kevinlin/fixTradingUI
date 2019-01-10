@@ -53,15 +53,16 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     }
   ];
   options = {
-    height: 250,
-    rowHeaders: false,
-    stretchH: 'all',
-    startRows: 10,
+    className: 'htCenter htMiddle',
     columnSorting: false,
     contextMenu: true,
-    className: 'htCenter htMiddle',
+    height: 250,
+    manualColumnResize: true,
     observeChanges: true,
-    readOnly: true
+    readOnly: true,
+    rowHeaders: false,
+    startRows: 10,
+    stretchH: 'all'
   };
 
   constructor(private appRef: ApplicationRef,
