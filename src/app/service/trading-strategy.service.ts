@@ -73,10 +73,11 @@ export class TradingStrategyService {
         + ((strategy.contract6Coefficient < 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
         + strategy.constantFactor;
 
-      if (strategy.longPriceLevel !== newLongPriceLevel) {
-        strategy.longPriceLevel = newLongPriceLevel;
+      if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
         strategy.timestamp = new Date();
-
+        strategy.timestampString = (strategy.timestamp).toISOString();
+      }
+      if (strategy.longPriceLevel !== newLongPriceLevel) {
         if (newLongPriceLevel > strategy.longPriceLevel) {
           strategy.longPriceLevelTrend = 1;
         } else if (newLongPriceLevel < strategy.longPriceLevel) {
@@ -84,12 +85,9 @@ export class TradingStrategyService {
         } else {
           strategy.longPriceLevelTrend = 0;
         }
+        strategy.longPriceLevel = newLongPriceLevel;
       }
-
       if (strategy.shortPriceLevel !== newShortPriceLevel) {
-        strategy.shortPriceLevel = newShortPriceLevel;
-        strategy.timestamp = new Date();
-
         if (newShortPriceLevel > strategy.shortPriceLevel) {
           strategy.shortPriceLevelTrend = 1;
         } else if (newShortPriceLevel < strategy.shortPriceLevel) {
@@ -97,6 +95,7 @@ export class TradingStrategyService {
         } else {
           strategy.shortPriceLevelTrend = 0;
         }
+        strategy.shortPriceLevel = newShortPriceLevel;
       }
     }
   }

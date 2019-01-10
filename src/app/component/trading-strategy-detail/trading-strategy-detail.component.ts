@@ -32,30 +32,24 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     {
       title: '策略名',
       data: 'name',
-      type: 'text',
-      readOnly: true
+      type: 'text'
     },
     {
-      title: '时间',
-      data: 'timestamp',
-      type: 'date',
-      dateFormat: 'HH:mm:ss Z',
-      correctFormat: true,
-      readOnly: true
+      title: '时间戳',
+      data: 'timestampString',
+      type: 'text'
     },
     {
       title: '做多价差',
       data: 'longPriceLevel',
       type: 'numeric',
-      format: '0,0',
-      readOnly: true
+      format: '0,0'
     },
     {
       title: '做空价差',
       data: 'shortPriceLevel',
       type: 'numeric',
-      format: '0,0',
-      readOnly: true
+      format: '0,0'
     }
   ];
   options = {
@@ -67,7 +61,7 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     contextMenu: true,
     className: 'htCenter htMiddle',
     observeChanges: true,
-    readOnly: false
+    readOnly: true
   };
 
   constructor(private appRef: ApplicationRef,
@@ -89,10 +83,10 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     this.strategyService.dataSubject.subscribe(strategies => {
       if (this.recordHistory) {
         const latestStrategy = strategies.find(stg => stg.name === this.selectedStrategy.name);
-        if (latestStrategy && latestStrategy.timestamp !== this.selectedStrategy.timestamp) {
+        if (latestStrategy && latestStrategy.timestampString !== this.selectedStrategy.timestampString) {
           this.historyPriceLevels.push({
             name: latestStrategy.name,
-            timestamp: latestStrategy.timestamp,
+            timestampString: latestStrategy.timestampString,
             longPriceLevel: latestStrategy.longPriceLevel,
             shortPriceLevel: latestStrategy.shortPriceLevel
           });

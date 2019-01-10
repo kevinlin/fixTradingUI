@@ -42,6 +42,7 @@ export class TradingStrategy {
   longPriceLevel: number;
   shortPriceLevel: number;
   timestamp: Date;
+  timestampString: string;
   longPriceLevelTrend = 0;
   shortPriceLevelTrend = 0;
 
