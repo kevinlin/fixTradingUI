@@ -17,10 +17,10 @@ export class MarketDataService {
   private marketDataUrl = '/api/marketData';
 
   constructor(private httpClient: HttpClient, private stompClientService: StompClientService) {
-    stompClientService.subscribeLatestMarketData()
+    stompClientService.latestMarketDataObservable
       .subscribe((message: Message) => {
         const latestMarketData = JSON.parse(message.body);
-        console.log('MarketDataService.latestMarketData:', latestMarketData);
+        console.log('MarketDataService.latestMarketData[...]->', latestMarketData);
         this.latestMarketDataSubject.next(latestMarketData);
       });
   }

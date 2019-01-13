@@ -73,22 +73,29 @@ export class TradingStrategyService {
         + ((strategy.contract6Coefficient < 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
         + strategy.constantFactor;
 
-      if (newLongPriceLevel > strategy.longPriceLevel) {
-        strategy.longPriceLevelColor = 1;
-      }
-      else {
-        strategy.longPriceLevelColor = 2;
-      }
-      if (newShortPriceLevel > strategy.shortPriceLevel) {
-        strategy.shortPriceLevelColor = 1;
-      }
-      else {
-        strategy.shortPriceLevelColor = 2;
-      }
       if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
-        strategy.longPriceLevel = newLongPriceLevel;
-        strategy.shortPriceLevel = newShortPriceLevel;
         strategy.timestamp = new Date();
+        strategy.timestampString = (strategy.timestamp).toISOString();
+      }
+      if (strategy.longPriceLevel !== newLongPriceLevel) {
+        if (newLongPriceLevel > strategy.longPriceLevel) {
+          strategy.longPriceLevelTrend = 1;
+        } else if (newLongPriceLevel < strategy.longPriceLevel) {
+          strategy.longPriceLevelTrend = -1;
+        } else {
+          strategy.longPriceLevelTrend = 0;
+        }
+        strategy.longPriceLevel = newLongPriceLevel;
+      }
+      if (strategy.shortPriceLevel !== newShortPriceLevel) {
+        if (newShortPriceLevel > strategy.shortPriceLevel) {
+          strategy.shortPriceLevelTrend = 1;
+        } else if (newShortPriceLevel < strategy.shortPriceLevel) {
+          strategy.shortPriceLevelTrend = -1;
+        } else {
+          strategy.shortPriceLevelTrend = 0;
+        }
+        strategy.shortPriceLevel = newShortPriceLevel;
       }
     }
   }

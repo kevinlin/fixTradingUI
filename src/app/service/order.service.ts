@@ -17,11 +17,11 @@ export class OrderService {
   private orderUrl = '/api/order';
 
   constructor(private httpClient: HttpClient, private stompClientService: StompClientService) {
-    stompClientService.subscribeTodayOrders()
+    stompClientService.todayOrdersDataObservable
       .subscribe((message: Message) => {
-        const orders = JSON.parse(message.body);
-        console.log(orders);
-        this.todayOrdersSubject.next(orders);
+        const todayOrders = JSON.parse(message.body);
+        console.log('OrderService.todayOrders[...]->', todayOrders);
+        this.todayOrdersSubject.next(todayOrders);
       });
   }
 
