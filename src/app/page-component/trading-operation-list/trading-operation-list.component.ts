@@ -45,7 +45,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
     this.selectedOperation = null;
   }
 
-  newExecution() {
+  newOperation() {
     this.selectedOperation = new TradingOperation();
     this.selectedOperation.tradingStrategy = this.selectedStrategy;
   }
