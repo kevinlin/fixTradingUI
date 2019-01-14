@@ -35,66 +35,70 @@ export class TradingStrategyService {
   }
 
   private calculateLivePrice(strategy: TradingStrategy, mdMap: Map<string, MarketData>) {
-    const symbol1 = strategy.contract1Symbol;
-    const symbol2 = strategy.contract2Symbol;
-    const symbol3 = strategy.contract3Symbol;
-    const symbol4 = strategy.contract4Symbol;
-    const symbol5 = strategy.contract5Symbol;
-    const symbol6 = strategy.contract6Symbol;
+    const marketData1 = mdMap.get(strategy.contract1Symbol);
+    const marketData2 = mdMap.get(strategy.contract2Symbol);
+    const marketData3 = mdMap.get(strategy.contract3Symbol);
+    const marketData4 = mdMap.get(strategy.contract4Symbol);
+    const marketData5 = mdMap.get(strategy.contract5Symbol);
+    const marketData6 = mdMap.get(strategy.contract6Symbol);
 
-    if (mdMap.has(symbol1) && mdMap.has(symbol2) && (symbol3 !== null === mdMap.has(symbol3))
-      && (symbol4 !== null === mdMap.has(symbol4)) && (symbol5 !== null === mdMap.has(symbol5)) && (symbol6 !== null === mdMap.has(symbol6))) {
-      // Bid/Ask price use the opposite side
-      const symbol1Ask = mdMap.get(symbol1).bestBid.price;
-      const symbol1Bid = mdMap.get(symbol1).bestAsk.price;
-      const symbol2Ask = mdMap.get(symbol2).bestBid.price;
-      const symbol2Bid = mdMap.get(symbol2).bestAsk.price;
-      const symbol3Ask = symbol3 ? mdMap.get(symbol3).bestBid.price : 0;
-      const symbol3Bid = symbol3 ? mdMap.get(symbol3).bestAsk.price : 0;
-      const symbol4Ask = symbol4 ? mdMap.get(symbol4).bestBid.price : 0;
-      const symbol4Bid = symbol4 ? mdMap.get(symbol4).bestAsk.price : 0;
-      const symbol5Ask = symbol5 ? mdMap.get(symbol5).bestBid.price : 0;
-      const symbol5Bid = symbol5 ? mdMap.get(symbol5).bestAsk.price : 0;
-      const symbol6Ask = symbol6 ? mdMap.get(symbol6).bestBid.price : 0;
-      const symbol6Bid = symbol6 ? mdMap.get(symbol6).bestAsk.price : 0;
+    if (!mdMap.has(strategy.contract1Symbol) || marketData1.bestBid.price === 0 || marketData1.bestAsk.price === 0) {
+      return;
+    }
+    if (!mdMap.has(strategy.contract2Symbol) || marketData2.bestBid.price === 0 || marketData2.bestAsk.price === 0) {
+      return;
+    }
+    if (strategy.contract3Symbol && (!marketData3 || marketData3.bestBid.price === 0 || marketData3.bestAsk.price === 0)) {
+      return;
+    }
+    if (strategy.contract4Symbol && (!marketData4 || marketData4.bestBid.price === 0 || marketData4.bestAsk.price === 0)) {
+      return;
+    }
+    if (strategy.contract5Symbol && (!marketData5 || marketData5.bestBid.price === 0 || marketData5.bestAsk.price === 0)) {
+      return;
+    }
+    if (strategy.contract6Symbol && (!marketData6 || marketData6.bestBid.price === 0 || marketData6.bestAsk.price === 0)) {
+      return;
+    }
 
-      const newLongPriceLevel = symbol1Bid * strategy.contract1Coefficient
-        + ((strategy.contract2Coefficient > 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
-        + ((strategy.contract3Coefficient > 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
-        + ((strategy.contract4Coefficient > 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
-        + ((strategy.contract5Coefficient > 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
-        + ((strategy.contract6Coefficient > 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
-        + strategy.constantFactor;
-      const newShortPriceLevel = symbol1Ask * strategy.contract1Coefficient
-        + ((strategy.contract2Coefficient < 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
-        + ((strategy.contract3Coefficient < 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
-        + ((strategy.contract4Coefficient < 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
-        + ((strategy.contract5Coefficient < 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
-        + ((strategy.contract6Coefficient < 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
-        + strategy.constantFactor;
+    // Bid/Ask price use the opposite side
+    const symbol1Ask = marketData1.bestBid.price;
+    const symbol1Bid = marketData1.bestAsk.price;
+    const symbol2Ask = marketData2.bestBid.price;
+    const symbol2Bid = marketData2.bestAsk.price;
+    const symbol3Ask = strategy.contract3Symbol ? marketData3.bestBid.price : 0;
+    const symbol3Bid = strategy.contract3Symbol ? marketData3.bestAsk.price : 0;
+    const symbol4Ask = strategy.contract4Symbol ? marketData4.bestBid.price : 0;
+    const symbol4Bid = strategy.contract4Symbol ? marketData4.bestAsk.price : 0;
+    const symbol5Ask = strategy.contract5Symbol ? marketData5.bestBid.price : 0;
+    const symbol5Bid = strategy.contract5Symbol ? marketData5.bestAsk.price : 0;
+    const symbol6Ask = strategy.contract6Symbol ? marketData6.bestBid.price : 0;
+    const symbol6Bid = strategy.contract6Symbol ? marketData6.bestAsk.price : 0;
 
-      if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
-        strategy.timestamp = new Date();
-        strategy.timestampString = (strategy.timestamp).toISOString();
-      }
+    const newLongPriceLevel = symbol1Bid * strategy.contract1Coefficient
+      + ((strategy.contract2Coefficient > 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
+      + ((strategy.contract3Coefficient > 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
+      + ((strategy.contract4Coefficient > 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
+      + ((strategy.contract5Coefficient > 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
+      + ((strategy.contract6Coefficient > 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
+      + strategy.constantFactor;
+    const newShortPriceLevel = symbol1Ask * strategy.contract1Coefficient
+      + ((strategy.contract2Coefficient < 0 ? symbol2Bid : symbol2Ask) * strategy.contract2Coefficient)
+      + ((strategy.contract3Coefficient < 0 ? symbol3Bid : symbol3Ask) * strategy.contract3Coefficient)
+      + ((strategy.contract4Coefficient < 0 ? symbol4Bid : symbol4Ask) * strategy.contract4Coefficient)
+      + ((strategy.contract5Coefficient < 0 ? symbol5Bid : symbol5Ask) * strategy.contract5Coefficient)
+      + ((strategy.contract6Coefficient < 0 ? symbol6Bid : symbol6Ask) * strategy.contract6Coefficient)
+      + strategy.constantFactor;
+
+    if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
+      strategy.timestamp = new Date();
+      strategy.timestampString = (strategy.timestamp).toISOString();
       if (strategy.longPriceLevel !== newLongPriceLevel) {
-        if (newLongPriceLevel > strategy.longPriceLevel) {
-          strategy.longPriceLevelTrend = 1;
-        } else if (newLongPriceLevel < strategy.longPriceLevel) {
-          strategy.longPriceLevelTrend = -1;
-        } else {
-          strategy.longPriceLevelTrend = 0;
-        }
+        strategy.longPriceLevelTrend = (newLongPriceLevel > strategy.longPriceLevel) ? 1 : (newLongPriceLevel < strategy.longPriceLevel) ? -1 : 0;
         strategy.longPriceLevel = newLongPriceLevel;
       }
       if (strategy.shortPriceLevel !== newShortPriceLevel) {
-        if (newShortPriceLevel > strategy.shortPriceLevel) {
-          strategy.shortPriceLevelTrend = 1;
-        } else if (newShortPriceLevel < strategy.shortPriceLevel) {
-          strategy.shortPriceLevelTrend = -1;
-        } else {
-          strategy.shortPriceLevelTrend = 0;
-        }
+        strategy.shortPriceLevelTrend = (newShortPriceLevel > strategy.shortPriceLevel) ? 1 : (newShortPriceLevel < strategy.shortPriceLevel) ? -1 : 0;
         strategy.shortPriceLevel = newShortPriceLevel;
       }
     }
