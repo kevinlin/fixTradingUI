@@ -57,7 +57,7 @@
   <app-trading-strategy-view [selectedStrategy]="selectedStrategy"></app-trading-strategy-view>
   <br/>
   <div class="action-row">
-    <button mat-raised-button color="accent" (click)="newExecution()">新建交易计划</button>&nbsp;
+    <button mat-raised-button color="accent" (click)="newExecution()">新建交易执行</button>&nbsp;
   </div>
   <br/>
   <app-trading-execution-detail *ngIf="selectedOperation" [operation]="selectedOperation"></app-trading-execution-detail>
