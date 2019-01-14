@@ -49,10 +49,6 @@ export class TradingOperation {
     return this.state === OperationState.PENDING;
   }
 
-  public isNotPending(): boolean {
-    return this.state !== OperationState.PENDING;
-  }
-
   public isSuspended(): boolean {
     return this.state === OperationState.SUSPENDED;
   }

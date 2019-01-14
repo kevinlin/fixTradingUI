@@ -38,7 +38,7 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button *ngIf="!row.isCompleted()" mat-raised-button color="primary" (click)="edit(row)">编辑</button>&nbsp;
+          <button mat-raised-button color="primary" (click)="edit(row)">编辑或查看</button>&nbsp;
           <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="suspend(row)">暂停</button>
           <button *ngIf="row.isSuspended()" mat-raised-button color="primary" (click)="resume(row)">继续</button>&nbsp;
           <button *ngIf="row.isPending()" mat-raised-button color="warn" (click)="delete(row)">删除</button>
@@ -60,5 +60,5 @@
     <button mat-raised-button color="accent" (click)="newExecution()">新建交易计划</button>&nbsp;
   </div>
   <br/>
-  <app-trading-execution-detail *ngIf="selectedOperation" [selectedOperation]="selectedOperation"></app-trading-execution-detail>
+  <app-trading-execution-detail *ngIf="selectedOperation" [operation]="selectedOperation"></app-trading-execution-detail>
 </div>
