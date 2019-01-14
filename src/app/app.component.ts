@@ -23,7 +23,7 @@ export class AppComponent {
     { path: '/instruments', label: '可交易合约' },
     { path: '/strategies', label: '交易策略' },
     { path: '/operations', label: '交易操作' },
-    { path: '/executions', label: '交易执行' },
+    { path: '/executions', label: '交易计划' },
     { path: '/orderBlotter', label: '历史纪录' },
     { path: '/notificationCenter', label: '消息中心' },
     // { path: '/parameters', label: '交易参数' },
