@@ -24,7 +24,7 @@
       <div class="col-3">
         <div class="form-group">
           <mat-form-field>
-            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" [disabled]="!operation.isCompleted()" placeholder="超价">
+            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" [disabled]="operation.isCompleted()" placeholder="超价">
               <mat-option *ngFor="let choice of overPriceLevelValues" [value]="choice">{{choice}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -46,42 +46,48 @@
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract1Symbol"
           [executions]="operation.contract1Executions"
-          [lots]="operation.tradingStrategy.contract1Lots">
+          [strategyLots]="operation.tradingStrategy.contract1Lots"
+          [operationLots]="operation.contract1Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract2Symbol"
           [executions]="operation.contract2Executions"
-          [lots]="operation.tradingStrategy.contract2Lots">
+          [strategyLots]="operation.tradingStrategy.contract2Lots"
+          [operationLots]="operation.contract2Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract3Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract3Symbol"
           [executions]="operation.contract3Executions"
-          [lots]="operation.tradingStrategy.contract3Lots">
+          [strategyLots]="operation.tradingStrategy.contract3Lots"
+          [operationLots]="operation.contract3Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract4Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract4Symbol"
           [executions]="operation.contract4Executions"
-          [lots]="operation.tradingStrategy.contract4Lots">
+          [strategyLots]="operation.tradingStrategy.contract4Lots"
+          [operationLots]="operation.contract4Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract5Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract5Symbol"
           [executions]="operation.contract5Executions"
-          [lots]="operation.tradingStrategy.contract5Lots">
+          [strategyLots]="operation.tradingStrategy.contract5Lots"
+          [operationLots]="operation.contract5Lots">
         </app-execution-table>
       </div>
       <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract6Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract6Symbol"
           [executions]="operation.contract6Executions"
-          [lots]="operation.tradingStrategy.contract6Lots">
+          [strategyLots]="operation.tradingStrategy.contract6Lots"
+          [operationLots]="operation.contract6Lots">
         </app-execution-table>
       </div>
     </div>
