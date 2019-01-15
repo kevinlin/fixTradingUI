@@ -1,6 +1,9 @@
 <h3>
   {{symbol}}<br/>
-  <small>总手数: {{sumLots()}}<br/>现持仓: {{+lots}}</small>
+  <small>
+    总手数: {{sumLots()}} | 成交手数: {{+operationLots}}<br/>
+    当前持仓: {{+strategyLots}}<br/>
+  </small>
 </h3>
 <hot-table
   [hotId]="symbol"

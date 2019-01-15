@@ -27,7 +27,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
   dataSource: TradingOperationListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'state', 'action'];
+  displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'position', 'state', 'action'];
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private strategyService: TradingStrategyService, private operationService: TradingOperationService) {
