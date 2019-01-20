@@ -28,8 +28,19 @@
         <mat-cell *matCellDef="let row">{{row.direction}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="operationType">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>操作类型</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>计划类型</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.operationType}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>成交手数</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngIf="row.contract1Lots">{{row.tradingStrategy.contract1Symbol}}={{row.contract1Lots}} </ng-container>
+          <ng-container *ngIf="row.contract2Lots">{{row.tradingStrategy.contract2Symbol}}={{row.contract2Lots}} </ng-container>
+          <ng-container *ngIf="row.contract3Lots">{{row.tradingStrategy.contract3Symbol}}={{row.contract3Lots}} </ng-container>
+          <ng-container *ngIf="row.contract4Lots">{{row.tradingStrategy.contract4Symbol}}={{row.contract4Lots}} </ng-container>
+          <ng-container *ngIf="row.contract5Lots">{{row.tradingStrategy.contract5Symbol}}={{row.contract5Lots}} </ng-container>
+          <ng-container *ngIf="row.contract6Lots">{{row.tradingStrategy.contract6Symbol}}={{row.contract6Lots}} </ng-container>
+        </mat-cell>
       </ng-container>
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef mat-sort-header>状态</mat-header-cell>
@@ -38,7 +49,7 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button *ngIf="!row.isCompleted()" mat-raised-button color="primary" (click)="edit(row)">编辑</button>&nbsp;
+          <button mat-raised-button color="primary" (click)="edit(row)">编辑或查看</button>&nbsp;
           <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="suspend(row)">暂停</button>
           <button *ngIf="row.isSuspended()" mat-raised-button color="primary" (click)="resume(row)">继续</button>&nbsp;
           <button *ngIf="row.isPending()" mat-raised-button color="warn" (click)="delete(row)">删除</button>
@@ -57,8 +68,8 @@
   <app-trading-strategy-view [selectedStrategy]="selectedStrategy"></app-trading-strategy-view>
   <br/>
   <div class="action-row">
-    <button mat-raised-button color="accent" (click)="newExecution()">新建交易执行</button>&nbsp;
+    <button mat-raised-button color="accent" (click)="newOperation()">新建交易计划</button>&nbsp;
   </div>
   <br/>
-  <app-trading-execution-detail *ngIf="selectedOperation" [selectedOperation]="selectedOperation"></app-trading-execution-detail>
+  <app-trading-execution-detail *ngIf="selectedOperation" [operation]="selectedOperation"></app-trading-execution-detail>
 </div>

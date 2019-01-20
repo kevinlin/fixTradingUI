@@ -11,7 +11,8 @@ export class ExecutionTableComponent implements OnInit {
 
   @Input() symbol: string;
   @Input() executions: TradingExecution[];
-  @Input() lots: number;
+  @Input() strategyLots: number;
+  @Input() operationLots: number;
 
   columns = [
     {

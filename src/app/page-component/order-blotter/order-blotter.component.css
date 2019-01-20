@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.mat-column-date, .mat-column-status {
+.mat-column-date, .mat-column-strategy, .mat-column-status {
   flex: 1.5;
 }
 
