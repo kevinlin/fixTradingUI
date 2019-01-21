@@ -15,8 +15,14 @@ export class TradingOperation {
   overPriceLevel: number;
 
   // Conditional order
-  isConditional: boolean;
+  conditional: boolean;
   priceLevelThreshold: number;
+  contract1OrderLots: number;
+  contract2OrderLots: number;
+  contract3OrderLots: number;
+  contract4OrderLots: number;
+  contract5OrderLots: number;
+  contract6OrderLots: number;
 
   // State & contract execution details
   state: OperationState;
