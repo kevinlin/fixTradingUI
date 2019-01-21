@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="row" *ngIf="operation.operationType">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract1Symbol"
           [executions]="operation.contract1Executions"
@@ -50,7 +50,7 @@
           [operationLots]="operation.contract1Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract2Symbol"
           [executions]="operation.contract2Executions"
@@ -58,7 +58,7 @@
           [operationLots]="operation.contract2Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract3Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract3Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract3Symbol"
           [executions]="operation.contract3Executions"
@@ -66,7 +66,7 @@
           [operationLots]="operation.contract3Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract4Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract4Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract4Symbol"
           [executions]="operation.contract4Executions"
@@ -74,7 +74,7 @@
           [operationLots]="operation.contract4Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract5Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract5Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract5Symbol"
           [executions]="operation.contract5Executions"
@@ -82,7 +82,7 @@
           [operationLots]="operation.contract5Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract6Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract6Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract6Symbol"
           [executions]="operation.contract6Executions"
