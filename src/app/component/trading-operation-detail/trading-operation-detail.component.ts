@@ -99,27 +99,31 @@ export class TradingOperationDetailComponent implements OnInit {
   }
 
   saveOperation() {
+    let executionsToSave: TradingExecution[];
+    if (!this.operation.conditional) {
+      executionsToSave = this.operation.contract1Executions.slice();
+      executionsToSave = executionsToSave.concat(this.operation.contract2Executions.slice());
+      if (this.operation.contract3Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract3Executions.slice());
+      }
+      if (this.operation.contract4Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract4Executions.slice());
+      }
+      if (this.operation.contract5Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract5Executions.slice());
+      }
+      if (this.operation.contract6Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract6Executions.slice());
+      }
+      executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
+    }
+
     this.operationService.save(this.operation).subscribe(savedOperation => {
       this.operation = savedOperation;
 
       if (!this.operation.conditional) {
-        let executionsToSave = this.operation.contract1Executions.slice();
-        executionsToSave = executionsToSave.concat(this.operation.contract2Executions.slice());
-        if (this.operation.contract3Executions) {
-          executionsToSave = executionsToSave.concat(this.operation.contract3Executions.slice());
-        }
-        if (this.operation.contract4Executions) {
-          executionsToSave = executionsToSave.concat(this.operation.contract4Executions.slice());
-        }
-        if (this.operation.contract5Executions) {
-          executionsToSave = executionsToSave.concat(this.operation.contract5Executions.slice());
-        }
-        if (this.operation.contract6Executions) {
-          executionsToSave = executionsToSave.concat(this.operation.contract6Executions.slice());
-        }
-        executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
         executionsToSave.forEach(execution => {
-          execution.operationId = savedOperation.id;
+          execution.operationId = this.operation.id;
         });
 
         this.executionService.saveAll(executionsToSave).subscribe(savedExecutions => {
