@@ -15,6 +15,10 @@ export class TradingStrategyService {
 
   private data: TradingStrategy[] = [];
   public dataSubject = new BehaviorSubject<TradingStrategy[]>([]);
+  public recordHistory: boolean;
+  public historyPriceLevels = [];
+  public strategyToRecord: string;
+  public strategyTimestampString: string;
 
   constructor(private httpClient: HttpClient, private marketDataService: MarketDataService) {
     this.refreshData();
@@ -23,6 +27,22 @@ export class TradingStrategyService {
       this.data.forEach(strategy => this.calculateLivePrice(strategy, marketDataMap));
       this.dataSubject.next(this.data);
     });
+
+    this.dataSubject.subscribe(strategies => {
+      if (this.recordHistory) {
+        const latestStrategy = strategies.find(stg => stg.name === this.strategyToRecord);
+        if (latestStrategy && latestStrategy.timestampString !== this.strategyTimestampString) {
+          this.historyPriceLevels.push({
+            name: latestStrategy.name,
+            timestampString: latestStrategy.timestampString,
+            longPriceLevel: latestStrategy.longPriceLevel,
+            shortPriceLevel: latestStrategy.shortPriceLevel
+          });
+          this.strategyTimestampString = latestStrategy.timestampString;
+        }
+      }
+    });
+
   }
 
   private tradingStrategyUrl = '/api/tradingStrategy';
@@ -92,7 +112,7 @@ export class TradingStrategyService {
 
     if (strategy.longPriceLevel !== newLongPriceLevel || strategy.shortPriceLevel !== newShortPriceLevel) {
       strategy.timestamp = new Date();
-      strategy.timestampString = (strategy.timestamp).toISOString();
+      strategy.timestampString = (strategy.timestamp).toLocaleString();
       if (strategy.longPriceLevel !== newLongPriceLevel) {
         strategy.longPriceLevelTrend = (newLongPriceLevel > strategy.longPriceLevel) ? 1 : (newLongPriceLevel < strategy.longPriceLevel) ? -1 : 0;
         strategy.longPriceLevel = newLongPriceLevel;
@@ -119,6 +139,16 @@ export class TradingStrategyService {
       tap(() => this.refreshData()),
       map(data => plainToClass(TradingStrategy, data))
     );
+  }
+
+  public toggleRecordHistory(strategy: TradingStrategy) {
+    this.recordHistory = !this.recordHistory;
+
+    if (this.recordHistory) {
+      this.strategyToRecord = strategy.name;
+      this.strategyTimestampString = strategy.timestampString;
+      this.historyPriceLevels = [];
+    }
   }
 
 }

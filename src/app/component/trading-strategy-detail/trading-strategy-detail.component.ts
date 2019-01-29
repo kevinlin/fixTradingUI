@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ApplicationRef, Component, Input} from '@angular/core';
 import {HotTableRegisterer} from '@handsontable-pro/angular';
 import {Observable} from 'rxjs';
 
@@ -15,9 +15,8 @@ import {ToastsManager} from '../../toast/toasts-manager.service';
   templateUrl: './trading-strategy-detail.component.html',
   styleUrls: ['./trading-strategy-detail.component.css']
 })
-export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
+export class TradingStrategyDetailComponent {
 
-  public static KEY_RECORDHISOTRY = 'TradingStrategyDetailComponent.recordHistory';
   public static KEY_HISOTRYPRICELEVELS = 'TradingStrategyDetailComponent.historyPriceLevels';
 
   @Input() selectedStrategy: TradingStrategy;
@@ -25,8 +24,6 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
   allInstruments: Observable<Instrument[]>;
   DirectionValues = Object.values(Direction).filter(e => typeof (e) === 'string');
 
-  recordHistory: boolean;
-  historyPriceLevels: any[];
   hotId = 'historyPriceLevels';
   columns = [
     {
@@ -74,41 +71,8 @@ export class TradingStrategyDetailComponent implements OnInit, OnDestroy {
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);
   }
 
-  ngOnInit() {
-    const saved = localStorage.getItem(TradingStrategyDetailComponent.KEY_RECORDHISOTRY);
-    this.recordHistory = (saved === 'true');
-    if (this.recordHistory && localStorage.getItem(TradingStrategyDetailComponent.KEY_HISOTRYPRICELEVELS) !== null) {
-      this.historyPriceLevels = JSON.parse(localStorage.getItem(TradingStrategyDetailComponent.KEY_HISOTRYPRICELEVELS));
-    }
-
-    this.strategyService.dataSubject.subscribe(strategies => {
-      if (this.recordHistory) {
-        const latestStrategy = strategies.find(stg => stg.name === this.selectedStrategy.name);
-        if (latestStrategy && latestStrategy.timestampString !== this.selectedStrategy.timestampString) {
-          this.historyPriceLevels.push({
-            name: latestStrategy.name,
-            timestampString: latestStrategy.timestampString,
-            longPriceLevel: latestStrategy.longPriceLevel,
-            shortPriceLevel: latestStrategy.shortPriceLevel
-          });
-        }
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.recordHistory) {
-      localStorage.setItem(TradingStrategyDetailComponent.KEY_HISOTRYPRICELEVELS, JSON.stringify(this.historyPriceLevels));
-    }
-  }
-
   onChangeRecordHistory() {
-    this.recordHistory = !this.recordHistory;
-
-    if (this.recordHistory) {
-      this.historyPriceLevels = [];
-    }
-    localStorage.setItem(TradingStrategyDetailComponent.KEY_RECORDHISOTRY, String(this.recordHistory));
+    this.strategyService.toggleRecordHistory(this.selectedStrategy);
   }
 
   exportCSV() {
