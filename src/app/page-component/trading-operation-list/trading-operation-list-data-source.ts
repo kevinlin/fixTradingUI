@@ -79,6 +79,8 @@ export class TradingOperationListDataSource extends DataSource<TradingOperation>
           return compare(a.date, b.date, isAsc);
         case 'direction':
           return compare(a.direction, b.direction, isAsc);
+        case 'conditional':
+          return compare(a.conditional, b.conditional, isAsc);
         case 'position':
           return compare(a.contract1Lots, b.contract1Lots, isAsc);
         case 'state':

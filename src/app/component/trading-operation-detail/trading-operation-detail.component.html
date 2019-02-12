@@ -7,12 +7,12 @@
   </mat-card-header>
   <mat-card-content>
     <div class="row">
-      <div class="col-3">
+      <div class="col">
         <mat-form-field>
           <input matInput [(ngModel)]="operation.date" type="date" placeholder="日期" [required]="true" [disabled]="!operation.isPending()">
         </mat-form-field>
       </div>
-      <div class="col-3">
+      <div class="col">
         <div class="form-group">
           <mat-form-field>
             <mat-select [(ngModel)]="operation.operationType" [required]="true" [disabled]="!operation.isPending()" (selectionChange)="operationTypeChange($event)" placeholder="执行动作">
@@ -21,16 +21,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="col-3">
-        <div class="form-group">
-          <mat-form-field>
-            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" [disabled]="operation.isCompleted()" placeholder="超价">
-              <mat-option *ngFor="let choice of overPriceLevelValues" [value]="choice">{{choice}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="col-3" *ngIf="operation.operationType">
+      <div class="col" *ngIf="operation.operationType">
         <div class="form-group">
           <label for="direction">方向</label>
           <mat-radio-group id="direction" class="radio-group" [(ngModel)]="operation.direction" [required]="true" [disabled]="!operation.isPending()">
@@ -40,9 +31,81 @@
           </mat-radio-group>
         </div>
       </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" [disabled]="operation.isCompleted()" placeholder="超价">
+              <mat-option *ngFor="let choice of overPriceLevelValues" [value]="choice">{{choice}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
-    <div class="row" *ngIf="operation.operationType">
-      <div class="col-sm-3">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="operation.conditional" [indeterminate]="conditionalIsNull()" [required]="true" [disabled]="!operation.isPending()">条件单</mat-checkbox>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional">
+        <div class="form-group">
+          <mat-form-field>
+            <button matPrefix mat-mini-fab (click)="toggleSign()">{{getThresholdSign()}}</button>
+            <input matInput [(ngModel)]="operation.priceLevelThreshold" type="number" placeholder="触发价差" class="right-align" [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract1OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract1Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract2OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract2Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional && operation.tradingStrategy.contract3Symbol">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract3OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract3Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional && operation.tradingStrategy.contract4Symbol">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract4OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract4Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional && operation.tradingStrategy.contract5Symbol">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract5OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract5Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col" *ngIf="operation.conditional && operation.tradingStrategy.contract6Symbol">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="operation.contract6OrderLots" type="number" placeholder="{{operation.tradingStrategy.contract6Symbol}}手数" class="right-align"
+                   [disabled]="!operation.isPending()">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="operation.operationType && !operation.conditional">
+      <div class="col-sm-4">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract1Symbol"
           [executions]="operation.contract1Executions"
@@ -50,7 +113,7 @@
           [operationLots]="operation.contract1Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract2Symbol"
           [executions]="operation.contract2Executions"
@@ -58,7 +121,7 @@
           [operationLots]="operation.contract2Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract3Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract3Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract3Symbol"
           [executions]="operation.contract3Executions"
@@ -66,7 +129,7 @@
           [operationLots]="operation.contract3Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract4Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract4Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract4Symbol"
           [executions]="operation.contract4Executions"
@@ -74,7 +137,7 @@
           [operationLots]="operation.contract4Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract5Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract5Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract5Symbol"
           [executions]="operation.contract5Executions"
@@ -82,7 +145,7 @@
           [operationLots]="operation.contract5Lots">
         </app-execution-table>
       </div>
-      <div class="col-sm-3" *ngIf="operation.tradingStrategy.contract6Symbol">
+      <div class="col-sm-4" *ngIf="operation.tradingStrategy.contract6Symbol">
         <app-execution-table
           [symbol]="operation.tradingStrategy.contract6Symbol"
           [executions]="operation.contract6Executions"

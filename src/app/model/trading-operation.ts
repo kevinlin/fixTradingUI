@@ -12,10 +12,22 @@ export class TradingOperation {
   date: Date;
   direction: Direction;
   operationType: OperationType;
-  state: OperationState;
   overPriceLevel: number;
+  greaterThan: boolean;
 
-  // Contract execution details
+  // Conditional order
+  conditional: boolean;
+  priceLevelThreshold: number;
+  contract1OrderLots: number;
+  contract2OrderLots: number;
+  contract3OrderLots: number;
+  contract4OrderLots: number;
+  contract5OrderLots: number;
+  contract6OrderLots: number;
+
+  // State & contract execution details
+  state: OperationState;
+
   contract1Side: OrderSide;
   contract1Executions: TradingExecution[];
   contract1Lots: number;
@@ -58,7 +70,7 @@ export class TradingOperation {
   }
 
   public isCompleted(): boolean {
-    return this.state === OperationState.COMPLETED;
+    return this.state === OperationState.COMPLETED || this.state === OperationState.COMPLETED_PROBLEM;
   }
 
 }

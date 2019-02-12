@@ -30,7 +30,7 @@ export class TradingOperationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.operationTypeValues = Object.values(OperationType)
-      .filter(e => typeof(e) === 'string')
+      .filter(e => typeof (e) === 'string')
       .filter(type => {
         if (this.operation.tradingStrategy && this.operation.tradingStrategy.isInPosition) {
           return type !== 'TRANSFER';
@@ -38,7 +38,7 @@ export class TradingOperationDetailComponent implements OnInit {
         return true;
       });
     this.directionValues = Object.values(Direction)
-      .filter(e => typeof(e) === 'string')
+      .filter(e => typeof (e) === 'string')
       .filter(direction => {
         return direction !== 'NEUTRAL';
       });
@@ -99,32 +99,40 @@ export class TradingOperationDetailComponent implements OnInit {
   }
 
   saveOperation() {
-    let executionsToSave = this.operation.contract1Executions.slice();
-    executionsToSave = executionsToSave.concat(this.operation.contract2Executions.slice());
-    if (this.operation.contract3Executions) {
-      executionsToSave = executionsToSave.concat(this.operation.contract3Executions.slice());
+    let executionsToSave: TradingExecution[];
+    if (!this.operation.conditional) {
+      executionsToSave = this.operation.contract1Executions.slice();
+      executionsToSave = executionsToSave.concat(this.operation.contract2Executions.slice());
+      if (this.operation.contract3Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract3Executions.slice());
+      }
+      if (this.operation.contract4Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract4Executions.slice());
+      }
+      if (this.operation.contract5Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract5Executions.slice());
+      }
+      if (this.operation.contract6Executions) {
+        executionsToSave = executionsToSave.concat(this.operation.contract6Executions.slice());
+      }
+      executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
     }
-    if (this.operation.contract4Executions) {
-      executionsToSave = executionsToSave.concat(this.operation.contract4Executions.slice());
-    }
-    if (this.operation.contract5Executions) {
-      executionsToSave = executionsToSave.concat(this.operation.contract5Executions.slice());
-    }
-    if (this.operation.contract6Executions) {
-      executionsToSave = executionsToSave.concat(this.operation.contract6Executions.slice());
-    }
-    executionsToSave = executionsToSave.filter(e => e.time && e.lots).sort((a, b) => (a.time > b.time ? 1 : -1));
 
     this.operationService.save(this.operation).subscribe(savedOperation => {
       this.operation = savedOperation;
-      executionsToSave.forEach(execution => {
-        execution.operationId = savedOperation.id;
-      });
-      this.executionService.saveAll(executionsToSave).subscribe(savedExecutions => {
-        this.updateExecutions(savedExecutions);
-        // this.snackBar.open('Trading Operation: \'' + this.operation.tradingStrategy.name + '\'' + '-' + this.operation.date, 'saved', { duration: 3000 });
-        this.toastr.success('Trading Operation: \'' + this.operation.tradingStrategy.name + '\'' + '-' + this.operation.date + ' saved.');
-      });
+
+      if (!this.operation.conditional) {
+        executionsToSave.forEach(execution => {
+          execution.operationId = this.operation.id;
+        });
+
+        this.executionService.saveAll(executionsToSave).subscribe(savedExecutions => {
+          this.updateExecutions(savedExecutions);
+        });
+      }
+
+      // this.snackBar.open('Trading Operation: \'' + this.operation.tradingStrategy.name + '\'' + '-' + this.operation.date, 'saved', { duration: 3000 });
+      this.toastr.success('Trading Operation: \'' + this.operation.tradingStrategy.name + '\'' + '-' + this.operation.date + ' saved.');
     });
   }
 
@@ -173,4 +181,15 @@ export class TradingOperationDetailComponent implements OnInit {
     }, {});
   }
 
+  conditionalIsNull() {
+    return this.operation.conditional === null;
+  }
+
+  getThresholdSign() {
+    return this.operation.greaterThan ? '>' : '<';
+  }
+
+  toggleSign() {
+    this.operation.greaterThan = !this.operation.greaterThan;
+  }
 }
