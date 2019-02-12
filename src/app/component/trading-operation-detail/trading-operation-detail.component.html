@@ -50,8 +50,8 @@
       <div class="col" *ngIf="operation.conditional">
         <div class="form-group">
           <mat-form-field>
+            <button matPrefix mat-mini-fab (click)="toggleSign()">{{getThresholdSign()}}</button>
             <input matInput [(ngModel)]="operation.priceLevelThreshold" type="number" placeholder="触发价差" class="right-align" [disabled]="!operation.isPending()">
-            <span matPrefix>{{getThresholdSign()}}&nbsp;</span>
           </mat-form-field>
         </div>
       </div>

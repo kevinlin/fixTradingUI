@@ -13,6 +13,7 @@ export class TradingOperation {
   direction: Direction;
   operationType: OperationType;
   overPriceLevel: number;
+  greaterThan: boolean;
 
   // Conditional order
   conditional: boolean;

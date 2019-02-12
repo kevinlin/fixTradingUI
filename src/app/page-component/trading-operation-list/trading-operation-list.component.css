@@ -2,6 +2,14 @@
   flex: 0.5;
 }
 
+.mat-column-direction {
+  flex: 0.5;
+}
+
+.mat-column-conditional {
+  flex: 0.5;
+}
+
 .mat-column-position {
   flex: 2;
 }

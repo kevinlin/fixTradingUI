@@ -186,11 +186,10 @@ export class TradingOperationDetailComponent implements OnInit {
   }
 
   getThresholdSign() {
-    if (this.operation.direction === null || this.operation.direction === Direction.NEUTRAL || this.operation.operationType === null || this.operation.operationType === OperationType.TRANSFER) {
-      return '?';
-    }
-
-    return (this.operation.direction === Direction.LONG) === (this.operation.operationType === OperationType.OPEN) ? '>' : '<';
+    return this.operation.greaterThan ? '>' : '<';
   }
 
+  toggleSign() {
+    this.operation.greaterThan = !this.operation.greaterThan;
+  }
 }
