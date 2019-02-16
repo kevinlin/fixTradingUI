@@ -48,6 +48,8 @@ export class TradingOperationListComponent extends BasePageComponent implements 
   newOperation() {
     this.selectedOperation = new TradingOperation();
     this.selectedOperation.tradingStrategy = this.selectedStrategy;
+    this.selectedOperation.conditional = false;
+    this.selectedOperation.greaterThan = true;
   }
 
   edit(toEdit: TradingOperation) {
