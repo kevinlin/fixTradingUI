@@ -22,6 +22,7 @@ import {InstrumentsComponent} from './page-component/instruments/instruments.com
 import {NotificationCenterComponent} from './page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from './page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from './page-component/parameters/parameters.component';
+import {PriceLevelHistoryComponent} from './page-component/price-level-history/price-level-history.component';
 import {TradingExecutionComponent} from './page-component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from './page-component/trading-operation-list/trading-operation-list.component';
 import {TradingSessionComponent} from './page-component/trading-session/trading-session.component';
@@ -82,6 +83,7 @@ const stompConfig: StompConfig = {
     NotificationCenterComponent,
     OrderBlotterComponent,
     ParametersComponent,
+    PriceLevelHistoryComponent,
     TradingExecutionComponent,
     TradingOperationDetailComponent,
     TradingOperationListComponent,
