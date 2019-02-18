@@ -29,18 +29,18 @@ export class OrderBlotterComponent extends BasePageComponent implements OnInit {
   queryDate: Date;
   isLoading = false;
 
-  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private orderServcie: OrderService) {
+  constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private orderService: OrderService) {
     super(stompClient, toastr, appRef, dialog);
   }
 
   ngOnInit() {
     this.baseOnInit();
-    this.dataSource = new OrderBlotterDataSource(this.orderServcie, this.paginator, this.sort);
+    this.dataSource = new OrderBlotterDataSource(this.orderService, this.paginator, this.sort);
   }
 
   public queryOrders() {
     this.isLoading = true;
-    this.orderServcie.queryOrdersByDate(this.queryDate).subscribe(orders => this.isLoading = false);
+    this.orderService.queryOrdersByDate(this.queryDate).subscribe(orders => this.isLoading = false);
   }
 
 }
