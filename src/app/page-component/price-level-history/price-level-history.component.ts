@@ -37,6 +37,12 @@ export class PriceLevelHistoryComponent extends BasePageComponent implements OnI
       type: 'text'
     },
     {
+      title: '成交价差',
+      data: 'tradePriceLevel',
+      type: 'numeric',
+      format: '0,0'
+    },
+    {
       title: '做多价差',
       data: 'longPriceLevel',
       type: 'numeric',
