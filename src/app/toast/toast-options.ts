@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class ToastOptions {
-  positionClass = 'toast-top-right';
+  positionClass = 'toast-top-left';
   maxShown = 10;
   newestOnTop = true;
   animate = 'fade';
