@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  stompUrl: 'ws://101.132.145.41/fixTrading/stomp'
+  stompUrl: 'ws://47.100.12.88/fixTrading/stomp'
 };
