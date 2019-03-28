@@ -7,6 +7,7 @@ import {InstrumentsComponent} from '../page-component/instruments/instruments.co
 import {NotificationCenterComponent} from '../page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../page-component/parameters/parameters.component';
+import {PriceLevelDerivativeHistoryComponent} from '../page-component/price-level-derivative-history/price-level-derivative-history.component';
 import {PriceLevelHistoryComponent} from '../page-component/price-level-history/price-level-history.component';
 import {TradingExecutionComponent} from '../page-component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from '../page-component/trading-operation-list/trading-operation-list.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
   { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
   { path: 'priceLevelHistory', component: PriceLevelHistoryComponent, canActivate: [AuthGuard] },
+  { path: 'priceLevelDerivativeHistory', component: PriceLevelDerivativeHistoryComponent, canActivate: [AuthGuard] },
   { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
   { path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
   { path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },
