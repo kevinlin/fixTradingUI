@@ -60,7 +60,7 @@ export class PriceLevelDerivativeHistoryComponent extends BasePageComponent impl
     },
     {
       title: '均值参数',
-      data: 'meanSpreadAverag',
+      data: 'meanSpreadAverage',
       type: 'numeric',
       format: '0,0'
     }
