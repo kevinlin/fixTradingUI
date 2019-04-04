@@ -5,5 +5,5 @@ export class PriceLevelDerivative {
   mean2: string;
   meanSpread: string;
   meanSpreadStdDev: string;
-  meanSpreadAverag: string;
+  meanSpreadAverage: string;
 }
