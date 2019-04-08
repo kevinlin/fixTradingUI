@@ -11,6 +11,7 @@ import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {AlertDialogComponent} from './component/alert-dialog/alert-dialog.component';
 import {ExecutionTableComponent} from './component/execution-table/execution-table.component';
+import {IntradayTradingParameterDetailComponent} from './component/intraday-trading-parameter-detail/intraday-trading-parameter-detail.component';
 import {LoginComponent} from './component/login/login.component';
 import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
 import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
@@ -19,9 +20,11 @@ import {TradingStrategyViewComponent} from './component/trading-strategy-view/tr
 import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
 import {InstrumentsComponent} from './page-component/instruments/instruments.component';
+import {IntradayTradingParameterListComponent} from './page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
 import {NotificationCenterComponent} from './page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from './page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from './page-component/parameters/parameters.component';
+import {PriceLevelDerivativeHistoryComponent} from './page-component/price-level-derivative-history/price-level-derivative-history.component';
 import {PriceLevelHistoryComponent} from './page-component/price-level-history/price-level-history.component';
 import {TradingExecutionComponent} from './page-component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from './page-component/trading-operation-list/trading-operation-list.component';
@@ -78,11 +81,14 @@ const stompConfig: StompConfig = {
     AppComponent,
     ExecutionTableComponent,
     InstrumentsComponent,
+    IntradayTradingParameterDetailComponent,
+    IntradayTradingParameterListComponent,
     LoginComponent,
     MarketWatcherComponent,
     NotificationCenterComponent,
     OrderBlotterComponent,
     ParametersComponent,
+    PriceLevelDerivativeHistoryComponent,
     PriceLevelHistoryComponent,
     TradingExecutionComponent,
     TradingOperationDetailComponent,
@@ -91,7 +97,7 @@ const stompConfig: StompConfig = {
     TradingStateComponent,
     TradingStrategyDetailComponent,
     TradingStrategyListComponent,
-    TradingStrategyViewComponent
+    TradingStrategyViewComponent,
   ],
   entryComponents: [
     AlertDialogComponent

@@ -1,0 +1,39 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedStrategy" [required]="true" placeholder="交易策略">
+            <mat-option *ngFor="let strategy of allStrategies | async" [value]="strategy">{{strategy.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <button mat-raised-button color="primary" (click)="queryPriceLevelDerivativeHistory()">查询</button>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div class="row">
+      <div class="col">
+        <hot-table
+          [hotId]="hotId"
+          [data]="priceLevelDerivativeHistory"
+          [columns]="columns"
+          [height]="options.height"
+          [rowHeaders]="options.rowHeaders"
+          [startRows]="options.startRows"
+          [stretchH]="options.stretchH"
+          [columnSorting]="options.columnSorting"
+          [contextMenu]="options.contextMenu"
+          [className]="options.className"
+          [readOnly]="options.readOnly"
+        ></hot-table>
+      </div>
+      <div class="col">
+        <button mat-raised-button color="primary" (click)="exportCSV()">Export as CSV</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

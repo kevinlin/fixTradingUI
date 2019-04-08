@@ -4,9 +4,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from '../component/login/login.component';
 import {AuthGuard} from '../guard/auth.guard';
 import {InstrumentsComponent} from '../page-component/instruments/instruments.component';
+import {IntradayTradingParameterListComponent} from '../page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
 import {NotificationCenterComponent} from '../page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../page-component/parameters/parameters.component';
+import {PriceLevelDerivativeHistoryComponent} from '../page-component/price-level-derivative-history/price-level-derivative-history.component';
 import {PriceLevelHistoryComponent} from '../page-component/price-level-history/price-level-history.component';
 import {TradingExecutionComponent} from '../page-component/trading-execution/trading-execution.component';
 import {TradingOperationListComponent} from '../page-component/trading-operation-list/trading-operation-list.component';
@@ -18,12 +20,14 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/instruments' },
   { path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] },
   { path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
+  { path: 'intradayTradingParameter', component: IntradayTradingParameterListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'notificationCenter', component: NotificationCenterComponent, canActivate: [AuthGuard] },
   { path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },
   { path: 'orderBlotter', component: OrderBlotterComponent, canActivate: [AuthGuard] },
   { path: 'parameters', component: ParametersComponent, canActivate: [AuthGuard] },
   { path: 'priceLevelHistory', component: PriceLevelHistoryComponent, canActivate: [AuthGuard] },
+  { path: 'priceLevelDerivativeHistory', component: PriceLevelDerivativeHistoryComponent, canActivate: [AuthGuard] },
   { path: 'strategies', component: TradingStrategyListComponent, canActivate: [AuthGuard] },
   { path: 'tradingSession', component: TradingSessionComponent, canActivate: [AuthGuard] },
   { path: 'tradingState', component: TradingStateComponent, canActivate: [AuthGuard] },

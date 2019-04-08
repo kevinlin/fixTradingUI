@@ -26,6 +26,8 @@ export class AppComponent {
     { path: '/executions', label: '交易执行' },
     { path: '/orderBlotter', label: '委托单历史纪录' },
     { path: '/priceLevelHistory', label: '价差历史纪录' },
+    { path: '/priceLevelDerivativeHistory', label: '价差二阶参数历史' },
+    { path: '/intradayTradingParameter', label: '日间自动交易参数' },
     { path: '/notificationCenter', label: '消息中心' },
     // { path: '/parameters', label: '交易参数' },
     // { path: '/tradingSession', label: '交易时段' },

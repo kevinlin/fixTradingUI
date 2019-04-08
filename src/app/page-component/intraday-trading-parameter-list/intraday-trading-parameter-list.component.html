@@ -1,0 +1,56 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>编号</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tradingStrategy">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>策略</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.tradingStrategy.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="interval">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>间隔时间</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.interval}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mean1Count">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>均值参数1</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.mean1Count}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mean2Count">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>均值参数2</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.mean2Count}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="meanSpreadAverageCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>均值差均值参数</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.meanSpreadAverageCount}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="meanSpreadStdDevCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>均值差标准差参数</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.meanSpreadStdDevCount}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-raised-button color="primary" (click)="edit(row)">编辑</button>&nbsp;
+          <button mat-raised-button color="warn" (click)="delete(row)" disabled>删除</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+  </mat-card-content>
+</mat-card>
+<br/>
+<div>
+  <div class="action-row">
+    <button mat-raised-button color="accent" (click)="newParameter()">新建日间自动交易参数</button>&nbsp;
+  </div>
+  <br/>
+  <app-intraday-trading-parameter-detail *ngIf="selectedParameter" [parameter]="selectedParameter"></app-intraday-trading-parameter-detail>
+</div>
