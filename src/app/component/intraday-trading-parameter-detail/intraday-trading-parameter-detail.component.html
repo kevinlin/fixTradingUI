@@ -1,0 +1,60 @@
+<mat-card *ngIf="parameter" class="mat-elevation-z8">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon class="md-48">build</mat-icon>
+    </div>
+    <mat-card-title><h3>{{parameter.tradingStrategy?.name}} ({{parameter.id}})</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-select [(ngModel)]="parameter.tradingStrategy" [required]="true" placeholder="交易策略">
+              <mat-option *ngFor="let choice of allStrategies | async" [value]="choice">{{choice.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="parameter.interval" type="number" placeholder="间隔时间" class="right-align"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="parameter.mean1Count" type="number" placeholder="均值参数1" class="right-align"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="parameter.mean2Count" type="number" placeholder="均值参数2" class="right-align"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="parameter.meanSpreadAverageCount" type="number" placeholder="均值差均值参数" class="right-align"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="parameter.meanSpreadStdDevCount" type="number" placeholder="均值差标准差参数" class="right-align"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveParameter()">保存</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="cancelChanges()">取消</button>
+  </mat-card-actions>
+</mat-card>
