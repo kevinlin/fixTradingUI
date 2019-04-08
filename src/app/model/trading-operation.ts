@@ -25,6 +25,9 @@ export class TradingOperation {
   contract5OrderLots: number;
   contract6OrderLots: number;
 
+  // passive lrder
+  passive: boolean;
+
   // State & contract execution details
   state: OperationState;
 

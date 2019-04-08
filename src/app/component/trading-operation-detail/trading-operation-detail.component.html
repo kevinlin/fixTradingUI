@@ -47,6 +47,10 @@
           <mat-checkbox [(ngModel)]="operation.conditional" [indeterminate]="conditionalIsNull()" [required]="true" [disabled]="!operation.isPending()">条件单</mat-checkbox>
         </div>
       </div>
+	  <div class="col">
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="operation.passive" [required]="true" [disabled]="!operation.isPending()">被动单（15分钟内超价完成）</mat-checkbox>
+        </div>
       <div class="col" *ngIf="operation.conditional">
         <div class="form-group">
           <mat-form-field>
