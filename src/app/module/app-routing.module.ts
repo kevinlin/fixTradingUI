@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from '../component/login/login.component';
 import {AuthGuard} from '../guard/auth.guard';
 import {InstrumentsComponent} from '../page-component/instruments/instruments.component';
+import {IntradayTradingParameterListComponent} from '../page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
 import {NotificationCenterComponent} from '../page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../page-component/parameters/parameters.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/instruments' },
   { path: 'executions', component: TradingExecutionComponent, canActivate: [AuthGuard] },
   { path: 'instruments', component: InstrumentsComponent, canActivate: [AuthGuard] },
+  { path: 'intradayTradingParameter', component: IntradayTradingParameterListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'notificationCenter', component: NotificationCenterComponent, canActivate: [AuthGuard] },
   { path: 'operations', component: TradingOperationListComponent, canActivate: [AuthGuard] },

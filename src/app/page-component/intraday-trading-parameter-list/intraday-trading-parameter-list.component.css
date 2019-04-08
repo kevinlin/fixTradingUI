@@ -1,0 +1,23 @@
+.mat-column-id {
+  flex: 0.5;
+}
+
+.mat-column-duration {
+  flex: 0.5;
+}
+
+.mat-column-mean1Count {
+  flex: 0.5;
+}
+
+.mat-column-mean2Count {
+  flex: 0.5;
+}
+
+.mat-column-.meanSpreadAverageCount {
+  flex: 0.5;
+}
+
+.mat-column-action {
+  flex: 2;
+}
