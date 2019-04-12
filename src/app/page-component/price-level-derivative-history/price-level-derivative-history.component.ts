@@ -35,13 +35,19 @@ export class PriceLevelDerivativeHistoryComponent extends BasePageComponent impl
       type: 'text'
     },
     {
-      title: '均值参数1',
+      title: '成交价差',
+      data: 'tradePriceLevel',
+      type: 'numeric',
+      format: '0,0'
+    },
+    {
+      title: '价差均值1',
       data: 'mean1',
       type: 'numeric',
       format: '0,0'
     },
     {
-      title: '均值参数2',
+      title: '价差均值2',
       data: 'mean2',
       type: 'numeric',
       format: '0,0'
@@ -53,13 +59,13 @@ export class PriceLevelDerivativeHistoryComponent extends BasePageComponent impl
       format: '0,0'
     },
     {
-      title: '标准差参数',
+      title: '均值差标准差',
       data: 'meanSpreadStdDev',
       type: 'numeric',
       format: '0,0'
     },
     {
-      title: '均值参数',
+      title: '均值差平均值',
       data: 'meanSpreadAverage',
       type: 'numeric',
       format: '0,0'
