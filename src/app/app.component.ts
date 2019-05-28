@@ -41,7 +41,7 @@ export class AppComponent {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authenticationService: AuthenticationService, public viewRef: ViewContainerRef) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public authenticationService: AuthenticationService, public viewRef: ViewContainerRef) {
     if (environment.production) {
       LogRocket.init('rsvpaj/fixtrading');
     }
