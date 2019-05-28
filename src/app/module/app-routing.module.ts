@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-
-import {LoginComponent} from '../component/login/login.component';
 import {AuthGuard} from '../guard/auth.guard';
 import {InstrumentsComponent} from '../page-component/instruments/instruments.component';
+
 import {IntradayTradingParameterListComponent} from '../page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
+import {LoginComponent} from '../page-component/login/login.component';
 import {NotificationCenterComponent} from '../page-component/notification-center/notification-center.component';
 import {OrderBlotterComponent} from '../page-component/order-blotter/order-blotter.component';
 import {ParametersComponent} from '../page-component/parameters/parameters.component';
