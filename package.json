@@ -43,7 +43,7 @@
     "@angular/language-service": "^8.0.0",
     "@types/jasmine": "~3.3.5",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^10.12.18",
+    "@types/node": "^12.0.4",
     "@types/sockjs-client": "~1.1.0",
     "@types/stompjs": "^2.3.4",
     "codelyzer": "^5.0.1",
