@@ -1,5 +1,4 @@
-import {ApplicationRef, Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Observable} from 'rxjs';
 

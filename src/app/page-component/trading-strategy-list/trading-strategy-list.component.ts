@@ -16,8 +16,8 @@ import {TradingStrategyListDataSource} from './trading-strategy-list-datasource'
 })
 export class TradingStrategyListComponent extends BasePageComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource: TradingStrategyListDataSource;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -48,7 +48,7 @@ export class TradingStrategyListComponent extends BasePageComponent implements O
       this.selectedStrategy = null;
     }
 
-    this.tradingStrategyService.delete(toDelete).subscribe(result => {
+    this.tradingStrategyService.delete(toDelete).subscribe(() => {
       // this.snackBar.open('Trading Strategy: \'' + toDelete.name + '\'', 'deleted', { duration: 3000 });
       this.toastr.success('Trading Strategy: \'' + toDelete.name + '\' deleted.');
     });
