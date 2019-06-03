@@ -15,8 +15,8 @@ import {IntradayTradingParameterListDataSource} from './intraday-trading-paramet
   styleUrls: ['./intraday-trading-parameter-list.component.css']
 })
 export class IntradayTradingParameterListComponent extends BasePageComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   selectedStrategy: TradingStrategy;
   selectedParameter: IntradayTradingParameter;
