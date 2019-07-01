@@ -27,13 +27,12 @@
     "@w11k/ngx-componentdestroyed": "~4.1.3",
     "bootstrap": "^4.3.1",
     "class-transformer": "~0.2.3",
-    "core-js": "^3.1.4",
     "handsontable-pro": "~6.2.3",
     "logrocket": "~1.0.0",
+    "npm-check-updates": "^3.1.12",
     "numbro": "~2.1.2",
     "rxjs": "~6.5.2",
     "stompjs": "~2.3.3",
-    "web-animations-js": "github:angular/web-animations-js#release_pr208",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
