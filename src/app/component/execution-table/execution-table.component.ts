@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import * as Handsontable from 'handsontable';
 
 import {TradingExecution} from '../../model/trading-execution';
@@ -7,6 +7,7 @@ import {TradingExecution} from '../../model/trading-execution';
   selector: 'app-execution-table',
   templateUrl: './execution-table.component.html',
   styleUrls: ['./execution-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExecutionTableComponent implements OnInit {
 
