@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, Input, OnInit} from '@angular/core';
+import {ApplicationRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MatRadioChange, MatSelectChange} from '@angular/material';
 
 import {AppComponent} from '../../app.component';
@@ -16,7 +16,7 @@ import {ToastsManager} from '../../toast/toasts-manager.service';
   templateUrl: './trading-operation-detail.component.html',
   styleUrls: ['./trading-operation-detail.component.css']
 })
-export class TradingOperationDetailComponent implements OnInit {
+export class TradingOperationDetailComponent implements OnInit, OnChanges {
 
   @Input() operation: TradingOperation;
 
@@ -29,6 +29,14 @@ export class TradingOperationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.directionValues = Object.values(Direction)
+      .filter(e => typeof (e) === 'string')
+      .filter(direction => {
+        return direction !== 'NEUTRAL';
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.operationTypeValues = Object.values(OperationType)
       .filter(e => typeof (e) === 'string')
       .filter(type => {
@@ -36,11 +44,6 @@ export class TradingOperationDetailComponent implements OnInit {
           return type !== 'TRANSFER';
         }
         return true;
-      });
-    this.directionValues = Object.values(Direction)
-      .filter(e => typeof (e) === 'string')
-      .filter(direction => {
-        return direction !== 'NEUTRAL';
       });
 
     // Initialize executions for every contract

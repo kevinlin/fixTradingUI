@@ -1,6 +1,7 @@
 export class PriceLevelDerivative {
   id: number;
   timestamp: Date;
+  tradePriceLevel: number;
   mean1: string;
   mean2: string;
   meanSpread: string;

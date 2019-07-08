@@ -18,8 +18,8 @@ import {TradingOperationListDataSource} from './trading-operation-list-data-sour
 })
 export class TradingOperationListComponent extends BasePageComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   allStrategies: Observable<TradingStrategy[]>;
   selectedStrategy: TradingStrategy;
@@ -63,20 +63,20 @@ export class TradingOperationListComponent extends BasePageComponent implements 
       this.selectedOperation = null;
     }
 
-    this.operationService.delete(toDelete).subscribe(result => {
+    this.operationService.delete(toDelete).subscribe(() => {
       // this.snackBar.open('Trading Execution: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date, 'deleted', { duration: 3000 });
       this.toastr.success('Trading Operation: \'' + toDelete.tradingStrategy.name + '\'' + '-' + toDelete.date + ' deleted.');
     });
   }
 
   suspend(toSuspend: TradingOperation) {
-    this.operationService.suspend(toSuspend).subscribe(result => {
+    this.operationService.suspend(toSuspend).subscribe(() => {
       // this.toastr.success('Trading Operation: \'' + toSuspend.tradingStrategy.name + '\'' + '-' + toSuspend.date + ' suspended.');
     });
   }
 
   resume(toResume: TradingOperation) {
-    this.operationService.resume(toResume).subscribe(result => {
+    this.operationService.resume(toResume).subscribe(() => {
       // this.toastr.success('Trading Operation: \'' + toResume.tradingStrategy.name + '\'' + '-' + toResume.date + ' resumed.');
     });
   }

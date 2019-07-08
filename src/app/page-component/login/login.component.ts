@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
 
-import { AuthenticationService } from '../../service/authentication.service';
+import {AuthenticationService} from '../../service/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.router.navigate([this.returnUrl]);
         },
         error => {

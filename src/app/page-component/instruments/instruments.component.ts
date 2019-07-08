@@ -1,5 +1,4 @@
-import {ApplicationRef, Component, OnInit} from '@angular/core';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Observable} from 'rxjs';
 import {Instrument} from '../../model/instrument';
@@ -21,14 +20,17 @@ export class InstrumentsComponent extends BasePageComponent implements OnInit, O
 
   public shfeInstruments: Observable<Instrument[]>;
   public dceInstruments: Observable<Instrument[]>;
+  public czceInstruments: Observable<Instrument[]>;
   public selectedShfeInstrument: Instrument;
   public selectedDceInstrument: Instrument;
+  public selectedCzceInstrument: Instrument;
 
   ngOnInit() {
     console.log('InstrumentsComponent onInit()->');
     this.baseOnInit();
     this.shfeInstruments = this.instrumentService.getInstruments('SHFE');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
+    this.czceInstruments = this.instrumentService.getInstruments('CZCE');
   }
 
   ngOnDestroy(): void {

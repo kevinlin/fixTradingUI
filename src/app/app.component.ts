@@ -2,10 +2,10 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, ViewContainerRef} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import * as LogRocket from 'logrocket';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from '../environments/environment';
-import {User} from './model/user';
+import {AuthenticationService} from './service/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +18,7 @@ export class AppComponent {
     .pipe(
       map(result => result.matches)
     );
+  showMenu: Observable<boolean>;
 
   navLinks = [
     { path: '/instruments', label: '可交易合约' },
@@ -35,28 +36,25 @@ export class AppComponent {
     { path: '/login', label: '登出' }
   ];
   title: string;
-  currentUser: User;
 
   private static capitalize(string): string {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public viewRef: ViewContainerRef) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public authenticationService: AuthenticationService, public viewRef: ViewContainerRef) {
     if (environment.production) {
       LogRocket.init('rsvpaj/fixtrading');
     }
 
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (this.currentUser && environment.production) {
-      LogRocket.identify(this.currentUser.username);
-    }
+    this.showMenu = combineLatest([this.authenticationService.loginStatus, this.isHandset$]).pipe(
+      map((values) => values[0] && !values[1])
+    );
 
     router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
           // console.log(event);
           this.title = AppComponent.capitalize(event.url.slice(1));
-          this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         }
       }
     );

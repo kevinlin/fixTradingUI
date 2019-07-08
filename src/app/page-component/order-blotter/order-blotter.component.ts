@@ -19,8 +19,8 @@ class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
   styleUrls: ['./order-blotter.component.css'],
 })
 export class OrderBlotterComponent extends BasePageComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   dataSource: OrderBlotterDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -40,7 +40,7 @@ export class OrderBlotterComponent extends BasePageComponent implements OnInit {
 
   public queryOrders() {
     this.isLoading = true;
-    this.orderService.queryOrdersByDate(this.queryDate).subscribe(orders => this.isLoading = false);
+    this.orderService.queryOrdersByDate(this.queryDate).subscribe(() => this.isLoading = false);
   }
 
 }

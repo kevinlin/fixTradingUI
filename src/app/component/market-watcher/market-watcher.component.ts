@@ -12,8 +12,8 @@ import {MarketWatcherDataSource} from './market-watcher-data-source';
   styleUrls: ['./market-watcher.component.css']
 })
 export class MarketWatcherComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   dataSource: MarketWatcherDataSource;
 
@@ -29,7 +29,7 @@ export class MarketWatcherComponent implements OnInit {
   }
 
   unsubscribe(marketData: MarketData) {
-    this.marketDataService.unsubscribe(marketData.symbol).subscribe(result => {
+    this.marketDataService.unsubscribe(marketData.symbol).subscribe(() => {
       // this.snackBar.open('Market Data for: \'' + marketData.symbol + '\'', 'unsubscribed', { duration: 3000 });
       this.toastr.success('Market Data for: \'' + marketData.symbol + '\' unsubscribed');
     });
