@@ -28,7 +28,7 @@
     "bootstrap": "^4.3.1",
     "class-transformer": "~0.2.3",
     "handsontable-pro": "~6.2.3",
-    "logrocket": "~1.0.0",
+    "logrocket": "~1.0.3",
     "npm-check-updates": "^3.1.12",
     "numbro": "2.1.1",
     "rxjs": "~6.5.2",
