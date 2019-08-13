@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HotTableModule} from '@handsontable-pro/angular';
-import {StompConfig, StompService} from '@stomp/ng2-stompjs';
+import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
 
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
@@ -33,33 +33,36 @@ import {TradingStateComponent} from './page-component/trading-state/trading-stat
 import {TradingStrategyListComponent} from './page-component/trading-strategy-list/trading-strategy-list.component';
 import {ToastModule} from './toast/toast-module';
 
-const stompConfig: StompConfig = {
+const rxStompConfig: InjectableRxStompConfig = {
   // Which server?
-  // url: 'ws://127.0.0.1:15674/ws',
-  url: environment.stompUrl,
-  // url: () => {
-  //   return new SockJS('/stomp');
-  // },
+  // brokerURL: 'ws://127.0.0.1:15674/ws',
+  brokerURL: environment.stompUrl,
 
   // Headers
   // Typical keys: login, passcode, host
-  headers: {
+  connectHeaders: {
     login: 'guest',
     passcode: 'guest'
   },
 
   // How often to heartbeat?
   // Interval in milliseconds, set to 0 to disable
-  heartbeat_in: 0, // Typical value 0 - disabled
-  heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+  heartbeatIncoming: 0,     // Typical value 0 - disabled
+  heartbeatOutgoing: 20000, // Typical value 20000 - every 20 seconds
 
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
   // Typical value 5000 (5 seconds)
-  reconnect_delay: 5000,
+  reconnectDelay: 5000,
 
   // Will log diagnostics on console
-  debug: !environment.production
+  // It can be quite verbose, not recommended in production
+  // Skip this key to stop logging to console
+  debug: (str) => {
+    if (!environment.production) {
+      console.log(new Date(), str);
+    }
+  }
 };
 
 @NgModule({
@@ -107,10 +110,15 @@ const stompConfig: StompConfig = {
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandler
     // },
-    StompService,
+    RxStompService,
     {
-      provide: StompConfig,
-      useValue: stompConfig
+      provide: InjectableRxStompConfig,
+      useValue: rxStompConfig
+    },
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+      deps: [InjectableRxStompConfig]
     }
   ],
   bootstrap: [AppComponent]
