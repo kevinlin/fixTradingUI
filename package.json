@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --prod --aot --optimization --baseHref=/fixTrading/ --progress",
+    "start": "ng serve fix-trading-ui --aot --proxyConfig=proxy.conf.json --sourceMap=true --progress",
+    "build": "ng build fix-trading-ui --configuration=production --sourceMap=true --baseHref=/fixTrading/ --progress --statsJson",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
