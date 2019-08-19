@@ -16,6 +16,16 @@
         </mat-form-field>
       </div>
       <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="startDate" type="date" placeholder="开始日期" [required]="true">
+        </mat-form-field>&nbsp;
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput [(ngModel)]="endDate" type="date" placeholder="结束日期" [required]="true">
+        </mat-form-field>&nbsp;
+      </div>
+      <div class="col">
         <button mat-raised-button color="primary" (click)="queryPriceLevels()">查询</button>
       </div>
     </div>

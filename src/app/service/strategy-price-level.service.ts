@@ -14,8 +14,15 @@ export class StrategyPriceLevelService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getHistoryPriceLevels(strategy: TradingStrategy, interval: number): Observable<StrategyPriceLevel[]> {
-    return this.httpClient.get<StrategyPriceLevel[]>(this.strategyPriceLevel + '/' + strategy.id + '/' + interval);
-  }
+  public getHistoryPriceLevels(strategy: TradingStrategy, interval: number, startDate: Date, endDate: Date): Observable<StrategyPriceLevel[]> {
+    let requestUrl = `${this.strategyPriceLevel}/${strategy.id}/${interval}?`;
+    if (startDate) {
+      requestUrl += `startDate=${startDate}&`;
+    }
+    if (endDate) {
+      requestUrl += `endDate=${endDate}&`;
+    }
 
+    return this.httpClient.get<StrategyPriceLevel[]>(requestUrl);
+  }
 }

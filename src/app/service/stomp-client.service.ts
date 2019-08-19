@@ -1,5 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {StompService, StompState} from '@stomp/ng2-stompjs';
+import {InjectableRxStompConfig, RxStompService} from '@stomp/ng2-stompjs';
+import {RxStompState} from '@stomp/rx-stomp';
 import {Message} from '@stomp/stompjs';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -16,25 +17,26 @@ export class StompClientService implements OnDestroy {
   public tradingStateObservable: Observable<Message>;
   public tradingParametersObservable: Observable<Message>;
 
-  constructor(private stompService: StompService) {
-    this.stompService.state
-      .pipe(map((state: number) => StompState[state]))
+  constructor(private rxStompService: RxStompService, private rxStompConfig: InjectableRxStompConfig) {
+    this.rxStompService.connectionState$
+      .pipe(map((state: number) => RxStompState[state]))
       .subscribe((status: string) => {
         console.log(`Stomp connection status: ${status}`);
       });
 
-    this.stompService.initAndConnect();
-    this.notificationObservable = this.stompService.subscribe('/topic/notification');
-    this.alertObservable = this.stompService.subscribe('/topic/alert');
-    this.latestMarketDataObservable = this.stompService.subscribe('/topic/marketData/all');
-    this.todayOrdersDataObservable = this.stompService.subscribe('/topic/order/today');
-    this.tradingStateObservable = this.stompService.subscribe('/topic/tradingState');
-    this.tradingParametersObservable = this.stompService.subscribe('/topic/tradingParameters');
+    this.rxStompService.configure(rxStompConfig);
+    this.rxStompService.activate();
+    this.notificationObservable = this.rxStompService.watch('/topic/notification');
+    this.alertObservable = this.rxStompService.watch('/topic/alert');
+    this.latestMarketDataObservable = this.rxStompService.watch('/topic/marketData/all');
+    this.todayOrdersDataObservable = this.rxStompService.watch('/topic/order/today');
+    this.tradingStateObservable = this.rxStompService.watch('/topic/tradingState');
+    this.tradingParametersObservable = this.rxStompService.watch('/topic/tradingParameters');
   }
 
   ngOnDestroy() {
-    if (this.stompService.connected()) {
-      this.stompService.disconnect();
+    if (this.rxStompService.connected()) {
+      this.rxStompService.deactivate();
     }
   }
 

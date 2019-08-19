@@ -23,6 +23,8 @@ export class PriceLevelHistoryComponent extends BasePageComponent implements OnI
   priceLevelIntervals = [1, 2, 3, 5, 10, 15, 30];
   selectedInterval: number;
   historyPriceLevels: StrategyPriceLevel[];
+  startDate: Date;
+  endDate: Date;
 
   hotId = 'historyPriceLevels';
   columns = [
@@ -80,7 +82,7 @@ export class PriceLevelHistoryComponent extends BasePageComponent implements OnI
 
   queryPriceLevels() {
     this.isLoading = true;
-    this.strategyPriceLevelService.getHistoryPriceLevels(this.selectedStrategy, this.selectedInterval).subscribe(priceLevels => {
+    this.strategyPriceLevelService.getHistoryPriceLevels(this.selectedStrategy, this.selectedInterval, this.startDate, this.endDate).subscribe(priceLevels => {
       this.historyPriceLevels = priceLevels;
       this.isLoading = false;
     });

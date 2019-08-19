@@ -20,14 +20,17 @@ export class InstrumentsComponent extends BasePageComponent implements OnInit, O
 
   public shfeInstruments: Observable<Instrument[]>;
   public dceInstruments: Observable<Instrument[]>;
+  public czceInstruments: Observable<Instrument[]>;
   public selectedShfeInstrument: Instrument;
   public selectedDceInstrument: Instrument;
+  public selectedCzceInstrument: Instrument;
 
   ngOnInit() {
     console.log('InstrumentsComponent onInit()->');
     this.baseOnInit();
     this.shfeInstruments = this.instrumentService.getInstruments('SHFE');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
+    this.czceInstruments = this.instrumentService.getInstruments('CZCE');
   }
 
   ngOnDestroy(): void {
