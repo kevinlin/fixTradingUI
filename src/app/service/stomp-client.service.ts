@@ -11,6 +11,7 @@ import {map} from 'rxjs/operators';
 export class StompClientService implements OnDestroy {
 
   public notificationObservable: Observable<Message>;
+  public warningObservable: Observable<Message>;
   public alertObservable: Observable<Message>;
   public latestMarketDataObservable: Observable<Message>;
   public todayOrdersDataObservable: Observable<Message>;
@@ -27,6 +28,7 @@ export class StompClientService implements OnDestroy {
     this.rxStompService.configure(rxStompConfig);
     this.rxStompService.activate();
     this.notificationObservable = this.rxStompService.watch('/topic/notification');
+    this.warningObservable = this.rxStompService.watch('/topic/warning');
     this.alertObservable = this.rxStompService.watch('/topic/alert');
     this.latestMarketDataObservable = this.rxStompService.watch('/topic/marketData/all');
     this.todayOrdersDataObservable = this.rxStompService.watch('/topic/order/today');

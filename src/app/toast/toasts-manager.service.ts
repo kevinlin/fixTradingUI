@@ -201,6 +201,9 @@ export class ToastsManager {
   warning(message: string, title?: string, options?: any): Promise<Toast> {
     title = (title ? title : 'Warning') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
+    if (!options) {
+      options = { dismiss: 'click' };
+    }
     const toast = new Toast('warning', message, title, data);
     return this.show(toast, options);
   }
