@@ -28,11 +28,8 @@ export class BasePageComponent {
       this.stompClient.alertObservable.subscribe((message: Message) => {
         const notification: Notification = JSON.parse(message.body);
         this.toastr.error(notification.message, notification.action);
-        const dialogRef = this.dialog.open(AlertDialogComponent, {
+        this.dialog.open(AlertDialogComponent, {
           data: notification
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog is closed with result: ${result}`);
         });
       });
     } catch (err) {
