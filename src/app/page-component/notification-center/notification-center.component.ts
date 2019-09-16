@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit} from '@angular/core';
+import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 
 import {StompClientService} from '../../service/stomp-client.service';
@@ -10,7 +10,7 @@ import {BasePageComponent} from '../base-page-component';
   templateUrl: './notification-center.component.html',
   styleUrls: ['./notification-center.component.css']
 })
-export class NotificationCenterComponent extends BasePageComponent implements OnInit {
+export class NotificationCenterComponent extends BasePageComponent implements OnInit, OnDestroy {
   constructor(protected stompClient: StompClientService, public toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog) {
     super(stompClient, toastr, appRef, dialog);
   }

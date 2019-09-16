@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit} from '@angular/core';
+import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {HotTableRegisterer} from '@handsontable-pro/angular';
 import {Observable} from 'rxjs';
@@ -15,7 +15,7 @@ import {BasePageComponent} from '../base-page-component';
   templateUrl: './price-level-history.component.html',
   styleUrls: ['./price-level-history.component.css']
 })
-export class PriceLevelHistoryComponent extends BasePageComponent implements OnInit {
+export class PriceLevelHistoryComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   allStrategies: Observable<TradingStrategy[]>;

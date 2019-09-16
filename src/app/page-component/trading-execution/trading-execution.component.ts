@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
@@ -18,7 +18,7 @@ class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
   templateUrl: './trading-execution.component.html',
   styleUrls: ['./trading-execution.component.css']
 })
-export class TradingExecutionComponent extends BasePageComponent implements OnInit {
+export class TradingExecutionComponent extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) orderBlotterPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) orderBlotterSort: MatSort;
 

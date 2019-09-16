@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 import {IntradayTradingParameter} from '../../model/intraday-trading-parameter';
 import {TradingStrategy} from '../../model/trading-strategy';
@@ -14,7 +14,7 @@ import {IntradayTradingParameterListDataSource} from './intraday-trading-paramet
   templateUrl: './intraday-trading-parameter-list.component.html',
   styleUrls: ['./intraday-trading-parameter-list.component.css']
 })
-export class IntradayTradingParameterListComponent extends BasePageComponent implements OnInit {
+export class IntradayTradingParameterListComponent extends BasePageComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 

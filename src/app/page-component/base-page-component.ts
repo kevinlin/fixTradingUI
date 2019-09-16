@@ -22,27 +22,32 @@ export class BasePageComponent implements OnDestroy {
 
   protected baseOnInit() {
     try {
-      this.stompClient.notificationObservable.pipe(takeUntil(componentDestroyed(this)))
-        .subscribe((message: Message) => {
-          const notification: Notification = JSON.parse(message.body);
-          this.toastr.info(notification.message, notification.action);
+      this.stompClient.notificationObservable.pipe(takeUntil(componentDestroyed(this))).subscribe((message: Message) => {
+        const notification: Notification = JSON.parse(message.body);
+        this.toastr.info(notification.message, notification.action);
+      });
+    } catch (err) {
+      console.log('baseOnInit()->', err);
+    }
+    try {
+      this.stompClient.warningObservable.pipe(takeUntil(componentDestroyed(this))).subscribe((message: Message) => {
+        const notification: Notification = JSON.parse(message.body);
+        this.toastr.warning(notification.message, notification.action);
+      });
+    } catch (err) {
+      console.log('baseOnInit()->', err);
+    }
+    try {
+      this.stompClient.alertObservable.pipe(takeUntil(componentDestroyed(this))).subscribe((message: Message) => {
+        const notification: Notification = JSON.parse(message.body);
+        this.toastr.error(notification.message, notification.action);
+        const dialogRef = this.dialog.open(AlertDialogComponent, {
+          data: notification
         });
-      this.stompClient.warningObservable.pipe(takeUntil(componentDestroyed(this)))
-        .subscribe((message: Message) => {
-          const notification: Notification = JSON.parse(message.body);
-          this.toastr.warning(notification.message, notification.action);
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog is closed with result: ${result}`);
         });
-      this.stompClient.alertObservable.pipe(takeUntil(componentDestroyed(this)))
-        .subscribe((message: Message) => {
-          const notification: Notification = JSON.parse(message.body);
-          this.toastr.error(notification.message, notification.action);
-          const dialogRef = this.dialog.open(AlertDialogComponent, {
-            data: notification
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog is closed with result: ${result}`);
-          });
-        });
+      });
     } catch (err) {
       console.log('baseOnInit()->', err);
     }
