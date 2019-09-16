@@ -28,7 +28,6 @@ export class ToastsManager {
     const saved = localStorage.getItem(ToastsManager.KEY);
     if (saved) {
       this.notifications = JSON.parse(saved);
-
       this.notificationsSubject.next(this.notifications.sort(ToastsManager.sortByTimestamp));
     } else {
       this.notifications = [];
@@ -204,6 +203,9 @@ export class ToastsManager {
   warning(message: string, title?: string, options?: any): Promise<Toast> {
     title = (title ? title : 'Warning') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
+    if (!options) {
+      options = { dismiss: 'click' };
+    }
     const toast = new Toast('warning', message, title, data);
     toast.pinned = true;
     return this.show(toast, options);
