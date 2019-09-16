@@ -17,7 +17,15 @@ export class ToastsManager {
   public notifications: Toast[];
   public notificationsSubject = new BehaviorSubject<Toast[]>([]);
 
-  private static sortByTimestamp = (t1, t2) => t1.timestamp.getTime() - t2.timestamp.getTime();
+  private static sortByTimestamp = (t1, t2) => {
+    if (typeof t1.timestamp === 'string') {
+      t1.timestamp = new Date(t1.timestamp);
+    }
+    if (typeof t2.timestamp === 'string') {
+      t2.timestamp = new Date(t2.timestamp);
+    }
+    return t2.timestamp.getTime() - t1.timestamp.getTime();
+  };
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -28,7 +36,7 @@ export class ToastsManager {
     const saved = localStorage.getItem(ToastsManager.KEY);
     if (saved) {
       this.notifications = JSON.parse(saved);
-      this.notificationsSubject.next(this.notifications);
+      this.onNotificationsChanged();
     } else {
       this.notifications = [];
     }
