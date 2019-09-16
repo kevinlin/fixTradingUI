@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort} from '@angular/material';
 import {Observable} from 'rxjs/internal/Observable';
 import {TradingOperation} from '../../model/trading-operation';
@@ -16,7 +16,7 @@ import {TradingOperationListDataSource} from './trading-operation-list-data-sour
   templateUrl: './trading-operation-list.component.html',
   styleUrls: ['./trading-operation-list.component.css']
 })
-export class TradingOperationListComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class TradingOperationListComponent extends BasePageComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

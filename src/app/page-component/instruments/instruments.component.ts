@@ -33,4 +33,8 @@ export class InstrumentsComponent extends BasePageComponent implements OnInit, O
     this.czceInstruments = this.instrumentService.getInstruments('CZCE');
   }
 
+  ngOnDestroy(): void {
+    console.log('InstrumentsComponent onDestroy()->');
+  }
+
 }
