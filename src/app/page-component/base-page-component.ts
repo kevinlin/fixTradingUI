@@ -18,6 +18,7 @@ export class BasePageComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('BasePageComponent.ngOnDestroy()->');
   }
 
   protected baseOnInit() {

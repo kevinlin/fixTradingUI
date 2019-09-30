@@ -58,7 +58,7 @@
           <button mat-raised-button color="primary" (click)="edit(row)">编辑或查看</button>&nbsp;
           <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="suspend(row)">暂停</button>
           <button *ngIf="row.isSuspended()" mat-raised-button color="primary" (click)="resume(row)">继续</button>&nbsp;
-          <button *ngIf="row.isPending()" mat-raised-button color="warn" (click)="delete(row)">删除</button>
+          <button *ngIf="row.isSuspended()" mat-raised-button color="warn" (click)="delete(row)">删除</button>
         </mat-cell>
       </ng-container>
 
