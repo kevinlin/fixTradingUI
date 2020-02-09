@@ -17,6 +17,16 @@ export class ToastsManager {
   public notifications: Toast[];
   public notificationsSubject = new BehaviorSubject<Toast[]>([]);
 
+  private static sortByTimestamp = (t1, t2) => {
+    if (typeof t1.timestamp === 'string') {
+      t1.timestamp = new Date(t1.timestamp);
+    }
+    if (typeof t2.timestamp === 'string') {
+      t2.timestamp = new Date(t2.timestamp);
+    }
+    return t2.timestamp.getTime() - t1.timestamp.getTime();
+  };
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private ngZone: NgZone,
@@ -26,18 +36,24 @@ export class ToastsManager {
     const saved = localStorage.getItem(ToastsManager.KEY);
     if (saved) {
       this.notifications = JSON.parse(saved);
-      this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+      this.onNotificationsChanged();
     } else {
       this.notifications = [];
     }
+  }
+
+  private onNotificationsChanged() {
+    const sorted = this.notifications.sort(ToastsManager.sortByTimestamp);
+    this.notificationsSubject.next(sorted);
+    this.notifications = sorted;
+    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
   }
 
   deleteSingleToast(toast: Toast) {
     const index = this.notifications.findIndex(t => t.timestamp === toast.timestamp);
     if (index > -1) {
       this.notifications.splice(index, 1);
-      this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
-      localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
+      this.onNotificationsChanged();
     }
   }
 
@@ -47,8 +63,7 @@ export class ToastsManager {
         this.notifications.splice(i, 1);
       }
     }
-    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
-    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
+    this.onNotificationsChanged();
   }
 
   setRootViewContainerRef(vRef: ViewContainerRef) {
@@ -61,8 +76,7 @@ export class ToastsManager {
 
   show(toast: Toast, options?: Object): Promise<Toast> {
     this.notifications.push(toast);
-    localStorage.setItem(ToastsManager.KEY, JSON.stringify(this.notifications));
-    this.notificationsSubject.next(this.notifications.sort((t1, t2) => t1.timestamp > t2.timestamp ? -1 : 1));
+    this.onNotificationsChanged();
 
     return new Promise((resolve, reject) => {
       if (!this.container) {
@@ -201,7 +215,11 @@ export class ToastsManager {
   warning(message: string, title?: string, options?: any): Promise<Toast> {
     title = (title ? title : 'Warning') + ' (' + (new Date()).toLocaleTimeString() + ')';
     const data = options && options.data ? options.data : null;
+    if (!options) {
+      options = { dismiss: 'click' };
+    }
     const toast = new Toast('warning', message, title, data);
+    toast.pinned = true;
     return this.show(toast, options);
   }
 

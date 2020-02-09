@@ -18,32 +18,40 @@ export class BasePageComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('BasePageComponent.ngOnDestroy()->');
   }
 
   protected baseOnInit() {
-    this.stompClient.notificationObservable.pipe(takeUntil(componentDestroyed(this)))
-      .subscribe((message: Message) => {
-        const notification: Notification = JSON.parse(message.body);
-        // this.snackBar.open(notification.message, notification.action, { duration: 3000 });
-        this.toastr.info(notification.message, notification.action);
-      });
-    this.stompClient.alertObservable.pipe(takeUntil(componentDestroyed(this)))
-      .subscribe((message: Message) => {
-        const notification: Notification = JSON.parse(message.body);
-        this.toastr.error(notification.message, notification.action);
-        const dialogRef = this.dialog.open(AlertDialogComponent, {
-          data: notification
+    try {
+      this.stompClient.notificationObservable.pipe(takeUntil(componentDestroyed(this)))
+        .subscribe((message: Message) => {
+          const notification: Notification = JSON.parse(message.body);
+          this.toastr.info(notification.message, notification.action);
         });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog is closed with result: ${result}`);
+      this.stompClient.warningObservable.pipe(takeUntil(componentDestroyed(this)))
+        .subscribe((message: Message) => {
+          const notification: Notification = JSON.parse(message.body);
+          this.toastr.warning(notification.message, notification.action);
         });
-      });
+      this.stompClient.alertObservable.pipe(takeUntil(componentDestroyed(this)))
+        .subscribe((message: Message) => {
+          const notification: Notification = JSON.parse(message.body);
+          this.toastr.error(notification.message, notification.action);
+          const dialogRef = this.dialog.open(AlertDialogComponent, {
+            data: notification
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog is closed with result: ${result}`);
+          });
+        });
+    } catch (err) {
+      console.log('baseOnInit()->', err);
+    }
   }
 
   protected handleHttpError(error) {
     console.log(error);
     const message = error.error ? error.error.message : error.message;
-    // this.snackBar.open('Error occurred', message, { duration: 3000 });
     this.toastr.error(message, 'HTTP Error');
     this.loading = false;
   }
