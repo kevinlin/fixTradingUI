@@ -1,9 +1,4 @@
 <mat-card class="mat-elevation-z8">
-  <mat-card-header>
-    <mat-form-field>
-      <input matInput type="text" placeholder="筛选" (keyup)="applyFilter($event.target.value)">
-    </mat-form-field>
-  </mat-card-header>
   <mat-card-content>
     <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
       <ng-container matColumnDef="id">

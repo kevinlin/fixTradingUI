@@ -5,7 +5,7 @@
     <h3>申报单明细</h3>
   </mat-card-header>
   <mat-card-content>
-    <mat-table #orderTable [dataSource]="orderBlotterDataSource" matSort aria-label="Elements">
+    <mat-table #orderTable [dataSource]="dataSource" matSort aria-label="Elements">
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef mat-sort-header>日期</mat-header-cell>
         <mat-cell *matCellDef="let row">{{row.date}}</mat-cell>
@@ -55,6 +55,6 @@
       <mat-row *matRowDef="let row; columns: orderBlotterDisplayedColumns;"></mat-row>
     </mat-table>
 
-    <mat-paginator #orderBlotterPaginator [length]="orderBlotterDataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
+    <mat-paginator #orderBlotterPaginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
   </mat-card-content>
 </mat-card>

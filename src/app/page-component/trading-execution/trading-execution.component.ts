@@ -1,28 +1,22 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {AfterViewInit, ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {Order} from '../../model/order';
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
 
 import {BasePageComponent} from '../base-page-component';
-import {BaseOrderBlotterDatasource} from '../order-blotter/base-order-blotter-datasource';
-
-class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
-  constructor(private orderService: OrderService, protected paginator: MatPaginator, protected sort: MatSort) {
-    super(orderService.todayOrdersSubject, paginator, sort);
-  }
-}
 
 @Component({
   selector: 'app-trading-execution',
   templateUrl: './trading-execution.component.html',
   styleUrls: ['./trading-execution.component.css']
 })
-export class TradingExecutionComponent extends BasePageComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) orderBlotterPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) orderBlotterSort: MatSort;
+export class TradingExecutionComponent extends BasePageComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  orderBlotterDataSource: OrderBlotterDataSource;
+  dataSource: MatTableDataSource<Order>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   orderBlotterDisplayedColumns = ['date', 'strategy', 'symbol', 'clOrdID', 'orderID', 'side', 'price', 'size', 'status', 'text', 'transactTime'];
@@ -34,7 +28,18 @@ export class TradingExecutionComponent extends BasePageComponent implements OnIn
 
   ngOnInit() {
     this.baseOnInit();
-    this.orderBlotterDataSource = new OrderBlotterDataSource(this.orderService, this.orderBlotterPaginator, this.orderBlotterSort);
+    this.dataSource = new MatTableDataSource([]);
+    this.orderService.todayOrdersSubject.subscribe(orders => {
+      this.dataSource.data = orders;
+    });
+  }
+
+  /**
+   * Set the paginator and sort after the view init since this component will be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }
