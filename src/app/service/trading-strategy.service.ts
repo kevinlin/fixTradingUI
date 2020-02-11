@@ -15,7 +15,7 @@ export class TradingStrategyService {
 
   private data: TradingStrategy[] = [];
   public dataSubject = new BehaviorSubject<TradingStrategy[]>([]);
-  public activeStrategiesSubject = new BehaviorSubject<TradingStrategy[]>([]);
+  public uncompletedStrategiesSubject = new BehaviorSubject<TradingStrategy[]>([]);
   public recordHistory: boolean;
   public historyPriceLevels = [];
   public strategyToRecord: string;
@@ -27,7 +27,7 @@ export class TradingStrategyService {
       const marketDataMap = new Map(marketDataList.map(md => [md.symbol, md] as [string, MarketData]));
       this.data.forEach(strategy => this.calculateLivePrice(strategy, marketDataMap));
       this.dataSubject.next(this.data);
-      this.activeStrategiesSubject.next(this.data.filter(strategy => strategy.isActive()));
+      this.uncompletedStrategiesSubject.next(this.data.filter(strategy => !strategy.isCompleted()));
     });
 
     this.dataSubject.subscribe(strategies => {
@@ -53,7 +53,7 @@ export class TradingStrategyService {
     this.findAll().subscribe(result => {
       this.data = result.map(ts => plainToClass(TradingStrategy, ts));
       this.dataSubject.next(this.data);
-      this.activeStrategiesSubject.next(this.data.filter(strategy => strategy.isActive()));
+      this.uncompletedStrategiesSubject.next(this.data.filter(strategy => !strategy.isCompleted()));
     });
   }
 

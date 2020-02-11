@@ -22,7 +22,7 @@ export class IntradayTradingParameterDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.allStrategies = this.strategyService.activeStrategiesSubject;
+    this.allStrategies = this.strategyService.uncompletedStrategiesSubject;
   }
 
   saveParameter() {

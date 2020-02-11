@@ -31,7 +31,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private strategyService: TradingStrategyService, private operationService: TradingOperationService) {
     super(stompClient, toastr, appRef, dialog);
-    this.allStrategies = strategyService.activeStrategiesSubject;
+    this.allStrategies = strategyService.uncompletedStrategiesSubject;
   }
 
   ngOnInit() {
