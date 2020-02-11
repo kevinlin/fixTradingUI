@@ -53,6 +53,7 @@ export class TradingStrategyService {
     this.findAll().subscribe(result => {
       this.data = result.map(ts => plainToClass(TradingStrategy, ts));
       this.dataSubject.next(this.data);
+      this.activeStrategiesSubject.next(this.data.filter(strategy => strategy.isActive()));
     });
   }
 
