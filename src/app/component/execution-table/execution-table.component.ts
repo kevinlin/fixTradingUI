@@ -13,6 +13,7 @@ export class ExecutionTableComponent implements OnInit {
 
   @Input() symbol: string;
   @Input() executions: TradingExecution[];
+  @Input() overPriceLevel: number;
   @Input() strategyLots: number;
   @Input() operationLots: number;
 
@@ -44,6 +45,12 @@ export class ExecutionTableComponent implements OnInit {
       format: '0,0'
     },
     {
+      title: '价格',
+      data: 'fixedPrice',
+      type: 'numeric',
+      format: '0,0'
+    },
+    {
       title: '状态',
       data: 'state',
       type: 'text',
@@ -65,6 +72,7 @@ export class ExecutionTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.columns[4].readOnly = !!this.overPriceLevel;
   }
 
   sumLots() {
