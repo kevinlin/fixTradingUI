@@ -12,7 +12,6 @@ export class TradingOperation {
   date: Date;
   direction: Direction;
   operationType: OperationType;
-  fixedPrice: number;
   overPriceLevel: number;
 
   // Conditional order

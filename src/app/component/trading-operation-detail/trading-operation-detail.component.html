@@ -34,14 +34,7 @@
       <div class="col">
         <div class="form-group">
           <mat-form-field>
-            <input matInput [(ngModel)]="operation.fixedPrice" type="number" placeholder="指定价格" class="right-align" [disabled]="!!operation.overPriceLevel || operation.isCompleted()">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-group">
-          <mat-form-field>
-            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" placeholder="超价" [disabled]="!!operation.fixedPrice || operation.isCompleted()">
+            <mat-select [(ngModel)]="operation.overPriceLevel" [required]="true" [disabled]="operation.isCompleted()" placeholder="超价">
               <mat-option *ngFor="let choice of overPriceLevelValues" [value]="choice">{{choice}}</mat-option>
             </mat-select>
           </mat-form-field>
