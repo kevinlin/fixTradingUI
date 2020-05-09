@@ -1,5 +1,5 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {AfterViewInit, ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Observable} from 'rxjs/internal/Observable';
 import {TradingOperation} from '../../model/trading-operation';
 
@@ -9,14 +9,13 @@ import {TradingOperationService} from '../../service/trading-operation.service';
 import {TradingStrategyService} from '../../service/trading-strategy.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
 import {BasePageComponent} from '../base-page-component';
-import {TradingOperationListDataSource} from './trading-operation-list-data-source';
 
 @Component({
   selector: 'app-trading-execution-list',
   templateUrl: './trading-operation-list.component.html',
   styleUrls: ['./trading-operation-list.component.css']
 })
-export class TradingOperationListComponent extends BasePageComponent implements OnInit {
+export class TradingOperationListComponent extends BasePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -24,7 +23,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
   allStrategies: Observable<TradingStrategy[]>;
   selectedStrategy: TradingStrategy;
   selectedOperation: TradingOperation;
-  dataSource: TradingOperationListDataSource;
+  dataSource: MatTableDataSource<TradingOperation>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'strategy', 'date', 'direction', 'operationType', 'conditional', 'position', 'state', 'action'];
@@ -32,16 +31,28 @@ export class TradingOperationListComponent extends BasePageComponent implements 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private strategyService: TradingStrategyService, private operationService: TradingOperationService) {
     super(stompClient, toastr, appRef, dialog);
-    this.allStrategies = strategyService.dataSubject;
+    this.allStrategies = strategyService.uncompletedStrategiesSubject;
   }
 
   ngOnInit() {
     this.baseOnInit();
-    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.operationService, this.paginator, this.sort);
+    this.dataSource = new MatTableDataSource([]);
+    this.operationService.dataSubject.subscribe(newData => {
+      this.dataSource.data = newData.filter(execution => {
+        return !this.selectedStrategy || execution.tradingStrategy.id === this.selectedStrategy.id;
+      });
+    });
+  }
+
+  /**
+   * Set the paginator and sort after the view init since this component will be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   selectedStrategyChanged() {
-    this.dataSource = new TradingOperationListDataSource(this.selectedStrategy, this.operationService, this.paginator, this.sort);
     this.selectedOperation = null;
   }
 

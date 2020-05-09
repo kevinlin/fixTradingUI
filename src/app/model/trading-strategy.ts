@@ -53,7 +53,11 @@ export class TradingStrategy {
   }
 
   public isActive(): boolean {
-    return this.state === 'ACTIVE';
+    return this.state === StrategyState.ACTIVE;
+  }
+
+  public isCompleted(): boolean {
+    return this.state === StrategyState.COMPLETED;
   }
 
   public isInPosition(): boolean {

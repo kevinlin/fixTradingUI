@@ -1,27 +1,21 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {AfterViewInit, ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {Order} from '../../model/order';
 import {OrderService} from '../../service/order.service';
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';
 
 import {BasePageComponent} from '../base-page-component';
-import {BaseOrderBlotterDatasource} from './base-order-blotter-datasource';
-
-class OrderBlotterDataSource extends BaseOrderBlotterDatasource {
-  constructor(private orderService: OrderService, protected paginator: MatPaginator, protected sort: MatSort) {
-    super(orderService.historyOrderSubject, paginator, sort);
-  }
-}
 
 @Component({
   selector: 'app-order-blotter',
   templateUrl: './order-blotter.component.html',
   styleUrls: ['./order-blotter.component.css'],
 })
-export class OrderBlotterComponent extends BasePageComponent implements OnInit {
+export class OrderBlotterComponent extends BasePageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  dataSource: OrderBlotterDataSource;
+  dataSource: MatTableDataSource<Order>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['date', 'strategy', 'symbol', 'clOrdID', 'orderID', 'side', 'price', 'size', 'status', 'transactTime', 'text'];
@@ -35,7 +29,18 @@ export class OrderBlotterComponent extends BasePageComponent implements OnInit {
 
   ngOnInit() {
     this.baseOnInit();
-    this.dataSource = new OrderBlotterDataSource(this.orderService, this.paginator, this.sort);
+    this.dataSource = new MatTableDataSource([]);
+    this.orderService.historyOrderSubject.subscribe(orders => {
+      this.dataSource.data = orders;
+    });
+  }
+
+  /**
+   * Set the paginator and sort after the view init since this component will be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   public queryOrders() {

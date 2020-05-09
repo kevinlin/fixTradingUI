@@ -1,4 +1,4 @@
-import { OrderSide } from './enum/order-side.enum';
+import {OrderSide} from './enum/order-side.enum';
 
 export class TradingExecution {
 
@@ -13,5 +13,6 @@ export class TradingExecution {
   side: OrderSide;
   time: string;
   lots: number;
+  fixedPrice: number;
   state: string;
 }
