@@ -38,9 +38,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
     this.baseOnInit();
     this.dataSource = new MatTableDataSource([]);
     this.operationService.dataSubject.subscribe(newData => {
-      this.dataSource.data = newData.filter(execution => {
-        return !this.selectedStrategy || execution.tradingStrategy.id === this.selectedStrategy.id;
-      });
+      this.dataSource.data = newData.filter(operation => !this.selectedStrategy || operation.tradingStrategy.id === this.selectedStrategy.id);
     });
   }
 
@@ -54,6 +52,7 @@ export class TradingOperationListComponent extends BasePageComponent implements 
 
   selectedStrategyChanged() {
     this.selectedOperation = null;
+    this.dataSource.data = this.dataSource.data.filter(operation => !this.selectedStrategy || operation.tradingStrategy.id === this.selectedStrategy.id);
   }
 
   newOperation() {
