@@ -1,5 +1,5 @@
 import {ApplicationRef, OnDestroy} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {Message} from '@stomp/stompjs';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';

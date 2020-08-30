@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 import {Notification} from '../../model/notification';
 
@@ -21,7 +21,7 @@ export class AlertDialogComponent implements OnInit {
     this.audio.load();
     const intervalID = setInterval(() => this.audio.play(), 3000);
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(() => {
       console.log('Dialog is closed');
       clearInterval(intervalID);
     });

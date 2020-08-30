@@ -1,5 +1,5 @@
 import {ApplicationRef, Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {HotTableRegisterer} from '@handsontable-pro/angular';
 import {Observable} from 'rxjs';
 import {PriceLevelDerivative} from '../../model/price-level-derivative';

@@ -1,5 +1,5 @@
 import {ApplicationRef, Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 
 import {StompClientService} from '../../service/stomp-client.service';
 import {ToastsManager} from '../../toast/toasts-manager.service';

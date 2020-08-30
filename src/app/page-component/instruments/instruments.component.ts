@@ -1,5 +1,5 @@
 import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {Instrument} from '../../model/instrument';
 import {InstrumentService} from '../../service/instrument.service';

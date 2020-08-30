@@ -1,5 +1,6 @@
 import {ApplicationRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {MatRadioChange, MatSelectChange} from '@angular/material';
+import {MatRadioChange} from '@angular/material/radio';
+import {MatSelectChange} from '@angular/material/select';
 
 import {AppComponent} from '../../app.component';
 import {Direction} from '../../model/enum/direction.enum';
