@@ -18,6 +18,7 @@ import {TradingStrategyDetailComponent} from './component/trading-strategy-detai
 import {TradingStrategyViewComponent} from './component/trading-strategy-view/trading-strategy-view.component';
 import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
+import {BasePageComponent} from './page-component/base-page-component';
 import {InstrumentsComponent} from './page-component/instruments/instruments.component';
 import {IntradayTradingParameterListComponent} from './page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
 import {LoginComponent} from './page-component/login/login.component';
@@ -82,6 +83,7 @@ const rxStompConfig: InjectableRxStompConfig = {
   declarations: [
     AlertDialogComponent,
     AppComponent,
+    BasePageComponent,
     ExecutionTableComponent,
     InstrumentsComponent,
     IntradayTradingParameterDetailComponent,
