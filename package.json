@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve fix-trading-ui --aot --proxyConfig=proxy.conf.json --sourceMap=true --progress",
-    "build": "ng build fix-trading-ui --configuration=production --sourceMap=true --baseHref=/fixTrading/ --progress --statsJson --no-es5BrowserSupport",
+    "build": "ng build fix-trading-ui --prod --sourceMap=true --baseHref=/fixTrading/ --progress --statsJson",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
