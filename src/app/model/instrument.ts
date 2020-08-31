@@ -8,4 +8,5 @@ export interface Instrument {
   symbol: string;
   maturityDate: string;
   minPriceIncrement: number;
+  hidden: boolean;
 }

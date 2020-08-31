@@ -7,12 +7,13 @@
       <mat-card-content>
         <mat-radio-group class="example-radio-group" [(ngModel)]="selectedShfeInstrument">
           <div *ngFor="let instrument of shfeInstruments | async">
+            <mat-checkbox [(ngModel)]="instrument.hidden" [disabled]="true">隐藏</mat-checkbox>&nbsp;
             <mat-radio-button class="example-radio-button" [value]="instrument">
-              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
+              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br />
             </mat-radio-button>
           </div>
         </mat-radio-group>
-        <div class="text-monospace">详细信息: {{selectedShfeInstrument | json}}</div>
+        <app-instrument-details [instrument]="selectedShfeInstrument"></app-instrument-details>
       </mat-card-content>
     </mat-card>
   </div>
@@ -24,12 +25,14 @@
       <mat-card-content>
         <mat-radio-group class="example-radio-group" [(ngModel)]="selectedDceInstrument">
           <div *ngFor="let instrument of dceInstruments | async">
+            <mat-checkbox [(ngModel)]="instrument.hidden" [disabled]="true">隐藏</mat-checkbox>&nbsp;
             <mat-radio-button class="example-radio-button" [value]="instrument">
-              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
+              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})
+              <br />
             </mat-radio-button>
           </div>
         </mat-radio-group>
-        <div class="text-monospace">详细信息: {{selectedDceInstrument | json}}</div>
+        <app-instrument-details [instrument]="selectedDceInstrument"></app-instrument-details>
       </mat-card-content>
     </mat-card>
   </div>
@@ -41,12 +44,13 @@
       <mat-card-content>
         <mat-radio-group class="example-radio-group" [(ngModel)]="selectedCzceInstrument">
           <div *ngFor="let instrument of czceInstruments | async">
+            <mat-checkbox [(ngModel)]="instrument.hidden" [disabled]="true">隐藏</mat-checkbox>&nbsp;
             <mat-radio-button class="example-radio-button" [value]="instrument">
-              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br/>
+              {{instrument.productName}} {{instrument.symbol}} ({{instrument.maturity.monthLabel}}{{instrument.maturity.year}})<br />
             </mat-radio-button>
           </div>
         </mat-radio-group>
-        <div class="text-monospace">详细信息: {{selectedCzceInstrument | json}}</div>
+        <app-instrument-details [instrument]="selectedCzceInstrument"></app-instrument-details>
       </mat-card-content>
     </mat-card>
   </div>

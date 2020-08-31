@@ -22,4 +22,12 @@ export class InstrumentService {
     return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/' + exchange);
   }
 
+  public hideInstrument(symbol: string): Observable<Instrument> {
+    return this.httpClient.patch<Instrument>(this.instrumentsUrl + '/' + symbol + '/hide', null);
+  }
+
+  public unhideInstrument(symbol: string): Observable<Instrument> {
+    return this.httpClient.patch<Instrument>(this.instrumentsUrl + '/' + symbol + '/unhide', null);
+  }
+
 }

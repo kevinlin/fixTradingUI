@@ -11,6 +11,7 @@ import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {AlertDialogComponent} from './component/alert-dialog/alert-dialog.component';
 import {ExecutionTableComponent} from './component/execution-table/execution-table.component';
+import {InstrumentDetailsComponent} from './component/instrument-details/instrument-details.component';
 import {IntradayTradingParameterDetailComponent} from './component/intraday-trading-parameter-detail/intraday-trading-parameter-detail.component';
 import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
 import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
@@ -86,6 +87,7 @@ const rxStompConfig: InjectableRxStompConfig = {
     BasePageComponent,
     ExecutionTableComponent,
     InstrumentsComponent,
+    InstrumentDetailsComponent,
     IntradayTradingParameterDetailComponent,
     IntradayTradingParameterListComponent,
     LoginComponent,
