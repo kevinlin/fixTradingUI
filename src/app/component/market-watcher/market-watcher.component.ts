@@ -1,5 +1,7 @@
 import {AfterViewInit, ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {AppComponent} from '../../app.component';
 import {MarketData} from '../../model/market-data';
 import {MarketDataService} from '../../service/market-data.service';

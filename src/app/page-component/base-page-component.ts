@@ -1,7 +1,7 @@
-import {ApplicationRef, OnDestroy} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {ApplicationRef, Component, OnDestroy} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {Message} from '@stomp/stompjs';
-import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
+import {componentDestroyed, OnDestroyMixin} from '@w11k/ngx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';
 
 import {AppComponent} from '../app.component';
@@ -10,10 +10,15 @@ import {Notification} from '../model/notification';
 import {StompClientService} from '../service/stomp-client.service';
 import {ToastsManager} from '../toast/toasts-manager.service';
 
-export class BasePageComponent implements OnDestroy {
+@Component({
+  selector: `app-base-page-component`,
+  template: '<div></div>'
+})
+export class BasePageComponent extends OnDestroyMixin implements OnDestroy {
   public loading: boolean;
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog) {
+    super();
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);
   }
 

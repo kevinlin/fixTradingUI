@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import * as Handsontable from 'handsontable';
 
 import {TradingExecution} from '../../model/trading-execution';
 
@@ -94,8 +93,8 @@ export class ExecutionTableComponent implements OnInit {
     }
   }
 
-  onAfterCreateRow = (hot: Handsontable, index: number) => {
-    console.log('onAfterCreateRow()->amount: ' + index);
+  onAfterCreateRow = (index: number) => {
+    console.log('onAfterCreateRow()->index: ' + index);
     const template = index === 0 ? this.executions[this.executions.length - 1] : this.executions[0];
     this.executions.splice(index, 1, new TradingExecution(template.symbol, template.side));
   }

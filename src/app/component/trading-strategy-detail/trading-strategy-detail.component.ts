@@ -1,5 +1,5 @@
 import {ApplicationRef, Component, Input} from '@angular/core';
-import {HotTableRegisterer} from '@handsontable-pro/angular';
+import {HotTableRegisterer} from '@handsontable/angular';
 import {Observable} from 'rxjs';
 
 import {AppComponent} from '../../app.component';
@@ -65,7 +65,7 @@ export class TradingStrategyDetailComponent {
   constructor(private appRef: ApplicationRef,
               private hotRegisterer: HotTableRegisterer,
               private instrumentService: InstrumentService,
-              private strategyService: TradingStrategyService,
+              public strategyService: TradingStrategyService,
               private toastr: ToastsManager) {
     this.allInstruments = this.instrumentService.getAllInstruments();
     this.toastr.setRootViewContainerRef((appRef.components[0].instance as AppComponent).viewRef);

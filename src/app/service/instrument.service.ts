@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {Instrument} from '../model/instrument';
 
@@ -15,11 +16,20 @@ export class InstrumentService {
   private instrumentsUrl = '/api/instrument';
 
   public getAllInstruments(): Observable<Instrument[]> {
-    return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/all');
+    return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/all')
+      .pipe(map(instruments => instruments.filter(instrument => !instrument.hidden)));
   }
 
   public getInstruments(exchange: string): Observable<Instrument[]> {
     return this.httpClient.get<Instrument[]>(this.instrumentsUrl + '/' + exchange);
+  }
+
+  public hideInstrument(symbol: string): Observable<Instrument> {
+    return this.httpClient.patch<Instrument>(this.instrumentsUrl + '/' + symbol + '/hide', null);
+  }
+
+  public unhideInstrument(symbol: string): Observable<Instrument> {
+    return this.httpClient.patch<Instrument>(this.instrumentsUrl + '/' + symbol + '/unhide', null);
   }
 
 }

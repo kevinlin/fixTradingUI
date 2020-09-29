@@ -4,13 +4,14 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HotTableModule} from '@handsontable-pro/angular';
+import {HotTableModule} from '@handsontable/angular';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
 
 import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {AlertDialogComponent} from './component/alert-dialog/alert-dialog.component';
 import {ExecutionTableComponent} from './component/execution-table/execution-table.component';
+import {InstrumentDetailsComponent} from './component/instrument-details/instrument-details.component';
 import {IntradayTradingParameterDetailComponent} from './component/intraday-trading-parameter-detail/intraday-trading-parameter-detail.component';
 import {MarketWatcherComponent} from './component/market-watcher/market-watcher.component';
 import {TradingOperationDetailComponent} from './component/trading-operation-detail/trading-operation-detail.component';
@@ -18,6 +19,7 @@ import {TradingStrategyDetailComponent} from './component/trading-strategy-detai
 import {TradingStrategyViewComponent} from './component/trading-strategy-view/trading-strategy-view.component';
 import {AppRoutingModule} from './module/app-routing.module';
 import {MaterialModule} from './module/material.module';
+import {BasePageComponent} from './page-component/base-page-component';
 import {InstrumentsComponent} from './page-component/instruments/instruments.component';
 import {IntradayTradingParameterListComponent} from './page-component/intraday-trading-parameter-list/intraday-trading-parameter-list.component';
 import {LoginComponent} from './page-component/login/login.component';
@@ -82,8 +84,10 @@ const rxStompConfig: InjectableRxStompConfig = {
   declarations: [
     AlertDialogComponent,
     AppComponent,
+    BasePageComponent,
     ExecutionTableComponent,
     InstrumentsComponent,
+    InstrumentDetailsComponent,
     IntradayTradingParameterDetailComponent,
     IntradayTradingParameterListComponent,
     LoginComponent,
