@@ -139,7 +139,7 @@ export class TradingStrategyService {
   }
 
   public complete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
-    return this.httpClient.get<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id + '/complete', tradingStrategy.id).pipe(
+    return this.httpClient.get<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id + '/complete').pipe(
       tap(() => this.refreshData()),
       map(data => plainToClass(TradingStrategy, data))
     );
