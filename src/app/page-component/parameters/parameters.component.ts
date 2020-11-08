@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Message} from '@stomp/stompjs';
 import {takeUntil} from 'rxjs/operators';
@@ -14,7 +14,7 @@ import {BasePageComponent} from '../base-page-component';
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })
-export class ParametersComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class ParametersComponent extends BasePageComponent implements OnInit {
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private parametersService: ParametersService) {
@@ -40,10 +40,6 @@ export class ParametersComponent extends BasePageComponent implements OnInit, On
         // this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
         this.toastr.info('Trading Parameters changed.');
       });
-  }
-
-  ngOnDestroy(): void {
-    console.log('ParametersComponent onDestroy()->');
   }
 
   saveTradingParameters() {
