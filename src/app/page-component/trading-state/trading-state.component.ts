@@ -1,7 +1,6 @@
 import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Message} from '@stomp/stompjs';
-import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import {takeUntil} from 'rxjs/operators';
 
 import {TradingParameters} from '../../model/trading-parameters';
@@ -48,7 +47,7 @@ export class TradingStateComponent extends BasePageComponent implements OnInit, 
         });
 
         this.stompClient.tradingStateObservable
-          .pipe(takeUntil(componentDestroyed(this)))
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((message: Message) => {
             const state = JSON.parse(message.body);
             this.onTradingStateChange(state);
@@ -56,7 +55,7 @@ export class TradingStateComponent extends BasePageComponent implements OnInit, 
             this.toastr.info('Trading State changed.');
           });
         this.stompClient.tradingParametersObservable
-          .pipe(takeUntil(componentDestroyed(this)))
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((message: Message) => {
             this.tradingParameters = JSON.parse(message.body);
             // this.snackBar.open('Trading Parameters', 'changed', { duration: 3000 });
