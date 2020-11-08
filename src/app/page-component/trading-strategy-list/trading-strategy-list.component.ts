@@ -62,6 +62,12 @@ export class TradingStrategyListComponent extends BasePageComponent implements O
     this.selectedStrategy = plainToClass(TradingStrategy, toEdit);
   }
 
+  completeStrategy(toComplete: TradingStrategy) {
+    this.tradingStrategyService.complete(toComplete).subscribe(() => {
+      this.toastr.success('Trading Strategy: \'' + toComplete.name + '\' completed.');
+    });
+  }
+
   deleteStrategy(toDelete: TradingStrategy) {
     if (this.selectedStrategy === toDelete) {
       this.selectedStrategy = null;

@@ -56,7 +56,8 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row">
           <button mat-raised-button color="primary" (click)="editStrategy(row)">编辑</button>&nbsp;
-          <button mat-raised-button color="warn" [disabled]="row.isActive()" (click)="deleteStrategy(row)">删除</button>
+          <button *ngIf="row.isActive()" mat-raised-button color="accent" (click)="completeStrategy(row)">完成</button>
+          <button *ngIf="!row.isActive()" mat-raised-button color="warn" (click)="deleteStrategy(row)">删除</button>
         </mat-cell>
       </ng-container>
 
