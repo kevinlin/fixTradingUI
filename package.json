@@ -58,6 +58,6 @@
     "tslint": "~6.1.0",
     "typescript": "~3.9.7",
     "typings": "^2.1.1",
-    "webpack-bundle-analyzer": "^3.9.0"
+    "webpack-bundle-analyzer": "^4.2.0"
   }
 }
