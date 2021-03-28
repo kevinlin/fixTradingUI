@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 
@@ -15,7 +15,7 @@ import {BasePageComponent} from '../base-page-component';
   templateUrl: './trading-session.component.html',
   styleUrls: ['./trading-session.component.css']
 })
-export class TradingSessionComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class TradingSessionComponent extends BasePageComponent implements OnInit {
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog,
               private instrumentService: InstrumentService, private tradingSessionService: TradingSessionService) {
@@ -51,10 +51,6 @@ export class TradingSessionComponent extends BasePageComponent implements OnInit
     }, error => {
       this.handleHttpError(error);
     });
-  }
-
-  ngOnDestroy(): void {
-    console.log('TradingSessionComponent onDestroy()->');
   }
 
   startSession(): void {

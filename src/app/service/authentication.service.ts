@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<User> {
-    if (password === 'sanhua') {
+    if (password === 'xinyi') {
       const user = new User();
       user.username = username;
       user.password = password;

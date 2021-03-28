@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {Instrument} from '../../model/instrument';
@@ -12,7 +12,7 @@ import {BasePageComponent} from '../base-page-component';
   templateUrl: './instruments.component.html',
   styleUrls: ['./instruments.component.css']
 })
-export class InstrumentsComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class InstrumentsComponent extends BasePageComponent implements OnInit {
 
   constructor(protected stompClient: StompClientService, protected toastr: ToastsManager, protected appRef: ApplicationRef, protected dialog: MatDialog, private instrumentService: InstrumentService) {
     super(stompClient, toastr, appRef, dialog);
@@ -31,10 +31,6 @@ export class InstrumentsComponent extends BasePageComponent implements OnInit, O
     this.shfeInstruments = this.instrumentService.getInstruments('SHFE');
     this.dceInstruments = this.instrumentService.getInstruments('DCE');
     this.czceInstruments = this.instrumentService.getInstruments('CZCE');
-  }
-
-  ngOnDestroy(): void {
-    console.log('InstrumentsComponent onDestroy()->');
   }
 
 }

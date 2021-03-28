@@ -131,16 +131,23 @@ export class TradingStrategyService {
     return this.httpClient.get<TradingStrategy[]>(this.tradingStrategyUrl + '/all');
   }
 
-  public delete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
-    return this.httpClient.delete<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id).pipe(
-      tap(() => this.refreshData())
-    );
-  }
-
   public save(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
     return this.httpClient.post<TradingStrategy>(this.tradingStrategyUrl, tradingStrategy).pipe(
       tap(() => this.refreshData()),
       map(data => plainToClass(TradingStrategy, data))
+    );
+  }
+
+  public complete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
+    return this.httpClient.get<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id + '/complete').pipe(
+      tap(() => this.refreshData()),
+      map(data => plainToClass(TradingStrategy, data))
+    );
+  }
+
+  public delete(tradingStrategy: TradingStrategy): Observable<TradingStrategy> {
+    return this.httpClient.delete<TradingStrategy>(this.tradingStrategyUrl + '/' + tradingStrategy.id).pipe(
+      tap(() => this.refreshData())
     );
   }
 
