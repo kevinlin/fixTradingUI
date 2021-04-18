@@ -23,9 +23,9 @@
     [opened]="(showMenu | async)">
     <mat-toolbar color="primary">菜单</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">
-        {{link.label}}
-      </a>
+      <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">{{link.label}}</a>
+      <a mat-list-item href="/fixTrading/swagger-ui/" target="_blank" routerLinkActive="active">后台程序接口</a>
+      <a mat-list-item href="http://139.196.45.41/grafana" target="_blank" routerLinkActive="active">主机监控</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
