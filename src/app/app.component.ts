@@ -30,6 +30,7 @@ export class AppComponent {
     { path: '/priceLevelDerivativeHistory', label: '价差二阶参数历史' },
     { path: '/intradayTradingParameter', label: '日间自动交易参数' },
     { path: '/notificationCenter', label: '消息中心' },
+    { path: '/swagger-ui/', label: '后台程序接口' },
     // { path: '/parameters', label: '交易参数' },
     // { path: '/tradingSession', label: '交易时段' },
     // { path: '/tradingState', label: '交易状态' }
