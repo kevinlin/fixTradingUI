@@ -1,0 +1,40 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "21:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@angular/language-service"
+    versions:
+    - 11.0.5
+    - 11.1.1
+    - 11.2.3
+  - dependency-name: rxjs
+    versions:
+    - 6.6.3
+    - 6.6.6
+  - dependency-name: "@angular/cli"
+    versions:
+    - 11.0.5
+    - 11.1.2
+    - 11.2.2
+  - dependency-name: "@types/jasmine"
+    versions:
+    - 3.6.2
+    - 3.6.3
+    - 3.6.4
+  - dependency-name: handsontable
+    versions:
+    - 8.2.0
+    - 8.3.0
+    - 8.3.1
+  - dependency-name: bootstrap
+    versions:
+    - 4.5.3
+    - 4.6.0
+  - dependency-name: webpack-bundle-analyzer
+    versions:
+    - 4.3.0
