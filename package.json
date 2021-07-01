@@ -27,7 +27,7 @@
     "@stomp/ng2-stompjs": "~8.0.0",
     "bootstrap": "^4.3.1",
     "class-transformer": "~0.3.1",
-    "handsontable": "^8.0.0",
+    "handsontable": "^9.0.1",
     "logrocket": "~1.0.3",
     "numbro": "2.3.1",
     "rxjs": "~6.6.2",
