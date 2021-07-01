@@ -28,7 +28,7 @@
     "bootstrap": "^4.3.1",
     "class-transformer": "~0.3.1",
     "handsontable": "^8.0.0",
-    "logrocket": "~1.0.3",
+    "logrocket": "~1.3.0",
     "numbro": "2.3.1",
     "rxjs": "~6.6.2",
     "stompjs": "~2.3.3",
